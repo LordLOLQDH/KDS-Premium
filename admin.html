@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>KDS Admin Center</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background: #050505;
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255, 106, 0, 0.12),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(255, 106, 0, 0.07),
+                    transparent 30%
+                );
+
+        }
+
+
+        .topbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+
+            height: 70px;
+
+            background: rgba(5, 5, 5, 0.92);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom: 1px solid #222;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+        }
+
+
+        .brand {
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+
+        .brand span {
+
+            color: #ff6a00;
+
+        }
+
+
+        .admin-badge {
+
+            display: inline-block;
+
+            margin-left: 10px;
+
+            padding: 5px 9px;
+
+            border: 1px solid #ff6a00;
+
+            border-radius: 20px;
+
+            color: #ff6a00;
+
+            font-family: monospace;
+
+            font-size: 9px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .logout {
+
+            width: auto;
+
+            margin: 0;
+
+            padding: 9px 16px;
+
+            background: transparent;
+
+            border: 1px solid #333;
+
+            color: #aaa;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .logout:hover {
+
+            border-color: #ff6a00;
+
+            color: #ff6a00;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 45px 25px 70px;
+
+            position: relative;
+
+        }
+
+
+        .header {
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .header small {
+
+            color: #ff6a00;
+
+            font-family: monospace;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .header h1 {
+
+            margin: 10px 0;
+
+            font-size: clamp(
+                32px,
+                6vw,
+                55px
+            );
+
+            line-height: 1;
+
+        }
+
+
+        .header p {
+
+            color: #777;
+
+            max-width: 600px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .stat {
+
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            border-radius: 14px;
+
+            padding: 22px;
+
+        }
+
+
+        .stat-label {
+
+            color: #777;
+
+            font-size: 12px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .stat-number {
+
+            font-size: 34px;
+
+            font-weight: 800;
+
+        }
+
+
+        .stat-number.orange {
+
+            color: #ff6a00;
+
+        }
+
+
+        .section {
+
+            margin-top: 35px;
+
+        }
+
+
+        .section-title {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .section-title h2 {
+
+            margin: 0;
+
+            font-size: 20px;
+
+        }
+
+
+        .section-title span {
+
+            color: #666;
+
+            font-size: 12px;
+
+        }
+
+
+        .panel {
+
+            background: #0b0b0b;
+
+            border: 1px solid #222;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+        }
+
+
+        .empty {
+
+            padding: 35px;
+
+            text-align: center;
+
+            color: #666;
+
+        }
+
+
+        .request {
+
+            padding: 20px;
+
+            border-bottom: 1px solid #202020;
+
+        }
+
+
+        .request:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .request-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .request-name {
+
+            font-weight: 700;
+
+            font-size: 16px;
+
+        }
+
+
+        .request-email {
+
+            color: #777;
+
+            font-size: 12px;
+
+            margin-top: 5px;
+
+        }
+
+
+        .status {
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            height: fit-content;
+
+        }
+
+
+        .status.pending {
+
+            color: #ff6a00;
+
+            border: 1px solid #ff6a00;
+
+        }
+
+
+        .status.approved {
+
+            color: #6fdc8c;
+
+            border: 1px solid #6fdc8c;
+
+        }
+
+
+        .status.rejected {
+
+            color: #ff6666;
+
+            border: 1px solid #ff6666;
+
+        }
+
+
+        .request-message {
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            background: #111;
+
+            border-radius: 8px;
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .actions {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 15px;
+
+        }
+
+
+        .actions button {
+
+            width: auto;
+
+            margin: 0;
+
+            padding: 9px 13px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-weight: 700;
+
+            font-size: 11px;
+
+        }
+
+
+        .approve {
+
+            background: #ff6a00;
+
+            color: white;
+
+            border: 1px solid #ff6a00;
+
+        }
+
+
+        .reject {
+
+            background: transparent;
+
+            color: #ff6666;
+
+            border: 1px solid #663333;
+
+        }
+
+
+        .members {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .members th {
+
+            text-align: left;
+
+            color: #666;
+
+            font-size: 11px;
+
+            font-weight: normal;
+
+            padding: 15px;
+
+            border-bottom: 1px solid #222;
+
+        }
+
+
+        .members td {
+
+            padding: 15px;
+
+            border-bottom: 1px solid #181818;
+
+            font-size: 13px;
+
+        }
+
+
+        .member-email {
+
+            color: #777;
+
+            font-size: 11px;
+
+        }
+
+
+        .premium {
+
+            color: #ff6a00;
+
+        }
+
+
+        .admin {
+
+            color: #ff6a00;
+
+            font-family: monospace;
+
+        }
+
+
+        .loading {
+
+            padding: 30px;
+
+            text-align: center;
+
+            color: #666;
+
+        }
+
+
+        .error {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background: rgba(
+                255,
+                50,
+                50,
+                0.08
+            );
+
+            border: 1px solid #542222;
+
+            color: #ff7777;
+
+            border-radius: 8px;
+
+            display: none;
+
+        }
+
+
+        @media(max-width: 700px) {
+
+            .topbar {
+
+                padding: 0 15px;
+
+            }
+
+
+            .container {
+
+                padding:
+                    30px 15px 50px;
+
+            }
+
+
+            .stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .admin-badge {
+
+                display: none;
+
+            }
+
+
+            .members {
+
+                min-width: 600px;
+
+            }
+
+
+            .panel.table-panel {
+
+                overflow-x: auto;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- TOPBAR -->
+
+<header class="topbar">
+
+
+    <div class="brand">
+
+        Kraus
+
+        <span>
+            Digital Solutions
+        </span>
+
+
+        <span class="admin-badge">
+
+            ADMIN
+
+        </span>
+
+    </div>
+
+
+    <button
+        class="logout"
+        id="logoutButton"
+    >
+
+        Logout
+
+    </button>
+
+
+</header>
+
+
+
+<!-- CONTENT -->
+
+<main class="container">
+
+
+    <div class="header">
+
+        <small>
+            KDS / ADMIN CENTER
+        </small>
+
+
+        <h1>
+            Control Center.
+        </h1>
+
+
+        <p>
+
+            Verwalte KDS Premium-Mitglieder,
+            Zugangsanfragen und Premium-Zugänge
+            zentral an einem Ort.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- STATISTIKEN -->
+
+    <section class="stats">
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                MITGLIEDER
+            </div>
+
+            <div
+                class="stat-number"
+                id="memberCount"
+            >
+                –
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                PREMIUM AKTIV
+            </div>
+
+            <div
+                class="stat-number orange"
+                id="premiumCount"
+            >
+                –
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-label">
+                OFFENE ANFRAGEN
+            </div>
+
+            <div
+                class="stat-number orange"
+                id="requestCount"
+            >
+                –
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ANFRAGEN -->
+
+    <section class="section">
+
+
+        <div class="section-title">
+
+            <h2>
+                Zugangsanfragen
+            </h2>
+
+            <span>
+                PREMIUM REQUESTS
+            </span>
+
+        </div>
+
+
+        <div
+            class="panel"
+            id="requestsPanel"
+        >
+
+            <div class="loading">
+
+                Anfragen werden geladen...
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- MITGLIEDER -->
+
+    <section class="section">
+
+
+        <div class="section-title">
+
+            <h2>
+                Mitglieder
+            </h2>
+
+            <span>
+                MEMBERS
+            </span>
+
+        </div>
+
+
+        <div
+            class="panel table-panel"
+        >
+
+            <table class="members">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            NAME
+                        </th>
+
+                        <th>
+                            E-MAIL
+                        </th>
+
+                        <th>
+                            ROLLE
+                        </th>
+
+                        <th>
+                            PREMIUM
+                        </th>
+
+                        <th>
+                            SEIT
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="membersTable">
+
+                    <tr>
+
+                        <td colspan="5">
+
+                            <div class="loading">
+
+                                Mitglieder werden geladen...
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </section>
+
+
+
+    <div
+        class="error"
+        id="adminError"
+    ></div>
+
+
+</main>
+
+
+
+<script
+    type="module"
+    src="admin.js"
+></script>
+
+
+</body>
+
+</html>
