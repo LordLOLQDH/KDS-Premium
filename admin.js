@@ -35,8 +35,6 @@ async function checkAdmin() {
 
     try {
 
-        // Prüfen, ob überhaupt jemand eingeloggt ist
-
         const {
             data: {
                 user
@@ -52,8 +50,6 @@ async function checkAdmin() {
 
         }
 
-
-        // Profil des Benutzers laden
 
         const {
             data: profile,
@@ -75,8 +71,6 @@ async function checkAdmin() {
 
         }
 
-
-        // Ist der Benutzer wirklich Admin?
 
         if (profile.role !== "admin") {
 
@@ -147,7 +141,8 @@ async function loadMembers() {
 
     premiumCount.textContent =
         data.filter(
-            member => member.premium === true
+            member =>
+                member.premium === true
         ).length;
 
 
@@ -172,11 +167,15 @@ async function loadMembers() {
         data.map(member => {
 
             const date =
-                new Date(
-                    member.created_at
-                ).toLocaleDateString(
-                    "de-DE"
-                );
+                member.created_at
+
+                    ? new Date(
+                        member.created_at
+                    ).toLocaleDateString(
+                        "de-DE"
+                    )
+
+                    : "–";
 
 
             return `
@@ -185,25 +184,25 @@ async function loadMembers() {
 
                     <td>
 
-                        ${
-                            escapeHtml(
-                                member.full_name ||
-                                "Unbekannt"
-                            )
-                        }
+                        ${escapeHtml(
+                            member.full_name ||
+                            "Unbekannt"
+                        )}
 
                     </td>
+
 
                     <td>
 
                         <span class="member-email">
 
                             Benutzer-ID:
-                            ${member.id}
+                            ${escapeHtml(member.id)}
 
                         </span>
 
                     </td>
+
 
                     <td>
 
@@ -219,10 +218,11 @@ async function loadMembers() {
 
                     </td>
 
+
                     <td>
 
                         ${
-                            member.premium
+                            member.premium === true
 
                             ? `<span class="premium">
                                 AKTIV
@@ -232,6 +232,7 @@ async function loadMembers() {
                         }
 
                     </td>
+
 
                     <td>
 
@@ -308,11 +309,15 @@ async function loadRequests() {
         data.map(request => {
 
             const date =
-                new Date(
-                    request.created_at
-                ).toLocaleDateString(
-                    "de-DE"
-                );
+                request.created_at
+
+                    ? new Date(
+                        request.created_at
+                    ).toLocaleDateString(
+                        "de-DE"
+                    )
+
+                    : "–";
 
 
             return `
@@ -325,21 +330,18 @@ async function loadRequests() {
 
                             <div class="request-name">
 
-                                ${
-                                    escapeHtml(
-                                        request.name
-                                    )
-                                }
+                                ${escapeHtml(
+                                    request.name
+                                )}
 
                             </div>
 
+
                             <div class="request-email">
 
-                                ${
-                                    escapeHtml(
-                                        request.email
-                                    )
-                                }
+                                ${escapeHtml(
+                                    request.email
+                                )}
 
                                 ·
 
@@ -350,12 +352,16 @@ async function loadRequests() {
                         </div>
 
 
-                        <div class="status ${request.status}">
+                        <div
+                            class="status ${escapeHtml(
+                                request.status
+                            )}"
+                        >
 
-                            ${
+                            ${escapeHtml(
                                 request.status
                                     .toUpperCase()
-                            }
+                            )}
 
                         </div>
 
@@ -364,12 +370,10 @@ async function loadRequests() {
 
                     <div class="request-message">
 
-                        ${
-                            escapeHtml(
-                                request.message ||
-                                "Keine Nachricht."
-                            )
-                        }
+                        ${escapeHtml(
+                            request.message ||
+                            "Keine Nachricht."
+                        )}
 
                     </div>
 
@@ -387,6 +391,7 @@ async function loadRequests() {
                                 >
                                     ANNEHMEN
                                 </button>
+
 
                                 <button
                                     class="reject"
@@ -410,7 +415,9 @@ async function loadRequests() {
         }).join("");
 
 
-    // Buttons aktivieren
+    // ========================================
+    // ANNEHMEN BUTTONS
+    // ========================================
 
     document
         .querySelectorAll(".approve")
@@ -418,9 +425,28 @@ async function loadRequests() {
 
             button.addEventListener(
                 "click",
-                () => {
+                async () => {
 
-                    updateRequest(
+                    const confirmed =
+                        confirm(
+                            "Diese Anfrage wirklich annehmen und ein Premium-Konto erstellen?"
+                        );
+
+
+                    if (!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "WIRD ANGELEGT...";
+
+
+                    await updateRequest(
                         button.dataset.id,
                         "approved"
                     );
@@ -431,15 +457,38 @@ async function loadRequests() {
         });
 
 
+    // ========================================
+    // ABLEHNEN BUTTONS
+    // ========================================
+
     document
         .querySelectorAll(".reject")
         .forEach(button => {
 
             button.addEventListener(
                 "click",
-                () => {
+                async () => {
 
-                    updateRequest(
+                    const confirmed =
+                        confirm(
+                            "Diese Anfrage wirklich ablehnen?"
+                        );
+
+
+                    if (!confirmed) {
+
+                        return;
+
+                    }
+
+
+                    button.disabled = true;
+
+                    button.textContent =
+                        "WIRD ABGELEHNT...";
+
+
+                    await updateRequest(
                         button.dataset.id,
                         "rejected"
                     );
@@ -453,7 +502,7 @@ async function loadRequests() {
 
 
 // ========================================
-// ANFRAGE STATUS ÄNDERN
+// ANFRAGE BEARBEITEN
 // ========================================
 
 async function updateRequest(
@@ -463,28 +512,157 @@ async function updateRequest(
 
     try {
 
-        const {
-            error
-        } = await supabase
 
-            .from("premium_requests")
+        // ========================================
+        // ANNEHMEN
+        // ========================================
 
-            .update({
-                status: status
-            })
+        if (status === "approved") {
 
-            .eq(
-                "id",
-                id
+
+            const {
+                data: sessionData,
+                error: sessionError
+            } =
+                await supabase.auth.getSession();
+
+
+            if (sessionError) {
+
+                throw sessionError;
+
+            }
+
+
+            const session =
+                sessionData.session;
+
+
+            if (!session) {
+
+                throw new Error(
+                    "Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an."
+                );
+
+            }
+
+
+            const response =
+                await fetch(
+
+                    "https://wpsgjzqbwpyfpmdawwnn.supabase.co/functions/v1/approve-premium",
+
+                    {
+
+                        method: "POST",
+
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json",
+
+                            "Authorization":
+                                `Bearer ${session.access_token}`
+
+                        },
+
+
+                        body: JSON.stringify({
+
+                            requestId: id
+
+                        })
+
+                    }
+
+                );
+
+
+            let result;
+
+
+            try {
+
+                result =
+                    await response.json();
+
+            }
+
+            catch {
+
+                result = {};
+
+            }
+
+
+            if (
+                !response.ok ||
+                !result.success
+            ) {
+
+                throw new Error(
+
+                    result.error ||
+                    "Die Anfrage konnte nicht angenommen werden."
+
+                );
+
+            }
+
+
+            alert(
+                "Premium-Mitglied wurde erfolgreich angelegt."
             );
-
-
-        if (error) {
-
-            throw error;
 
         }
 
+
+
+        // ========================================
+        // ABLEHNEN
+        // ========================================
+
+        else if (status === "rejected") {
+
+
+            const {
+                error
+            } = await supabase
+
+                .from("premium_requests")
+
+                .update({
+
+                    status: "rejected"
+
+                })
+
+                .eq(
+                    "id",
+                    id
+                );
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            alert(
+                "Die Anfrage wurde abgelehnt."
+            );
+
+        }
+
+
+        // ========================================
+        // DATEN NEU LADEN
+        // ========================================
+
+        await loadMembers();
 
         await loadRequests();
 
@@ -493,11 +671,21 @@ async function updateRequest(
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Fehler beim Bearbeiten:",
+            error
+        );
+
 
         showError(
-            "Die Anfrage konnte nicht aktualisiert werden."
+            error.message ||
+            "Die Anfrage konnte nicht verarbeitet werden."
         );
+
+
+        // Liste wiederherstellen
+
+        await loadRequests();
 
     }
 
@@ -512,7 +700,15 @@ logoutButton.addEventListener(
     "click",
     async () => {
 
+        logoutButton.disabled =
+            true;
+
+        logoutButton.textContent =
+            "Logout...";
+
+
         await supabase.auth.signOut();
+
 
         window.location.replace(
             "login.html"
@@ -530,21 +726,36 @@ function escapeHtml(value) {
 
     return String(value)
 
-        .replaceAll("&", "&amp;")
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
 
-        .replaceAll("<", "&lt;")
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
 
-        .replaceAll(">", "&gt;")
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
 
-        .replaceAll('"', "&quot;")
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
 
-        .replaceAll("'", "&#039;");
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
 
 }
 
 
 // ========================================
-// FEHLER
+// FEHLERMELDUNG
 // ========================================
 
 function showError(message) {
@@ -559,7 +770,7 @@ function showError(message) {
 
 
 // ========================================
-// START
+// ADMIN CENTER STARTEN
 // ========================================
 
 async function startAdminPanel() {
@@ -585,7 +796,11 @@ async function startAdminPanel() {
 
     catch (error) {
 
-        console.error(error);
+        console.error(
+            "Admin-Daten konnten nicht geladen werden:",
+            error
+        );
+
 
         showError(
             "Die Admin-Daten konnten nicht geladen werden."
@@ -595,5 +810,9 @@ async function startAdminPanel() {
 
 }
 
+
+// ========================================
+// START
+// ========================================
 
 startAdminPanel();
