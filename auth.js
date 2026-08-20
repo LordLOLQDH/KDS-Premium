@@ -1,9 +1,9 @@
 import { supabase } from "./supabase.js";
 
 
-// ========================================
+// ================================
 // ELEMENTE
-// ========================================
+// ================================
 
 const loginForm = document.getElementById("loginForm");
 const registerForm = document.getElementById("registerForm");
@@ -20,9 +20,9 @@ const loginMessage = document.getElementById("loginMessage");
 const registerMessage = document.getElementById("registerMessage");
 
 
-// ========================================
-// HILFSFUNKTION FÜR NACHRICHTEN
-// ========================================
+// ================================
+// NACHRICHTEN
+// ================================
 
 function showMessage(element, text, type) {
 
@@ -33,9 +33,9 @@ function showMessage(element, text, type) {
 }
 
 
-// ========================================
-// ZWISCHEN LOGIN UND REGISTRIERUNG WECHSELN
-// ========================================
+// ================================
+// LOGIN / REGISTRIERUNG WECHSELN
+// ================================
 
 showRegister.addEventListener("click", () => {
 
@@ -59,9 +59,9 @@ showLogin.addEventListener("click", () => {
 });
 
 
-// ========================================
+// ================================
 // REGISTRIERUNG
-// ========================================
+// ================================
 
 registerForm.addEventListener("submit", async (event) => {
 
@@ -69,16 +69,22 @@ registerForm.addEventListener("submit", async (event) => {
 
 
     const name =
-        document.getElementById("registerName").value.trim();
+        document.getElementById("registerName")
+        .value
+        .trim();
 
     const email =
-        document.getElementById("registerEmail").value.trim();
+        document.getElementById("registerEmail")
+        .value
+        .trim();
 
     const password =
-        document.getElementById("registerPassword").value;
+        document.getElementById("registerPassword")
+        .value;
 
     const passwordRepeat =
-        document.getElementById("registerPasswordRepeat").value;
+        document.getElementById("registerPasswordRepeat")
+        .value;
 
 
     // Passwörter vergleichen
@@ -95,13 +101,13 @@ registerForm.addEventListener("submit", async (event) => {
     }
 
 
-    // Mindestlänge
+    // Passwortlänge
 
     if (password.length < 6) {
 
         showMessage(
             registerMessage,
-            "Das Passwort muss mindestens 6 Zeichen enthalten.",
+            "Das Passwort muss mindestens 6 Zeichen lang sein.",
             "error"
         );
 
@@ -128,7 +134,9 @@ registerForm.addEventListener("submit", async (event) => {
                 options: {
 
                     data: {
+
                         full_name: name
+
                     }
 
                 }
@@ -137,39 +145,44 @@ registerForm.addEventListener("submit", async (event) => {
 
 
         if (error) {
+
             throw error;
+
         }
 
 
-        /*
-        Wenn E-Mail-Bestätigung aktiviert ist,
-        muss der Benutzer zuerst seine E-Mail bestätigen.
-        */
+        // ================================
+        // E-MAIL-BESTÄTIGUNG
+        // ================================
 
         if (data.user && !data.session) {
 
             showMessage(
                 registerMessage,
-                "Konto erstellt. Bitte überprüfe deine E-Mails und bestätige deine E-Mail-Adresse.",
+                "Konto erstellt. Bitte bestätige deine E-Mail-Adresse.",
                 "success"
             );
 
             return;
+
         }
 
 
-        // Wenn keine E-Mail-Bestätigung erforderlich ist:
+        // ================================
+        // DIREKT EINGELOGGT
+        // ================================
 
         showMessage(
             registerMessage,
-            "Konto erfolgreich erstellt. Du wirst weitergeleitet...",
+            "Konto erfolgreich erstellt.",
             "success"
         );
 
 
         setTimeout(() => {
 
-            window.location.href = "dashboard.html";
+            window.location.href =
+                "dashboard.html";
 
         }, 1000);
 
@@ -181,7 +194,7 @@ registerForm.addEventListener("submit", async (event) => {
 
         showMessage(
             registerMessage,
-            getGermanError(error.message),
+            translateError(error.message),
             "error"
         );
 
@@ -190,9 +203,9 @@ registerForm.addEventListener("submit", async (event) => {
 });
 
 
-// ========================================
+// ================================
 // LOGIN
-// ========================================
+// ================================
 
 loginForm.addEventListener("submit", async (event) => {
 
@@ -200,10 +213,13 @@ loginForm.addEventListener("submit", async (event) => {
 
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById("loginEmail")
+        .value
+        .trim();
 
     const password =
-        document.getElementById("loginPassword").value;
+        document.getElementById("loginPassword")
+        .value;
 
 
     showMessage(
@@ -226,20 +242,23 @@ loginForm.addEventListener("submit", async (event) => {
 
 
         if (error) {
+
             throw error;
+
         }
 
 
         showMessage(
             loginMessage,
-            "Login erfolgreich. Dashboard wird geöffnet...",
+            "Login erfolgreich.",
             "success"
         );
 
 
         setTimeout(() => {
 
-            window.location.href = "dashboard.html";
+            window.location.href =
+                "dashboard.html";
 
         }, 700);
 
@@ -251,7 +270,7 @@ loginForm.addEventListener("submit", async (event) => {
 
         showMessage(
             loginMessage,
-            getGermanError(error.message),
+            translateError(error.message),
             "error"
         );
 
@@ -260,14 +279,16 @@ loginForm.addEventListener("submit", async (event) => {
 });
 
 
-// ========================================
+// ================================
 // PASSWORT VERGESSEN
-// ========================================
+// ================================
 
 forgotPassword.addEventListener("click", async () => {
 
     const email =
-        document.getElementById("loginEmail").value.trim();
+        document.getElementById("loginEmail")
+        .value
+        .trim();
 
 
     if (!email) {
@@ -279,6 +300,7 @@ forgotPassword.addEventListener("click", async () => {
         );
 
         return;
+
     }
 
 
@@ -286,22 +308,30 @@ forgotPassword.addEventListener("click", async () => {
 
         const { error } =
             await supabase.auth.resetPasswordForEmail(
+
                 email,
+
                 {
+
                     redirectTo:
-                        window.location.origin + "/reset-password.html"
+                        window.location.origin +
+                        "/reset-password.html"
+
                 }
+
             );
 
 
         if (error) {
+
             throw error;
+
         }
 
 
         showMessage(
             loginMessage,
-            "Wir haben dir einen Link zum Zurücksetzen des Passworts geschickt.",
+            "Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.",
             "success"
         );
 
@@ -313,7 +343,7 @@ forgotPassword.addEventListener("click", async () => {
 
         showMessage(
             loginMessage,
-            getGermanError(error.message),
+            translateError(error.message),
             "error"
         );
 
@@ -322,49 +352,71 @@ forgotPassword.addEventListener("click", async () => {
 });
 
 
-// ========================================
-// FEHLERMELDUNGEN AUF DEUTSCH
-// ========================================
+// ================================
+// FEHLER ÜBERSETZEN
+// ================================
 
-function getGermanError(message) {
+function translateError(message) {
 
     if (!message) {
+
         return "Ein unbekannter Fehler ist aufgetreten.";
+
     }
 
 
     if (
-        message.includes("Invalid login credentials")
+        message.includes(
+            "Invalid login credentials"
+        )
     ) {
+
         return "E-Mail-Adresse oder Passwort ist falsch.";
+
     }
 
 
     if (
-        message.includes("User already registered")
+        message.includes(
+            "User already registered"
+        )
     ) {
-        return "Für diese E-Mail-Adresse existiert bereits ein Konto.";
+
+        return "Diese E-Mail-Adresse ist bereits registriert.";
+
     }
 
 
     if (
-        message.includes("Password should be at least")
+        message.includes(
+            "Password should be at least"
+        )
     ) {
+
         return "Das Passwort ist zu kurz.";
+
     }
 
 
     if (
-        message.includes("Invalid email")
+        message.includes(
+            "Invalid email"
+        )
     ) {
+
         return "Bitte gib eine gültige E-Mail-Adresse ein.";
+
     }
 
 
     if (
-        message.includes("Email not confirmed")
+        message.includes(
+            "Email not confirmed"
+        )
     ) {
+
         return "Bitte bestätige zuerst deine E-Mail-Adresse.";
+
     }
 
 
