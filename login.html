@@ -62,7 +62,6 @@
         .container {
             width: 100%;
             max-width: 460px;
-
             position: relative;
         }
 
@@ -89,7 +88,8 @@
             padding: 35px;
 
             box-shadow:
-                0 20px 60px rgba(0, 0, 0, 0.45);
+                0 20px 60px
+                rgba(0, 0, 0, 0.45);
         }
 
         .badge {
@@ -141,12 +141,11 @@
 
             font-size: 12px;
 
-            margin:
-
-                15px 0 7px;
+            margin: 15px 0 7px;
         }
 
-        input {
+        input,
+        textarea {
             width: 100%;
 
             padding: 14px;
@@ -162,10 +161,23 @@
             outline: none;
 
             font-size: 14px;
+
+            font-family: inherit;
         }
 
-        input:focus {
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
             border-color: #ff6a00;
+
+            box-shadow:
+                0 0 0 2px
+                rgba(255, 106, 0, 0.08);
         }
 
         button {
@@ -188,34 +200,15 @@
             font-size: 14px;
 
             cursor: pointer;
+
+            transition: 0.2s ease;
         }
 
         button:hover {
             background: #ff791c;
-        }
 
-        .switch {
-            text-align: center;
-
-            margin-top: 22px;
-
-            color: #777;
-
-            font-size: 13px;
-        }
-
-        .switch button {
-            width: auto;
-
-            margin: 0;
-
-            padding: 0;
-
-            background: none;
-
-            color: #ff6a00;
-
-            font-size: 13px;
+            transform:
+                translateY(-1px);
         }
 
         .forgot {
@@ -234,6 +227,24 @@
 
         .forgot:hover {
             color: #ff6a00;
+
+            background: none;
+
+            transform: none;
+        }
+
+        .secondary {
+            background: transparent;
+
+            border: 1px solid #333;
+
+            color: #ff6a00;
+        }
+
+        .secondary:hover {
+            background: #111;
+
+            border-color: #ff6a00;
         }
 
         .message {
@@ -253,9 +264,12 @@
         .message.error {
             display: block;
 
-            background: rgba(255, 60, 60, 0.08);
+            background:
+                rgba(255, 60, 60, 0.08);
 
-            border: 1px solid rgba(255, 60, 60, 0.3);
+            border:
+                1px solid
+                rgba(255, 60, 60, 0.3);
 
             color: #ff7777;
         }
@@ -263,11 +277,32 @@
         .message.success {
             display: block;
 
-            background: rgba(255, 106, 0, 0.08);
+            background:
+                rgba(255, 106, 0, 0.08);
 
-            border: 1px solid rgba(255, 106, 0, 0.3);
+            border:
+                1px solid
+                rgba(255, 106, 0, 0.3);
 
             color: #ff6a00;
+        }
+
+        .request-link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #202020;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .request-link button {
+            margin-top: 10px;
         }
 
         .hidden {
@@ -290,6 +325,24 @@
 
         .back:hover {
             color: white;
+        }
+
+        .close {
+            background: transparent;
+
+            border: 1px solid #292929;
+
+            color: #777;
+
+            margin-top: 10px;
+        }
+
+        .close:hover {
+            color: white;
+
+            border-color: #555;
+
+            background: #111;
         }
 
         @media(max-width: 500px) {
@@ -315,6 +368,8 @@
 <div class="container">
 
 
+    <!-- LOGO -->
+
     <div class="logo">
 
         Kraus
@@ -326,194 +381,207 @@
     </div>
 
 
-    <div class="card">
 
+    <!-- LOGIN -->
 
-        <!-- LOGIN -->
+    <div
+        class="card"
+        id="loginCard"
+    >
 
-        <div id="loginBox">
-
-            <div class="badge">
-                KDS PREMIUM
-            </div>
-
-            <h1>
-                Willkommen<br>
-                <span>zurück.</span>
-            </h1>
-
-            <p class="description">
-                Melde dich bei deinem KDS Premium-Konto an.
-            </p>
-
-
-            <form id="loginForm">
-
-                <label>
-                    E-Mail-Adresse
-                </label>
-
-                <input
-                    id="loginEmail"
-                    type="email"
-                    placeholder="name@beispiel.de"
-                    required
-                >
-
-
-                <label>
-                    Passwort
-                </label>
-
-                <input
-                    id="loginPassword"
-                    type="password"
-                    placeholder="••••••••"
-                    required
-                >
-
-
-                <button type="submit">
-                    Einloggen →
-                </button>
-
-            </form>
-
-
-            <button
-                class="forgot"
-                id="forgotPassword"
-            >
-                Passwort vergessen?
-            </button>
-
-
-            <div
-                id="loginMessage"
-                class="message"
-            ></div>
-
-
-            <div class="switch">
-
-                Noch kein Premium-Konto?
-
-                <button
-                    type="button"
-                    id="showRegister"
-                >
-                    Registrieren
-                </button>
-
-            </div>
-
+        <div class="badge">
+            KDS PREMIUM
         </div>
 
 
+        <h1>
 
-        <!-- REGISTRIERUNG -->
+            Willkommen<br>
+
+            <span>
+                zurück.
+            </span>
+
+        </h1>
+
+
+        <p class="description">
+
+            Melde dich bei deinem
+            KDS Premium-Konto an.
+
+        </p>
+
+
+        <form id="loginForm">
+
+
+            <label for="loginEmail">
+                E-Mail-Adresse
+            </label>
+
+
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="name@beispiel.de"
+                autocomplete="email"
+                required
+            >
+
+
+            <label for="loginPassword">
+                Passwort
+            </label>
+
+
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+            >
+
+
+            <button type="submit">
+                Einloggen →
+            </button>
+
+
+        </form>
+
+
+        <button
+            type="button"
+            class="forgot"
+            id="forgotPassword"
+        >
+            Passwort vergessen?
+        </button>
+
 
         <div
-            id="registerBox"
-            class="hidden"
-        >
-
-            <div class="badge">
-                KDS PREMIUM
-            </div>
-
-            <h1>
-                Werde<br>
-                <span>Premium.</span>
-            </h1>
-
-            <p class="description">
-                Erstelle dein KDS Premium-Konto.
-            </p>
+            id="loginMessage"
+            class="message"
+        ></div>
 
 
-            <form id="registerForm">
+        <div class="request-link">
 
-                <label>
-                    Name
-                </label>
+            Noch kein KDS Premium-Konto?
 
-                <input
-                    id="registerName"
-                    type="text"
-                    placeholder="Vor- und Nachname"
-                    required
-                >
-
-
-                <label>
-                    E-Mail-Adresse
-                </label>
-
-                <input
-                    id="registerEmail"
-                    type="email"
-                    placeholder="name@beispiel.de"
-                    required
-                >
-
-
-                <label>
-                    Passwort
-                </label>
-
-                <input
-                    id="registerPassword"
-                    type="password"
-                    placeholder="Mindestens 6 Zeichen"
-                    minlength="6"
-                    required
-                >
-
-
-                <label>
-                    Passwort wiederholen
-                </label>
-
-                <input
-                    id="registerPasswordRepeat"
-                    type="password"
-                    placeholder="Passwort wiederholen"
-                    minlength="6"
-                    required
-                >
-
-
-                <button type="submit">
-                    Konto erstellen →
-                </button>
-
-            </form>
-
-
-            <div
-                id="registerMessage"
-                class="message"
-            ></div>
-
-
-            <div class="switch">
-
-                Bereits registriert?
-
-                <button
-                    type="button"
-                    id="showLogin"
-                >
-                    Zum Login
-                </button>
-
-            </div>
+            <button
+                type="button"
+                class="secondary"
+                id="showRequest"
+            >
+                Zugang anfragen
+            </button>
 
         </div>
 
 
     </div>
+
+
+
+    <!-- ANFRAGE -->
+
+    <div
+        class="card hidden"
+        id="requestCard"
+    >
+
+        <div class="badge">
+            KDS PREMIUM
+        </div>
+
+
+        <h1>
+
+            Zugang<br>
+
+            <span>
+                anfragen.
+            </span>
+
+        </h1>
+
+
+        <p class="description">
+
+            Premium-Zugänge werden persönlich
+            von Kraus Digital Solutions vergeben.
+
+        </p>
+
+
+        <form id="requestForm">
+
+
+            <label for="requestName">
+                Vor- und Nachname
+            </label>
+
+
+            <input
+                id="requestName"
+                type="text"
+                placeholder="Max Mustermann"
+                required
+            >
+
+
+            <label for="requestEmail">
+                E-Mail-Adresse
+            </label>
+
+
+            <input
+                id="requestEmail"
+                type="email"
+                placeholder="max@beispiel.de"
+                required
+            >
+
+
+            <label for="requestMessage">
+                Nachricht
+            </label>
+
+
+            <textarea
+                id="requestMessage"
+                placeholder="Warum möchtest du KDS Premium nutzen?"
+            ></textarea>
+
+
+            <button type="submit">
+                Anfrage senden →
+            </button>
+
+
+        </form>
+
+
+        <div
+            id="requestStatus"
+            class="message"
+        ></div>
+
+
+        <button
+            type="button"
+            class="close"
+            id="backToLogin"
+        >
+            ← Zurück zum Login
+        </button>
+
+
+    </div>
+
 
 
     <a
@@ -527,7 +595,6 @@
 </div>
 
 
-<!-- Unser Supabase-Modul -->
 
 <script
     type="module"
