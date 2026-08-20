@@ -44,10 +44,11 @@ async function checkAdmin() {
 
         if (!user) {
 
-            window.location.replace("login.html");
+            window.location.replace(
+                "login.html"
+            );
 
             return false;
-
         }
 
 
@@ -58,9 +59,14 @@ async function checkAdmin() {
 
             .from("profiles")
 
-            .select("role, premium")
+            .select(
+                "role, premium"
+            )
 
-            .eq("id", user.id)
+            .eq(
+                "id",
+                user.id
+            )
 
             .single();
 
@@ -68,18 +74,21 @@ async function checkAdmin() {
         if (error) {
 
             throw error;
-
         }
 
 
-        if (profile.role !== "admin") {
+        if (
+            !profile ||
+            profile.role !== "admin"
+        ) {
 
             await supabase.auth.signOut();
 
-            window.location.replace("login.html");
+            window.location.replace(
+                "login.html"
+            );
 
             return false;
-
         }
 
 
@@ -94,12 +103,12 @@ async function checkAdmin() {
             error
         );
 
-        window.location.replace("login.html");
+        window.location.replace(
+            "login.html"
+        );
 
         return false;
-
     }
-
 }
 
 
@@ -131,7 +140,6 @@ async function loadMembers() {
     if (error) {
 
         throw error;
-
     }
 
 
@@ -159,93 +167,95 @@ async function loadMembers() {
         `;
 
         return;
-
     }
 
 
     membersTable.innerHTML =
-        data.map(member => {
+        data.map(
+            member => {
 
-            const date =
-                member.created_at
+                const date =
+                    member.created_at
 
-                    ? new Date(
-                        member.created_at
-                    ).toLocaleDateString(
-                        "de-DE"
-                    )
+                        ? new Date(
+                            member.created_at
+                        ).toLocaleDateString(
+                            "de-DE"
+                        )
 
-                    : "–";
-
-
-            return `
-
-                <tr>
-
-                    <td>
-
-                        ${escapeHtml(
-                            member.full_name ||
-                            "Unbekannt"
-                        )}
-
-                    </td>
+                        : "–";
 
 
-                    <td>
+                return `
 
-                        <span class="member-email">
+                    <tr>
 
-                            Benutzer-ID:
-                            ${escapeHtml(member.id)}
+                        <td>
+                            ${escapeHtml(
+                                member.full_name ||
+                                "Unbekannt"
+                            )}
+                        </td>
 
-                        </span>
+                        <td>
 
-                    </td>
+                            <span class="member-email">
 
+                                Benutzer-ID:
+                                ${escapeHtml(
+                                    member.id
+                                )}
 
-                    <td>
+                            </span>
 
-                        ${
-                            member.role === "admin"
+                        </td>
 
-                            ? `<span class="admin">
-                                ADMIN
-                               </span>`
+                        <td>
 
-                            : "Mitglied"
-                        }
+                            ${
+                                member.role === "admin"
 
-                    </td>
+                                    ? `
+                                        <span class="admin">
+                                            ADMIN
+                                        </span>
+                                      `
 
+                                    : `
+                                        Mitglied
+                                      `
+                            }
 
-                    <td>
+                        </td>
 
-                        ${
-                            member.premium === true
+                        <td>
 
-                            ? `<span class="premium">
-                                AKTIV
-                               </span>`
+                            ${
+                                member.premium === true
 
-                            : "INAKTIV"
-                        }
+                                    ? `
+                                        <span class="premium">
+                                            AKTIV
+                                        </span>
+                                      `
 
-                    </td>
+                                    : `
+                                        INAKTIV
+                                      `
+                            }
 
+                        </td>
 
-                    <td>
+                        <td>
+                            ${date}
+                        </td>
 
-                        ${date}
+                    </tr>
 
-                    </td>
+                `;
 
-                </tr>
-
-            `;
-
-        }).join("");
-
+            }
+        ).join("");
 }
 
 
@@ -277,7 +287,6 @@ async function loadRequests() {
     if (error) {
 
         throw error;
-
     }
 
 
@@ -301,203 +310,203 @@ async function loadRequests() {
         `;
 
         return;
-
     }
 
 
     requestsPanel.innerHTML =
-        data.map(request => {
+        data.map(
+            request => {
 
-            const date =
-                request.created_at
+                const date =
+                    request.created_at
 
-                    ? new Date(
-                        request.created_at
-                    ).toLocaleDateString(
-                        "de-DE"
-                    )
+                        ? new Date(
+                            request.created_at
+                        ).toLocaleDateString(
+                            "de-DE"
+                        )
 
-                    : "–";
+                        : "–";
 
 
-            return `
+                return `
 
-                <div class="request">
+                    <div class="request">
 
-                    <div class="request-top">
+                        <div class="request-top">
 
-                        <div>
+                            <div>
 
-                            <div class="request-name">
+                                <div class="request-name">
 
-                                ${escapeHtml(
-                                    request.name
-                                )}
+                                    ${escapeHtml(
+                                        request.name
+                                    )}
+
+                                </div>
+
+
+                                <div class="request-email">
+
+                                    ${escapeHtml(
+                                        request.email
+                                    )}
+
+                                    ·
+
+                                    ${date}
+
+                                </div>
 
                             </div>
 
 
-                            <div class="request-email">
+                            <div
+                                class="status ${escapeHtml(
+                                    request.status
+                                )}"
+                            >
 
                                 ${escapeHtml(
-                                    request.email
+                                    request.status
+                                        .toUpperCase()
                                 )}
-
-                                ·
-
-                                ${date}
 
                             </div>
 
                         </div>
 
 
-                        <div
-                            class="status ${escapeHtml(
-                                request.status
-                            )}"
-                        >
+                        <div class="request-message">
 
                             ${escapeHtml(
-                                request.status
-                                    .toUpperCase()
+                                request.message ||
+                                "Keine Nachricht."
                             )}
 
                         </div>
 
+
+                        ${
+                            request.status === "pending"
+
+                                ? `
+
+                                    <div class="actions">
+
+                                        <button
+                                            class="approve"
+                                            data-id="${request.id}"
+                                        >
+                                            ANNEHMEN
+                                        </button>
+
+                                        <button
+                                            class="reject"
+                                            data-id="${request.id}"
+                                        >
+                                            ABLEHNEN
+                                        </button>
+
+                                    </div>
+
+                                  `
+
+                                : ""
+                        }
+
                     </div>
 
+                `;
 
-                    <div class="request-message">
-
-                        ${escapeHtml(
-                            request.message ||
-                            "Keine Nachricht."
-                        )}
-
-                    </div>
-
-
-                    ${
-                        request.status === "pending"
-
-                        ? `
-
-                            <div class="actions">
-
-                                <button
-                                    class="approve"
-                                    data-id="${request.id}"
-                                >
-                                    ANNEHMEN
-                                </button>
-
-
-                                <button
-                                    class="reject"
-                                    data-id="${request.id}"
-                                >
-                                    ABLEHNEN
-                                </button>
-
-                            </div>
-
-                        `
-
-                        : ""
-
-                    }
-
-                </div>
-
-            `;
-
-        }).join("");
+            }
+        ).join("");
 
 
     // ========================================
-    // ANNEHMEN BUTTONS
+    // ANNEHMEN
     // ========================================
 
     document
         .querySelectorAll(".approve")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    const confirmed =
-                        confirm(
-                            "Diese Anfrage wirklich annehmen und ein Premium-Konto erstellen?"
+                        const confirmed =
+                            confirm(
+                                "Diese Anfrage wirklich annehmen und ein Premium-Konto erstellen?"
+                            );
+
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+
+                        button.disabled =
+                            true;
+
+                        button.textContent =
+                            "WIRD ANGELEGT...";
+
+
+                        await updateRequest(
+                            button.dataset.id,
+                            "approved"
                         );
 
-
-                    if (!confirmed) {
-
-                        return;
-
                     }
+                );
 
-
-                    button.disabled = true;
-
-                    button.textContent =
-                        "WIRD ANGELEGT...";
-
-
-                    await updateRequest(
-                        button.dataset.id,
-                        "approved"
-                    );
-
-                }
-            );
-
-        });
+            }
+        );
 
 
     // ========================================
-    // ABLEHNEN BUTTONS
+    // ABLEHNEN
     // ========================================
 
     document
         .querySelectorAll(".reject")
-        .forEach(button => {
+        .forEach(
+            button => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                button.addEventListener(
+                    "click",
+                    async () => {
 
-                    const confirmed =
-                        confirm(
-                            "Diese Anfrage wirklich ablehnen?"
+                        const confirmed =
+                            confirm(
+                                "Diese Anfrage wirklich ablehnen?"
+                            );
+
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+
+                        button.disabled =
+                            true;
+
+                        button.textContent =
+                            "WIRD ABGELEHNT...";
+
+
+                        await updateRequest(
+                            button.dataset.id,
+                            "rejected"
                         );
 
-
-                    if (!confirmed) {
-
-                        return;
-
                     }
+                );
 
-
-                    button.disabled = true;
-
-                    button.textContent =
-                        "WIRD ABGELEHNT...";
-
-
-                    await updateRequest(
-                        button.dataset.id,
-                        "rejected"
-                    );
-
-                }
-            );
-
-        });
-
+            }
+        );
 }
 
 
@@ -519,7 +528,6 @@ async function updateRequest(
 
         if (status === "approved") {
 
-
             const {
                 data: sessionData,
                 error: sessionError
@@ -528,9 +536,7 @@ async function updateRequest(
 
 
             if (sessionError) {
-
                 throw sessionError;
-
             }
 
 
@@ -543,7 +549,6 @@ async function updateRequest(
                 throw new Error(
                     "Deine Anmeldung ist abgelaufen. Bitte melde dich erneut an."
                 );
-
             }
 
 
@@ -556,7 +561,6 @@ async function updateRequest(
 
                         method: "POST",
 
-
                         headers: {
 
                             "Content-Type":
@@ -567,7 +571,6 @@ async function updateRequest(
 
                         },
 
-
                         body: JSON.stringify({
 
                             requestId: id
@@ -575,12 +578,10 @@ async function updateRequest(
                         })
 
                     }
-
                 );
 
 
-            let result;
-
+            let result = {};
 
             try {
 
@@ -602,21 +603,76 @@ async function updateRequest(
             ) {
 
                 throw new Error(
-
                     result.error ||
                     "Die Anfrage konnte nicht angenommen werden."
+                );
+            }
 
+
+            const actionLink =
+                result.actionLink;
+
+
+            if (!actionLink) {
+
+                throw new Error(
+                    "Es wurde kein Passwort-Link erzeugt."
+                );
+            }
+
+
+            // ========================================
+            // PASSWORT-LINK KOPIEREN
+            // ========================================
+
+            const copy =
+                confirm(
+
+                    "Premium-Mitglied wurde erfolgreich erstellt.\n\n" +
+
+                    "OK = Passwort-Link kopieren\n" +
+
+                    "Abbrechen = Link anzeigen"
+
+                );
+
+
+            if (copy) {
+
+                try {
+
+                    await navigator.clipboard.writeText(
+                        actionLink
+                    );
+
+
+                    alert(
+                        "Passwort-Link wurde kopiert."
+                    );
+
+                }
+
+                catch {
+
+                    prompt(
+                        "Kopiere diesen Passwort-Link:",
+                        actionLink
+                    );
+
+                }
+
+            }
+
+            else {
+
+                prompt(
+                    "Passwort-Link für das Mitglied:",
+                    actionLink
                 );
 
             }
 
-
-            alert(
-                "Premium-Mitglied wurde erfolgreich angelegt."
-            );
-
         }
-
 
 
         // ========================================
@@ -624,7 +680,6 @@ async function updateRequest(
         // ========================================
 
         else if (status === "rejected") {
-
 
             const {
                 error
@@ -634,7 +689,8 @@ async function updateRequest(
 
                 .update({
 
-                    status: "rejected"
+                    status:
+                        "rejected"
 
                 })
 
@@ -647,14 +703,12 @@ async function updateRequest(
             if (error) {
 
                 throw error;
-
             }
 
 
             alert(
                 "Die Anfrage wurde abgelehnt."
             );
-
         }
 
 
@@ -665,7 +719,6 @@ async function updateRequest(
         await loadMembers();
 
         await loadRequests();
-
 
     }
 
@@ -683,12 +736,8 @@ async function updateRequest(
         );
 
 
-        // Liste wiederherstellen
-
         await loadRequests();
-
     }
-
 }
 
 
@@ -696,26 +745,30 @@ async function updateRequest(
 // LOGOUT
 // ========================================
 
-logoutButton.addEventListener(
-    "click",
-    async () => {
+if (logoutButton) {
 
-        logoutButton.disabled =
-            true;
+    logoutButton.addEventListener(
+        "click",
+        async () => {
 
-        logoutButton.textContent =
-            "Logout...";
+            logoutButton.disabled =
+                true;
+
+            logoutButton.textContent =
+                "Logout...";
 
 
-        await supabase.auth.signOut();
+            await supabase.auth.signOut();
 
 
-        window.location.replace(
-            "login.html"
-        );
+            window.location.replace(
+                "login.html"
+            );
 
-    }
-);
+        }
+    );
+
+}
 
 
 // ========================================
@@ -750,22 +803,27 @@ function escapeHtml(value) {
             "'",
             "&#039;"
         );
-
 }
 
 
 // ========================================
-// FEHLERMELDUNG
+// FEHLER ANZEIGEN
 // ========================================
 
 function showError(message) {
 
+    if (!adminError) {
+        alert(message);
+        return;
+    }
+
+
     adminError.textContent =
         message;
 
+
     adminError.style.display =
         "block";
-
 }
 
 
@@ -780,9 +838,7 @@ async function startAdminPanel() {
 
 
     if (!isAdmin) {
-
         return;
-
     }
 
 
@@ -805,9 +861,7 @@ async function startAdminPanel() {
         showError(
             "Die Admin-Daten konnten nicht geladen werden."
         );
-
     }
-
 }
 
 
