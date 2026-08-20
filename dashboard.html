@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>KDS Premium Dashboard</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background: #050505;
+
+            color: white;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+        }
+
+
+        body::before {
+
+            content: "";
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(255, 106, 0, 0.12),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(255, 106, 0, 0.07),
+                    transparent 30%
+                );
+
+        }
+
+
+        .topbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 10;
+
+            height: 70px;
+
+            background:
+                rgba(5, 5, 5, 0.92);
+
+            backdrop-filter: blur(12px);
+
+            border-bottom:
+                1px solid #222;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+        }
+
+
+        .brand {
+
+            font-size: 18px;
+
+            font-weight: 800;
+
+        }
+
+
+        .brand span {
+
+            color: #ff6a00;
+
+        }
+
+
+        .premium-badge {
+
+            display: inline-block;
+
+            margin-left: 10px;
+
+            padding: 5px 9px;
+
+            border:
+                1px solid #ff6a00;
+
+            border-radius: 20px;
+
+            color: #ff6a00;
+
+            font-family: monospace;
+
+            font-size: 9px;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .logout {
+
+            width: auto;
+
+            margin: 0;
+
+            padding: 9px 16px;
+
+            background: transparent;
+
+            border:
+                1px solid #333;
+
+            color: #aaa;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+        }
+
+
+        .logout:hover {
+
+            border-color: #ff6a00;
+
+            color: #ff6a00;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding:
+                45px 25px 70px;
+
+            position: relative;
+
+        }
+
+
+        .hero {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0c0c0c,
+                    #111
+                );
+
+            border:
+                1px solid #222;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            margin-bottom: 25px;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            right: -120px;
+
+            top: -150px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid
+                rgba(255, 106, 0, 0.3);
+
+            box-shadow:
+                0 0 100px
+                rgba(255, 106, 0, 0.08);
+
+        }
+
+
+        .hero small {
+
+            color: #ff6a00;
+
+            font-family: monospace;
+
+            letter-spacing: 2px;
+
+        }
+
+
+        .hero h1 {
+
+            margin:
+                12px 0 10px;
+
+            font-size:
+                clamp(
+                    32px,
+                    6vw,
+                    55px
+                );
+
+            line-height: 1;
+
+        }
+
+
+        .hero h1 span {
+
+            color: #ff6a00;
+
+        }
+
+
+        .hero p {
+
+            color: #888;
+
+            max-width: 650px;
+
+            line-height: 1.6;
+
+        }
+
+
+        .status {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 15px;
+
+            padding:
+                8px 12px;
+
+            border:
+                1px solid
+                rgba(255, 106, 0, 0.35);
+
+            border-radius: 30px;
+
+            color: #ff6a00;
+
+            font-size: 11px;
+
+        }
+
+
+        .dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            background: #ff6a00;
+
+            border-radius: 50%;
+
+            box-shadow:
+                0 0 10px
+                #ff6a00;
+
+        }
+
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 15px;
+
+        }
+
+
+        .card {
+
+            background: #0b0b0b;
+
+            border:
+                1px solid #222;
+
+            border-radius: 16px;
+
+            padding: 25px;
+
+            min-height: 190px;
+
+            position: relative;
+
+            transition:
+                transform 0.2s,
+                border-color 0.2s;
+
+        }
+
+
+        .card:hover {
+
+            transform:
+                translateY(-3px);
+
+            border-color:
+                rgba(255, 106, 0, 0.45);
+
+        }
+
+
+        .card-icon {
+
+            font-family: monospace;
+
+            color: #ff6a00;
+
+            font-size: 13px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .card h2 {
+
+            margin:
+                0 0 8px;
+
+            font-size: 21px;
+
+        }
+
+
+        .card p {
+
+            color: #777;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            max-width: 450px;
+
+        }
+
+
+        .card button {
+
+            width: auto;
+
+            margin-top: 12px;
+
+            padding:
+                10px 15px;
+
+            background: #ff6a00;
+
+            border:
+                1px solid #ff6a00;
+
+            border-radius: 7px;
+
+            color: white;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .card button:hover {
+
+            background: #ff791c;
+
+        }
+
+
+        .full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .welcome {
+
+            color: #aaa;
+
+        }
+
+
+        .welcome strong {
+
+            color: white;
+
+        }
+
+
+        .loading {
+
+            color: #666;
+
+        }
+
+
+        .error {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background:
+                rgba(
+                    255,
+                    50,
+                    50,
+                    0.08
+                );
+
+            border:
+                1px solid #542222;
+
+            color: #ff7777;
+
+            border-radius: 8px;
+
+            display: none;
+
+        }
+
+
+        @media(max-width: 700px) {
+
+            .topbar {
+
+                padding:
+                    0 15px;
+
+            }
+
+
+            .premium-badge {
+
+                display: none;
+
+            }
+
+
+            .container {
+
+                padding:
+                    25px 15px 50px;
+
+            }
+
+
+            .hero {
+
+                padding: 28px 22px;
+
+            }
+
+
+            .grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .full {
+
+                grid-column:
+                    auto;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+
+    <div class="brand">
+
+        Kraus
+
+        <span>
+            Digital Solutions
+        </span>
+
+
+        <span class="premium-badge">
+
+            PREMIUM
+
+        </span>
+
+    </div>
+
+
+    <button
+        class="logout"
+        id="logoutButton"
+    >
+
+        Logout
+
+    </button>
+
+
+</header>
+
+
+
+<main class="container">
+
+
+    <section class="hero">
+
+
+        <small>
+            KDS / PREMIUM
+        </small>
+
+
+        <h1>
+
+            Willkommen,
+            <span id="userName">
+                Premium Member
+            </span>.
+
+        </h1>
+
+
+        <p>
+
+            Dein persönlicher KDS Premium-Bereich.
+            Hier findest du exklusive Inhalte,
+            Angebote, Neuigkeiten und Funktionen.
+
+        </p>
+
+
+        <div class="status">
+
+            <span class="dot"></span>
+
+            PREMIUM AKTIV
+
+        </div>
+
+
+    </section>
+
+
+
+    <section class="grid">
+
+
+        <!-- NEWS -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                [01] NEWS
+            </div>
+
+
+            <h2>
+                KDS News
+            </h2>
+
+
+            <p>
+
+                Erfahre als Erstes von neuen
+                Funktionen, Projekten und
+                wichtigen Updates.
+
+            </p>
+
+
+            <button>
+                News öffnen →
+            </button>
+
+        </div>
+
+
+
+        <!-- OFFERS -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                [02] EXCLUSIVE
+            </div>
+
+
+            <h2>
+                Premium-Angebote
+            </h2>
+
+
+            <p>
+
+                Exklusive Angebote und
+                besondere Aktionen,
+                die nur Premium-Mitglieder
+                erhalten.
+
+            </p>
+
+
+            <button>
+                Angebote ansehen →
+            </button>
+
+        </div>
+
+
+
+        <!-- EARLY ACCESS -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                [03] EARLY ACCESS
+            </div>
+
+
+            <h2>
+                Neue Funktionen
+            </h2>
+
+
+            <p>
+
+                Teste neue KDS-Funktionen
+                vor ihrer offiziellen
+                Veröffentlichung.
+
+            </p>
+
+
+            <button>
+                Early Access →
+            </button>
+
+        </div>
+
+
+
+        <!-- SUPPORT -->
+
+        <div class="card">
+
+            <div class="card-icon">
+                [04] SUPPORT
+            </div>
+
+
+            <h2>
+                Premium Support
+            </h2>
+
+
+            <p>
+
+                Du hast eine Frage oder
+                benötigst Unterstützung?
+                Kontaktiere KDS direkt.
+
+            </p>
+
+
+            <button>
+                Support öffnen →
+            </button>
+
+        </div>
+
+
+
+        <!-- ACCOUNT -->
+
+        <div class="card full">
+
+            <div class="card-icon">
+                [05] ACCOUNT
+            </div>
+
+
+            <h2>
+                Dein Konto
+            </h2>
+
+
+            <p class="welcome">
+
+                Angemeldet als:
+                <strong id="userEmail">
+                    –
+                </strong>
+
+                <br><br>
+
+                Mitglied seit:
+                <strong id="memberSince">
+                    –
+                </strong>
+
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+
+    <div
+        class="error"
+        id="dashboardError"
+    ></div>
+
+
+</main>
+
+
+
+<script
+    type="module"
+    src="dashboard.js"
+></script>
+
+
+</body>
+
+</html>
