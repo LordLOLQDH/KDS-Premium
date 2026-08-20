@@ -1,2477 +1,1117 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#08090b">
-
-<title>KDS Premium</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0b0d10">
+<title>Kraus Digital Solutions – Premium</title>
 
 <style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#090b0f;
+  color:#f5f5f5;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
 
-* {
-    box-sizing: border-box;
+:root{
+  --bg:#090b0f;
+  --panel:#11141a;
+  --panel2:#171a21;
+  --border:#292e37;
+  --text:#f5f5f5;
+  --muted:#9ca3af;
+  --red:#ef4444;
+  --orange:#f97316;
+  --gradient:linear-gradient(135deg,#ef4444,#f97316);
 }
 
-html {
-    scroll-behavior: smooth;
+.app{
+  display:flex;
+  min-height:100vh;
 }
 
-body {
-    margin: 0;
-    background:
-        radial-gradient(
-            circle at 90% 0%,
-            rgba(255, 75, 20, 0.09),
-            transparent 28%
-        ),
-        #08090b;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
+.sidebar{
+  width:270px;
+  position:fixed;
+  left:0;
+  top:0;
+  bottom:0;
+  padding:25px 18px;
+  background:#0d0f13;
+  border-right:1px solid var(--border);
+  z-index:20;
+  overflow-y:auto;
 }
 
-button,
-input,
-textarea {
-    font: inherit;
+.logo{
+  padding:8px 12px 25px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:20px;
+}
+.logo strong{
+  display:block;
+  font-size:20px;
+}
+.logo span{
+  color:var(--muted);
+  font-size:12px;
 }
 
-button {
-    cursor: pointer;
+.nav-title{
+  color:#666d78;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  text-transform:uppercase;
+  margin:22px 12px 8px;
 }
 
-.hidden {
-    display: none !important;
+.nav button{
+  width:100%;
+  border:0;
+  background:transparent;
+  color:#aeb4bf;
+  text-align:left;
+  padding:12px;
+  border-radius:9px;
+  margin:2px 0;
+}
+.nav button:hover,.nav button.active{
+  background:#191d24;
+  color:#fff;
 }
 
-
-/* =========================
-   HEADER
-========================= */
-
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 16px 20px;
-
-    background: rgba(13, 15, 18, 0.94);
-    backdrop-filter: blur(14px);
-
-    border-bottom: 1px solid #25282e;
+.main{
+  margin-left:270px;
+  width:calc(100% - 270px);
+  padding:35px;
 }
 
-.logo {
-    font-size: 20px;
-    font-weight: 800;
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:30px;
 }
 
-.logo span {
-    background: linear-gradient(
-        90deg,
-        #ff4218,
-        #ff8b1b
-    );
-
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.mobile-menu{
+  display:none;
+  background:#171a20;
+  border:1px solid var(--border);
+  color:#fff;
+  padding:10px 13px;
+  border-radius:9px;
 }
 
-.logout {
-    padding: 9px 13px;
-
-    background: #17191e;
-
-    border: 1px solid #30343b;
-    border-radius: 8px;
-
-    color: white;
+.premium-badge{
+  background:var(--gradient);
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
 }
 
-
-/* =========================
-   CONTAINER
-========================= */
-
-.container {
-    max-width: 1100px;
-
-    margin: auto;
-
-    padding: 28px 16px 70px;
+.hero{
+  padding:42px;
+  border:1px solid var(--border);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 90% 10%,rgba(249,115,22,.15),transparent 30%),
+    radial-gradient(circle at 10% 90%,rgba(239,68,68,.10),transparent 30%),
+    var(--panel);
+  margin-bottom:25px;
 }
 
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    padding: 32px;
-
-    margin-bottom: 18px;
-
-    border: 1px solid #292d33;
-    border-radius: 18px;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255, 70, 20, 0.11),
-            transparent 55%
-        ),
-        #111317;
+.eyebrow{
+  color:#fb6b36;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
 }
 
-.label {
-    color: #ff6b26;
-
-    font-size: 11px;
-    font-weight: 800;
-
-    letter-spacing: 1.7px;
+.hero h1{
+  margin:12px 0;
+  font-size:clamp(32px,5vw,55px);
+  line-height:1.05;
+  letter-spacing:-2px;
 }
 
-.hero h1 {
-    margin: 10px 0 12px;
-
-    font-size: 37px;
-    line-height: 1.15;
+.gradient-text{
+  background:var(--gradient);
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-.hero p {
-    max-width: 720px;
-
-    margin: 0;
-
-    color: #aeb4bd;
-
-    line-height: 1.7;
+.hero p{
+  max-width:700px;
+  color:var(--muted);
+  line-height:1.7;
+  font-size:16px;
 }
 
-.premium-status {
-    display: inline-flex;
-
-    align-items: center;
-    gap: 8px;
-
-    margin-top: 18px;
-
-    padding: 8px 12px;
-
-    background: rgba(255, 75, 20, 0.10);
-
-    border: 1px solid rgba(255, 75, 20, 0.25);
-
-    border-radius: 20px;
-
-    color: #ff9c72;
-
-    font-size: 12px;
-    font-weight: bold;
+.progress-wrap{
+  margin-top:28px;
+  max-width:650px;
+}
+.progress-head{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:#b9bec7;
+  margin-bottom:8px;
+}
+.progress{
+  height:8px;
+  background:#252932;
+  border-radius:20px;
+  overflow:hidden;
+}
+.progress-bar{
+  height:100%;
+  width:0;
+  background:var(--gradient);
+  transition:.3s;
 }
 
-.dot {
-    width: 7px;
-    height: 7px;
-
-    border-radius: 50%;
-
-    background: #ff6a20;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
 }
 
-
-/* =========================
-   NAV
-========================= */
-
-.nav {
-    display: flex;
-
-    gap: 6px;
-
-    overflow-x: auto;
-
-    padding: 5px;
-
-    margin-bottom: 24px;
-
-    background: #0d0f12;
-
-    border: 1px solid #25282e;
-
-    border-radius: 10px;
+.card{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:22px;
+  transition:.2s;
+}
+.card:hover{
+  border-color:#3a404b;
+  transform:translateY(-2px);
+}
+.card h3{
+  margin:10px 0 8px;
+}
+.card p{
+  color:var(--muted);
+  line-height:1.6;
+  font-size:14px;
 }
 
-.nav button {
-    flex: 0 0 auto;
-
-    padding: 10px 13px;
-
-    background: transparent;
-
-    border: 0;
-    border-radius: 7px;
-
-    color: #858b95;
-
-    font-size: 13px;
+.icon{
+  width:42px;
+  height:42px;
+  border-radius:11px;
+  display:grid;
+  place-items:center;
+  background:#21171a;
+  color:#ff7848;
+  font-size:20px;
 }
 
-.nav button.active,
-.nav button:hover {
-    background: #1a1c21;
-
-    color: white;
+.section{
+  display:none;
+}
+.section.active{
+  display:block;
 }
 
-
-/* =========================
-   SECTIONS
-========================= */
-
-.section {
-    display: none;
+.section-title{
+  margin:10px 0 20px;
+}
+.section-title h2{
+  font-size:30px;
+  margin:0 0 7px;
+}
+.section-title p{
+  color:var(--muted);
 }
 
-.section.active {
-    display: block;
+.lesson{
+  border:1px solid var(--border);
+  background:var(--panel);
+  border-radius:14px;
+  margin-bottom:10px;
+  overflow:hidden;
 }
 
-.title {
-    margin-bottom: 5px;
-
-    font-size: 24px;
-    font-weight: 800;
+.lesson-head{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:17px;
+  cursor:pointer;
 }
 
-.description {
-    margin: 0 0 18px;
-
-    color: #858b95;
-
-    line-height: 1.6;
+.lesson-number{
+  min-width:36px;
+  height:36px;
+  display:grid;
+  place-items:center;
+  background:#1d2027;
+  border-radius:9px;
+  color:#ff7547;
+  font-weight:800;
+  font-size:13px;
 }
 
-
-/* =========================
-   CARDS
-========================= */
-
-.grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-
-    gap: 13px;
+.lesson-title{
+  flex:1;
+  font-weight:700;
 }
 
-.card {
-    padding: 21px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 12px;
+.lesson-check{
+  color:#666d78;
+}
+.lesson.done .lesson-check{
+  color:#22c55e;
 }
 
-.card-icon {
-    width: 42px;
-    height: 42px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-bottom: 14px;
-
-    background: rgba(255, 80, 20, 0.10);
-
-    border: 1px solid rgba(255, 80, 20, 0.20);
-
-    border-radius: 10px;
-
-    color: #ff762d;
-
-    font-weight: bold;
+.lesson-body{
+  display:none;
+  padding:0 20px 22px 67px;
+  color:#c0c5ce;
+  line-height:1.75;
+}
+.lesson.open .lesson-body{
+  display:block;
 }
 
-.card-label {
-    color: #777e88;
-
-    font-size: 10px;
-
-    text-transform: uppercase;
-
-    letter-spacing: 1px;
+.lesson-body h4{
+  color:#fff;
+  margin-top:22px;
 }
 
-.card h3 {
-    margin: 7px 0;
-
-    font-size: 18px;
+.lesson-body ul{
+  padding-left:20px;
 }
 
-.card p {
-    margin: 0;
-
-    color: #9da3ad;
-
-    font-size: 14px;
-
-    line-height: 1.6;
+.lesson-body li{
+  margin:6px 0;
 }
 
-
-/* =========================
-   BUTTONS
-========================= */
-
-.primary {
-    padding: 11px 15px;
-
-    border: 0;
-    border-radius: 8px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff4017,
-            #ff811b
-        );
-
-    color: white;
-
-    font-weight: 800;
+.example{
+  background:#0c0e12;
+  border-left:3px solid #f97316;
+  padding:15px 17px;
+  border-radius:6px;
+  margin:15px 0;
 }
 
-.secondary {
-    padding: 10px 14px;
-
-    background: #181a1f;
-
-    border: 1px solid #34373d;
-
-    border-radius: 8px;
-
-    color: white;
+.exercise{
+  margin-top:20px;
+  padding:18px;
+  border:1px solid #463022;
+  background:#17130f;
+  border-radius:12px;
+}
+.exercise strong{
+  color:#fb8b53;
 }
 
-.secondary:hover {
-    border-color: #ff6122;
+textarea{
+  width:100%;
+  min-height:150px;
+  margin-top:12px;
+  resize:vertical;
+  background:#0b0d11;
+  border:1px solid var(--border);
+  color:#fff;
+  border-radius:9px;
+  padding:13px;
+  outline:none;
+}
+textarea:focus{
+  border-color:#f97316;
 }
 
-.full {
-    width: 100%;
+.btn{
+  border:0;
+  border-radius:9px;
+  padding:11px 16px;
+  color:#fff;
+  background:#242932;
+  margin-top:10px;
+}
+.btn.primary{
+  background:var(--gradient);
+}
+.btn:hover{
+  filter:brightness(1.1);
 }
 
-
-/* =========================
-   TEXT TOOL
-========================= */
-
-.textarea {
-    width: 100%;
-
-    min-height: 270px;
-
-    padding: 16px;
-
-    resize: vertical;
-
-    background: #0d0f12;
-
-    border: 1px solid #292d33;
-
-    border-radius: 10px;
-
-    outline: none;
-
-    color: white;
-
-    line-height: 1.7;
+.search{
+  width:100%;
+  background:#11141a;
+  border:1px solid var(--border);
+  color:#fff;
+  padding:14px 16px;
+  border-radius:11px;
+  outline:none;
+  margin-bottom:18px;
+}
+.search:focus{
+  border-color:#f97316;
 }
 
-.textarea:focus,
-.input:focus,
-.notes:focus {
-    border-color: #ff6122;
+.table-wrap{
+  overflow-x:auto;
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+table{
+  border-collapse:collapse;
+  width:100%;
+  min-width:800px;
+  background:var(--panel);
+}
+th,td{
+  text-align:left;
+  padding:14px;
+  border-bottom:1px solid var(--border);
+}
+th{
+  background:#171a20;
+  color:#fff;
+  font-size:13px;
+}
+td{
+  color:#c0c5ce;
+  font-size:13px;
+}
+tr:last-child td{
+  border-bottom:0;
 }
 
-.toolbar {
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 8px;
-
-    margin-top: 10px;
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:25px;
+}
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:18px;
+}
+.stat strong{
+  display:block;
+  font-size:27px;
+}
+.stat span{
+  color:var(--muted);
+  font-size:12px;
 }
 
-.stats {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 10px;
-
-    margin-top: 10px;
+.notice{
+  padding:17px;
+  border:1px solid #3a2d23;
+  background:#16120e;
+  color:#cfc6bd;
+  border-radius:12px;
+  margin-bottom:20px;
 }
 
-.stat {
-    padding: 14px;
-
-    background: #17191e;
-
-    border: 1px solid #282c33;
-
-    border-radius: 9px;
+.footer{
+  text-align:center;
+  color:#555b65;
+  font-size:12px;
+  padding:40px 0 10px;
 }
 
-.stat-label {
-    margin-bottom: 5px;
-
-    color: #777e88;
-
-    font-size: 10px;
-
-    text-transform: uppercase;
+@media(max-width:900px){
+  .sidebar{
+    transform:translateX(-100%);
+    transition:.25s;
+  }
+  .sidebar.open{
+    transform:translateX(0);
+  }
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:18px;
+  }
+  .mobile-menu{
+    display:block;
+  }
+  .grid{
+    grid-template-columns:1fr;
+  }
+  .stat-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .hero{
+    padding:25px;
+  }
 }
 
-.stat-value {
-    font-size: 18px;
-
-    font-weight: 800;
+@media(max-width:500px){
+  .topbar{
+    align-items:flex-start;
+  }
+  .hero h1{
+    font-size:36px;
+  }
+  .stat-grid{
+    grid-template-columns:1fr 1fr;
+  }
 }
-
-
-/* =========================
-   INPUTS
-========================= */
-
-.input {
-    width: 100%;
-
-    padding: 13px 14px;
-
-    background: #0d0f12;
-
-    border: 1px solid #292d33;
-
-    border-radius: 9px;
-
-    outline: none;
-
-    color: white;
-}
-
-
-/* =========================
-   CHECKLIST
-========================= */
-
-.progress-box {
-    padding: 20px;
-
-    margin-bottom: 14px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 12px;
-}
-
-.progress {
-    height: 8px;
-
-    margin-top: 12px;
-
-    overflow: hidden;
-
-    background: #24272d;
-
-    border-radius: 10px;
-}
-
-.progress-fill {
-    width: 0%;
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff4017,
-            #ff891b
-        );
-
-    transition: width .25s;
-}
-
-.checklist {
-    display: grid;
-
-    gap: 9px;
-}
-
-.check {
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    padding: 15px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 9px;
-}
-
-.check input {
-    width: 18px;
-    height: 18px;
-
-    accent-color: #ff5b20;
-}
-
-.check span {
-    color: #c1c6ce;
-
-    font-size: 14px;
-}
-
-
-/* =========================
-   TEMPLATES
-========================= */
-
-.template textarea {
-    width: 100%;
-
-    min-height: 160px;
-
-    margin: 10px 0;
-
-    padding: 13px;
-
-    resize: vertical;
-
-    background: #0d0f12;
-
-    border: 1px solid #292d33;
-
-    border-radius: 8px;
-
-    color: white;
-}
-
-
-/* =========================
-   PROJECTS
-========================= */
-
-.project-list {
-    display: grid;
-
-    gap: 10px;
-
-    margin-top: 14px;
-}
-
-.project {
-    padding: 16px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 10px;
-
-    display: flex;
-
-    justify-content: space-between;
-
-    gap: 15px;
-}
-
-.project strong {
-    display: block;
-
-    margin-bottom: 5px;
-}
-
-.project small {
-    color: #777e88;
-}
-
-
-/* =========================
-   NOTES
-========================= */
-
-.notes {
-    width: 100%;
-
-    min-height: 300px;
-
-    padding: 16px;
-
-    resize: vertical;
-
-    background: #0d0f12;
-
-    border: 1px solid #292d33;
-
-    border-radius: 10px;
-
-    outline: none;
-
-    color: white;
-
-    line-height: 1.7;
-}
-
-
-/* =========================
-   TIPS
-========================= */
-
-.tip {
-    padding: 20px;
-
-    margin-bottom: 10px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 11px;
-}
-
-.tip strong {
-    display: block;
-
-    margin-bottom: 7px;
-}
-
-.tip p {
-    margin: 0;
-
-    color: #9da3ad;
-
-    line-height: 1.6;
-}
-
-
-/* =========================
-   DOWNLOADS
-========================= */
-
-.download {
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    gap: 12px;
-
-    padding: 17px;
-
-    margin-bottom: 9px;
-
-    background: #111317;
-
-    border: 1px solid #24272d;
-
-    border-radius: 10px;
-}
-
-.download small {
-    display: block;
-
-    margin-top: 4px;
-
-    color: #777e88;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-    padding: 30px;
-
-    text-align: center;
-
-    color: #555b64;
-
-    font-size: 12px;
-}
-
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 800px) {
-
-    .grid {
-        grid-template-columns: 1fr 1fr;
-    }
-
-}
-
-@media (max-width: 550px) {
-
-    .hero {
-        padding: 25px 20px;
-    }
-
-    .hero h1 {
-        font-size: 30px;
-    }
-
-    .grid,
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-    .project {
-        flex-direction: column;
-    }
-
-}
-
 </style>
 </head>
 
-
 <body>
 
+<div class="app">
 
-<header class="topbar">
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <strong>Kraus Digital Solutions</strong>
+    <span>Premium Academy</span>
+  </div>
 
-    <div class="logo">
-        KDS <span>PREMIUM</span>
+  <nav class="nav">
+    <div class="nav-title">Übersicht</div>
+    <button class="active" onclick="showSection('dashboard',this)">⌂ Dashboard</button>
+
+    <div class="nav-title">Kurse</div>
+    <button onclick="showSection('copywriting',this)">✎ Copywriting</button>
+    <button onclick="showSection('content',this)">◈ KI-Content-Service</button>
+
+    <div class="nav-title">Business</div>
+    <button onclick="showSection('services',this)">▦ Dienstleistungen</button>
+    <button onclick="showSection('portfolio',this)">◆ Portfolio</button>
+    <button onclick="showSection('clients',this)">◎ Kunden finden</button>
+
+    <div class="nav-title">Training</div>
+    <button onclick="showSection('exercises',this)">✓ Übungen</button>
+    <button onclick="showSection('plan',this)">◷ 30-Tage-Plan</button>
+  </nav>
+</aside>
+
+<main class="main">
+
+<div class="topbar">
+  <button class="mobile-menu" onclick="toggleMenu()">☰</button>
+  <div></div>
+  <span class="premium-badge">PREMIUM</span>
+</div>
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="section active">
+
+<div class="hero">
+  <div class="eyebrow">Kraus Digital Solutions</div>
+  <h1>Dein Weg zum<br><span class="gradient-text">Digital Freelancer.</span></h1>
+  <p>
+    Lerne Copywriting, KI-Content, Webentwicklung, Design und
+    Kundenakquise – Schritt für Schritt und mit praktischen Übungen.
+  </p>
+
+  <div class="progress-wrap">
+    <div class="progress-head">
+      <span>Gesamtfortschritt</span>
+      <span id="progressText">0%</span>
     </div>
-
-    <button
-        class="logout"
-        onclick="logout()"
-    >
-        Abmelden
-    </button>
-
-</header>
-
-
-<main class="container">
-
-
-<section class="hero">
-
-    <div class="label">
-        KRAUS DIGITAL SOLUTIONS
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
+  </div>
+</div>
 
-    <h1>
-        Deine Premium-Zentrale.
-    </h1>
+<div class="stat-grid">
+  <div class="stat">
+    <strong id="doneCount">0</strong>
+    <span>Abgeschlossene Lektionen</span>
+  </div>
+  <div class="stat">
+    <strong>39</strong>
+    <span>Copywriting-Kapitel</span>
+  </div>
+  <div class="stat">
+    <strong>30</strong>
+    <span>Trainingstage</span>
+  </div>
+  <div class="stat">
+    <strong>∞</strong>
+    <span>Übungsmöglichkeiten</span>
+  </div>
+</div>
 
-    <p>
-        Tools, Vorlagen, Projekte, Checklisten
-        und digitale Ressourcen – direkt auf
-        deinem Gerät.
-    </p>
+<div class="grid">
+  <div class="card">
+    <div class="icon">✎</div>
+    <h3>Copywriting lernen</h3>
+    <p>Von Headlines und Hooks über AIDA und PAS bis zu Landingpages und Verkaufsmails.</p>
+    <button class="btn primary" onclick="showSection('copywriting')">Kurs öffnen</button>
+  </div>
 
-    <div class="premium-status">
-        <span class="dot"></span>
-        PREMIUM
-    </div>
+  <div class="card">
+    <div class="icon">◈</div>
+    <h3>KI-Content-Service</h3>
+    <p>Lerne, KI als Werkzeug für professionelle Content-Dienstleistungen einzusetzen.</p>
+    <button class="btn primary" onclick="showSection('content')">Kurs öffnen</button>
+  </div>
+
+  <div class="card">
+    <div class="icon">€</div>
+    <h3>Freelance-Dienstleistungen</h3>
+    <p>Entdecke verschiedene Dienstleistungen, Lernaufwand und mögliche Preisbereiche.</p>
+    <button class="btn primary" onclick="showSection('services')">Übersicht</button>
+  </div>
+</div>
 
 </section>
 
+<!-- COPYWRITING -->
+<section id="copywriting" class="section">
 
-<nav class="nav">
+<div class="section-title">
+  <h2>Copywriting lernen</h2>
+  <p>Vom Anfänger zum Freelance-Copywriter.</p>
+</div>
 
-    <button
-        class="nav-button active"
-        data-section="dashboard"
-    >
-        Übersicht
-    </button>
+<input class="search" id="copySearch" oninput="filterLessons('copySearch','copyLessons')" placeholder="Kapitel durchsuchen…">
 
-    <button
-        class="nav-button"
-        data-section="tools"
-    >
-        Tools
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="website"
-    >
-        Website-Check
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="templates"
-    >
-        Vorlagen
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="projects"
-    >
-        Projekte
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="notes"
-    >
-        Notizen
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="downloads"
-    >
-        Downloads
-    </button>
-
-    <button
-        class="nav-button"
-        data-section="tips"
-    >
-        Tipps
-    </button>
-
-</nav>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<section
-    id="dashboard"
-    class="section active"
->
-
-    <div class="title">
-        Premium-Funktionen
-    </div>
-
-    <p class="description">
-        Wähle einen Bereich aus.
-    </p>
-
-
-    <div class="grid">
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                Aa
-            </div>
-
-            <div class="card-label">
-                Tool
-            </div>
-
-            <h3>
-                Text-Tools
-            </h3>
-
-            <p>
-                Texte analysieren, bereinigen,
-                formatieren und kopieren.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('tools')"
-            >
-                Öffnen →
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ✓
-            </div>
-
-            <div class="card-label">
-                Check
-            </div>
-
-            <h3>
-                Website-Check
-            </h3>
-
-            <p>
-                Prüfe wichtige Punkte deiner
-                Website Schritt für Schritt.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('website')"
-            >
-                Check starten →
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ▣
-            </div>
-
-            <div class="card-label">
-                Ressourcen
-            </div>
-
-            <h3>
-                Vorlagen
-            </h3>
-
-            <p>
-                Professionelle Texte und
-                Strukturen zum direkten Kopieren.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('templates')"
-            >
-                Vorlagen →
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ◇
-            </div>
-
-            <div class="card-label">
-                Organisation
-            </div>
-
-            <h3>
-                Projekte
-            </h3>
-
-            <p>
-                Kleine Projekte direkt im Browser
-                speichern und verwalten.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('projects')"
-            >
-                Projekte →
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ✎
-            </div>
-
-            <div class="card-label">
-                Persönlich
-            </div>
-
-            <h3>
-                Notizen
-            </h3>
-
-            <p>
-                Ideen und wichtige Informationen
-                auf deinem Gerät speichern.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('notes')"
-            >
-                Notizen →
-            </button>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-icon">
-                ↓
-            </div>
-
-            <div class="card-label">
-                Ressourcen
-            </div>
-
-            <h3>
-                Downloads
-            </h3>
-
-            <p>
-                Kostenlose Premium-Ressourcen
-                direkt herunterladen.
-            </p>
-
-            <button
-                class="secondary full"
-                style="margin-top:15px"
-                onclick="openSection('downloads')"
-            >
-                Downloads →
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TOOLS
-========================= -->
-
-<section
-    id="tools"
-    class="section"
->
-
-    <div class="title">
-        Text-Tools
-    </div>
-
-    <p class="description">
-        Praktische Werkzeuge für deine Texte.
-    </p>
-
-
-    <div class="card">
-
-        <textarea
-            id="textTool"
-            class="textarea"
-            placeholder="Text hier eingeben..."
-        ></textarea>
-
-
-        <div class="toolbar">
-
-            <button
-                class="secondary"
-                onclick="upper()"
-            >
-                GROSS
-            </button>
-
-            <button
-                class="secondary"
-                onclick="lower()"
-            >
-                klein
-            </button>
-
-            <button
-                class="secondary"
-                onclick="cleanText()"
-            >
-                Bereinigen
-            </button>
-
-            <button
-                class="secondary"
-                onclick="copyText()"
-            >
-                Kopieren
-            </button>
-
-            <button
-                class="secondary"
-                onclick="clearText()"
-            >
-                Leeren
-            </button>
-
-        </div>
-
-
-        <div class="stats">
-
-            <div class="stat">
-                <div class="stat-label">
-                    Wörter
-                </div>
-
-                <div
-                    id="words"
-                    class="stat-value"
-                >
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat">
-                <div class="stat-label">
-                    Zeichen
-                </div>
-
-                <div
-                    id="characters"
-                    class="stat-value"
-                >
-                    0
-                </div>
-            </div>
-
-
-            <div class="stat">
-                <div class="stat-label">
-                    Ohne Leerzeichen
-                </div>
-
-                <div
-                    id="charactersNoSpace"
-                    class="stat-value"
-                >
-                    0
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     WEBSITE CHECK
-========================= -->
-
-<section
-    id="website"
-    class="section"
->
-
-    <div class="title">
-        Website-Check
-    </div>
-
-    <p class="description">
-        Eine praktische manuelle Qualitätsprüfung.
-    </p>
-
-
-    <div class="progress-box">
-
-        <strong>
-            Fortschritt:
-            <span id="percentage">
-                0%
-            </span>
-        </strong>
-
-        <div class="progress">
-
-            <div
-                id="progress"
-                class="progress-fill"
-            ></div>
-
-        </div>
-
-    </div>
-
-
-    <div class="checklist">
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die Website funktioniert auf Smartphones.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die Navigation ist verständlich.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die wichtigsten Leistungen sind sofort erkennbar.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Es gibt einen klaren Call-to-Action.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Kontaktmöglichkeiten sind leicht auffindbar.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die Texte sind verständlich.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die wichtigsten Buttons funktionieren.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die Website wirkt professionell und einheitlich.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Impressum und Datenschutz sind vorhanden.</span>
-        </label>
-
-        <label class="check">
-            <input type="checkbox">
-            <span>Die Website wurde auf mehreren Bildschirmgrößen getestet.</span>
-        </label>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TEMPLATES
-========================= -->
-
-<section
-    id="templates"
-    class="section"
->
-
-    <div class="title">
-        Premium-Vorlagen
-    </div>
-
-    <p class="description">
-        Fertige Inhalte für Websites und Kommunikation.
-    </p>
-
-
-    <div class="grid">
-
-
-        <div class="card template">
-
-            <h3>
-                Website Hero
-            </h3>
-
-            <p>
-                Starker Einstieg für eine Unternehmenswebsite.
-            </p>
-
-            <textarea readonly>
-Ihre digitale Präsenz.
-Neu gedacht.
-
-Wir entwickeln moderne digitale Lösungen,
-die Ihr Unternehmen professionell,
-verständlich und überzeugend präsentieren.</textarea>
-
-            <button
-                class="primary"
-                onclick="copyTemplate(this)"
-            >
-                Kopieren
-            </button>
-
-        </div>
-
-
-        <div class="card template">
-
-            <h3>
-                Call-to-Action
-            </h3>
-
-            <p>
-                Für Landingpages und Angebotsseiten.
-            </p>
-
-            <textarea readonly>
-Bereit für den nächsten Schritt?
-
-Kontaktieren Sie uns und erfahren Sie,
-wie wir Ihren digitalen Auftritt verbessern können.</textarea>
-
-            <button
-                class="primary"
-                onclick="copyTemplate(this)"
-            >
-                Kopieren
-            </button>
-
-        </div>
-
-
-        <div class="card template">
-
-            <h3>
-                Kontakt-Antwort
-            </h3>
-
-            <p>
-                Professionelle automatische Antwort.
-            </p>
-
-            <textarea readonly>
-Vielen Dank für Ihre Nachricht.
-
-Ihre Anfrage wurde erfolgreich übermittelt.
-Wir melden uns so schnell wie möglich
-persönlich bei Ihnen zurück.</textarea>
-
-            <button
-                class="primary"
-                onclick="copyTemplate(this)"
-            >
-                Kopieren
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     PROJECTS
-========================= -->
-
-<section
-    id="projects"
-    class="section"
->
-
-    <div class="title">
-        Meine Projekte
-    </div>
-
-    <p class="description">
-        Deine Projekte werden lokal auf diesem Gerät gespeichert.
-    </p>
-
-
-    <div class="card">
-
-        <input
-            id="projectName"
-            class="input"
-            placeholder="Projektname"
-        >
-
-        <textarea
-            id="projectDescription"
-            class="textarea"
-            style="min-height:130px;margin-top:10px"
-            placeholder="Beschreibung..."
-        ></textarea>
-
-        <button
-            class="primary"
-            style="margin-top:10px"
-            onclick="addProject()"
-        >
-            Projekt speichern
-        </button>
-
-    </div>
-
-
-    <div
-        id="projectsList"
-        class="project-list"
-    ></div>
-
-</section>
-
-
-<!-- =========================
-     NOTES
-========================= -->
-
-<section
-    id="notes"
-    class="section"
->
-
-    <div class="title">
-        Meine Notizen
-    </div>
-
-    <p class="description">
-        Notizen werden nur auf diesem Gerät gespeichert.
-    </p>
-
-
-    <div class="card">
-
-        <textarea
-            id="notesArea"
-            class="notes"
-            placeholder="Deine Notizen..."
-        ></textarea>
-
-        <button
-            class="primary"
-            style="margin-top:10px"
-            onclick="saveNotes()"
-        >
-            Speichern
-        </button>
-
-        <button
-            class="secondary"
-            style="margin-top:10px"
-            onclick="deleteNotes()"
-        >
-            Löschen
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     DOWNLOADS
-========================= -->
-
-<section
-    id="downloads"
-    class="section"
->
-
-    <div class="title">
-        Premium Downloads
-    </div>
-
-    <p class="description">
-        Nützliche Ressourcen direkt aus deinem Premium-Bereich.
-    </p>
-
-
-    <div class="download">
-
-        <div>
-            <strong>
-                Website-Checkliste
-            </strong>
-
-            <small>
-                TXT-Datei
-            </small>
-        </div>
-
-        <button
-            class="primary"
-            onclick="downloadChecklist()"
-        >
-            Herunterladen
-        </button>
-
-    </div>
-
-
-    <div class="download">
-
-        <div>
-            <strong>
-                KDS Copywriting Grundlagen
-            </strong>
-
-            <small>
-                TXT-Datei
-            </small>
-        </div>
-
-        <button
-            class="primary"
-            onclick="downloadCopywriting()"
-        >
-            Herunterladen
-        </button>
-
-    </div>
-
-
-    <div class="download">
-
-        <div>
-            <strong>
-                Website-Content Check
-            </strong>
-
-            <small>
-                TXT-Datei
-            </small>
-        </div>
-
-        <button
-            class="primary"
-            onclick="downloadContent()"
-        >
-            Herunterladen
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- =========================
-     TIPS
-========================= -->
-
-<section
-    id="tips"
-    class="section"
->
-
-    <div class="title">
-        KDS Tipps
-    </div>
-
-    <p class="description">
-        Praktische Tipps für einen besseren digitalen Auftritt.
-    </p>
-
-
-    <div class="tip">
-
-        <strong>
-            01 · Der erste Eindruck
-        </strong>
-
-        <p>
-            Besucher sollten möglichst schnell verstehen,
-            was ein Unternehmen anbietet und welchen Nutzen
-            das Angebot für sie hat.
-        </p>
-
-    </div>
-
-
-    <div class="tip">
-
-        <strong>
-            02 · Klare Call-to-Actions
-        </strong>
-
-        <p>
-            Sag Besuchern konkret, was sie als Nächstes
-            tun können: Kontakt aufnehmen, Angebot ansehen
-            oder Termin vereinbaren.
-        </p>
-
-    </div>
-
-
-    <div class="tip">
-
-        <strong>
-            03 · Mobile Darstellung
-        </strong>
-
-        <p>
-            Eine Website sollte auf einem Smartphone
-            genauso verständlich und bedienbar sein
-            wie auf einem großen Bildschirm.
-        </p>
-
-    </div>
-
-
-    <div class="tip">
-
-        <strong>
-            04 · Vertrauen
-        </strong>
-
-        <p>
-            Referenzen, Bewertungen, transparente
-            Informationen und professionelle Inhalte
-            können die Glaubwürdigkeit erhöhen.
-        </p>
-
-    </div>
-
-
-    <div class="tip">
-
-        <strong>
-            05 · Texte
-        </strong>
-
-        <p>
-            Schreibe nicht nur darüber, was ein Unternehmen
-            macht. Erkläre vor allem, welchen konkreten
-            Vorteil der Kunde davon hat.
-        </p>
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-<footer>
-    Kraus Digital Solutions · Premium
-</footer>
-
+<div id="copyLessons">
 
 <script>
+const copyLessons = [
+["Was ist Copywriting?","Copywriting bedeutet, Texte zu schreiben, die eine bestimmte Handlung auslösen sollen. Zum Beispiel einen Kauf, eine Anfrage, einen Klick oder eine Anmeldung. Copywriting ist deshalb nicht einfach schönes Schreiben. Der Text soll funktionieren.","Lerne den Unterschied zwischen einer Eigenschaft und dem Ergebnis, das ein Kunde tatsächlich möchte.","Schreibe aus der Eigenschaft „25 Liter Rucksack“ einen konkreten Kundennutzen."],
+["Copywriting vs. Content Writing","Copywriting hat meistens ein kommerzielles Ziel. Content Writing informiert, unterhält oder erzeugt Reichweite. Die Bereiche können sich überschneiden.","Copywriting → Handlung. Content Writing → Information, Unterhaltung oder Reichweite.","Nimm einen beliebigen Blogartikel und überlege, welche Handlung der Leser danach ausführen soll."],
+["Menschen verstehen","Eine der wichtigsten Fähigkeiten eines Copywriters ist Menschenverständnis. Du musst wissen, was die Zielgruppe will, was sie nervt, wovor sie Angst hat und welche Einwände sie besitzt.","Je genauer du die Zielgruppe verstehst, desto weniger musst du beim Schreiben raten.","Finde 5 Probleme, 5 Wünsche und 5 Ängste einer Zielgruppe deiner Wahl."],
+["Zielgruppen und Buyer Personas","Du kannst nicht effektiv für alle Menschen gleichzeitig schreiben. Eine Buyer Persona beschreibt deinen idealen Kunden mit Problemen, Wünschen, Alltag und Einwänden.","Erstelle ein möglichst konkretes Bild des Menschen, der dein Angebot kaufen soll.","Erstelle eine Buyer Persona für einen Online-Fitnesskurs."],
+["Research","Professionelle Copy beginnt mit Recherche. Analysiere Kundenbewertungen, Social Media, Konkurrenz, FAQs und echte Formulierungen von Kunden.","Research kommt vor dem Schreiben.","Finde für ein Produkt 5 Probleme, 5 Wünsche und 5 typische Einwände."],
+["Headlines und Hooks","Wenn die Headline niemanden interessiert, wird der Rest des Textes kaum gelesen. Eine gute Headline kann Neugier, ein Problem, einen Nutzen oder ein Ergebnis zeigen.","Teste verschiedene Perspektiven statt nur eine Formulierung zu schreiben.","Schreibe 20 Headlines für einen Online-Copywriting-Kurs."],
+["Features, Benefits und Outcomes","Feature = Eigenschaft. Benefit = konkreter Vorteil. Outcome = das Ergebnis im Leben des Kunden.","Frage bei jeder Eigenschaft: Was bringt es dem Kunden und was verändert sich dadurch?","5000-mAh-Akku → Feature, Benefit und Outcome formulieren."],
+["Psychologie im Copywriting","Social Proof, Autorität, Knappheit und Verlustaversion können Texte beeinflussen. Diese Prinzipien dürfen nicht durch erfundene Behauptungen missbraucht werden.","Verwende nur echte Bewertungen, echte Zahlen und echte Verknappung.","Schreibe jeweils einen Satz mit Social Proof, Autorität und konkretem Nutzen."],
+["AIDA","AIDA steht für Attention, Interest, Desire und Action. Es ist ein Framework für einen logisch aufgebauten Werbetext.","Attention zieht Aufmerksamkeit an. Interest erklärt. Desire erzeugt Wunsch. Action führt zur Handlung.","Schreibe eine AIDA-Werbung für einen Online-Englischkurs."],
+["PAS","PAS bedeutet Problem, Agitate, Solution. Zuerst wird ein bekanntes Problem angesprochen, anschließend die Konsequenz verdeutlicht und danach eine Lösung vorgestellt.","PAS funktioniert besonders gut bei Problemen, die eine Zielgruppe bereits kennt.","Schreibe eine PAS-Werbung für eine Zeitmanagement-App."],
+["Weitere Frameworks","BAB bedeutet Before, After, Bridge. 4P steht für Promise, Picture, Proof und Push. Frameworks sind Strukturen, keine magischen Formeln.","Nutze Frameworks als Startpunkt und passe sie an den konkreten Kunden an.","Schreibe einen Werbetext mit BAB oder 4P."],
+["Storytelling","Geschichten können abstrakte Vorteile greifbarer machen. Ein einfaches Modell ist Ausgangssituation → Problem → Konflikt → Wendepunkt → Lösung → Ergebnis.","Die Geschichte sollte immer zum eigentlichen Marketingziel beitragen.","Schreibe eine kurze Geschichte über eine Person, die durch ein Produkt ein Problem löst."],
+["Call-to-Action","Ein CTA sagt dem Leser, was er als Nächstes tun soll. Gute CTAs sind konkret.","Beispiele: Kostenlos testen, Erstgespräch buchen, Angebot anfordern.","Schreibe 20 unterschiedliche CTAs für einen Onlinekurs."],
+["Werbeanzeigen","Bei Ads hast du wenig Platz. Hook → Problem → Lösung → Benefit → Proof → CTA ist eine mögliche Struktur.","Die Anzeige muss schnell klarmachen, für wen sie gedacht ist und warum sie relevant ist.","Schreibe drei unterschiedliche Anzeigen für dasselbe Produkt."],
+["Landingpages","Eine Landingpage führt Besucher Schritt für Schritt von Problem über Lösung und Vertrauen zur gewünschten Handlung.","Eine mögliche Struktur: Headline, Subheadline, CTA, Problem, Lösung, Vorteile, Beweise, Einwände, FAQ, CTA.","Erstelle eine Landingpage-Struktur für einen Website-Dienstleister."],
+["E-Mail-Copywriting","E-Mails können informieren, Vertrauen aufbauen, verkaufen, erinnern oder aktivieren.","Eine Verkaufsmail kann Subject → Hook → Problem → Lösung → Nutzen → Proof → CTA verwenden.","Schreibe eine Verkaufsmail für einen 30-Tage-Copywriting-Kurs."],
+["Social-Media-Copywriting","Social Media benötigt einen starken Einstieg. Hook → Problem → Insight → Beispiel → CTA ist eine mögliche Struktur.","Die ersten Zeilen entscheiden häufig darüber, ob weitergelesen wird.","Schreibe 10 Hooks zum Thema „Warum deine Werbung nicht funktioniert“."],
+["Produktbeschreibungen","Eine Produktbeschreibung sollte nicht nur technische Daten aufzählen. Sie sollte erklären, warum das Produkt für den Kunden relevant ist.","Features sind wichtig, aber der Kundennutzen sollte verständlich werden.","Schreibe eine Produktbeschreibung für kabellose Kopfhörer."],
+["Texte analysieren und verbessern","Professionelle Copywriter überarbeiten. Prüfe Klarheit, Relevanz, Nutzen, Beweise, Einwände und CTA.","Gute Texte entstehen häufig durch mehrere Überarbeitungen.","Verbessere: „Unsere innovative Softwarelösung bietet Unternehmen eine effiziente Möglichkeit zur Optimierung ihrer Geschäftsprozesse.“"],
+["A/B-Testing und Conversion","Beim A/B-Test werden zwei Varianten miteinander verglichen. Mögliche Kennzahlen sind Klickrate, Conversion Rate, Anfragen oder Verkäufe.","Teste statt zu behaupten, dass eine Version definitiv besser ist.","Erstelle zwei Headlines und formuliere eine Test-Hypothese."],
+["KI als Werkzeug","KI kann bei Ideen, Varianten, Research-Struktur, Überarbeitung und Brainstorming helfen. Sie ersetzt nicht die Qualitätskontrolle.","Ein gutes Briefing enthält Produkt, Zielgruppe, Ziel, Tonalität, Nutzen, Einwände und CTA.","Erstelle einen Prompt für eine Werbeanzeige."],
+["Copywriting-Workflow","Briefing → Research → Angebot verstehen → Ziel definieren → Messaging → Outline → Draft → Überarbeitung → Korrektur → Übergabe.","Ein strukturierter Prozess reduziert Fehler und spart Zeit.","Erstelle deinen eigenen Copywriting-Workflow."],
+["Portfolio aufbauen","Du kannst Spec Work erstellen, wenn du noch keine Kunden hast. Wichtig ist, Beispielarbeiten klar als solche zu kennzeichnen.","Ein Portfolio muss nicht riesig sein. Wenige gute Projekte sind besser als viele schwache.","Erstelle ein Portfolio-Projekt mit Landingpage, Ad und Verkaufsmail."],
+["Kunden finden","Mögliche Kunden sind lokale Unternehmen, Start-ups, Agenturen, Shops, Creator, SaaS-Unternehmen und Dienstleister.","Eine klare Positionierung kann die Akquise einfacher machen.","Nenne 10 Unternehmenstypen, für die deine Leistung interessant sein könnte."],
+["Cold Outreach","Gute Akquise zeigt, dass du dich mit dem Unternehmen beschäftigt hast. Vermeide generische Massenmails.","Beobachtung → Verbesserungsidee → Angebot → nächste Handlung.","Schreibe eine persönliche Akquise-Nachricht."],
+["Freelancing","Auf Plattformen und direkt konkurrierst du nicht nur über Schreibfähigkeit. Portfolio, Positionierung, Kommunikation und Zuverlässigkeit sind ebenfalls wichtig.","Spezifische Angebote können besser funktionieren als „Ich mache alles“."],
+["Preise","Copywriting kann pro Wort, Stunde, Projekt oder Retainer berechnet werden. Der Wert hängt nicht einfach von der Wortanzahl ab.","Berücksichtige Umfang, Research, Verantwortung, Aufwand und geschäftlichen Nutzen.","Erstelle drei hypothetische Angebote."],
+["Kundenkommunikation","Ein gutes Briefing beantwortet Zielgruppe, Angebot, Wettbewerb, Kaufgründe, Einwände, Tonalität und Ziel.","Je besser das Briefing, desto weniger musst du später raten.","Erstelle 10 Fragen für ein Kundenbriefing."],
+["Verhandlung","Wenn ein Kunde ein kleineres Budget hat, muss nicht automatisch der Preis halbiert werden. Du kannst den Leistungsumfang reduzieren.","Preis und Umfang sollten zusammenpassen.","Ein Kunde hat 100 € Budget, dein Angebot kostet 300 €. Entwickle eine kleinere Alternative."],
+["Business aufbauen","Ein professionelles Business benötigt Skill, Angebot, Positionierung, Akquise, Sales, Delivery und Kundenbindung.","Nicht nur die Leistung, sondern auch die Geschäftseite muss trainiert werden.","Bewerte dich in jedem Bereich von 1–10."],
+["Praxisprojekt","FocusDesk verkauft eine App mit Fokus-Timer, Website-Blocker, Aufgabenplanung, Statistiken und Fokus-Sessions. Ziel sind mehr kostenlose Testanmeldungen.","Erstelle Research, Headlines, Hooks, Benefits, Landingpage, Ads und E-Mail.","Starte das komplette FocusDesk-Projekt."],
+["Abschlussprüfung","Zeige dein Wissen: Copywriting definieren, Feature und Benefit erklären, AIDA und PAS erklären, Buyer Persona erstellen, Headlines, Hooks, CTA, Anzeige, Mail, Landingpage und Akquise-Nachricht schreiben.","Versuche die Aufgaben zunächst ohne Musterlösung zu bearbeiten.","Bearbeite die Prüfung vollständig."],
+["Wichtigste Regeln","Schreibe für den Leser. Verkaufe Ergebnisse. Research kommt vor dem Schreiben. Klarheit ist wichtiger als komplizierte Sprache. Beweise sind stärker als Behauptungen. Teste statt zu raten.","Diese Regeln bilden die Grundlage für gute Copy.","Schreibe deine persönlichen 10 wichtigsten Copywriting-Regeln auf."],
+["30-Tage-Lernplan","Tag 1–7: Grundlagen, Features, Zielgruppen, Personas, Research, Headlines und Hooks. Tag 8–14: AIDA, PAS, Storytelling, CTAs und Ads. Tag 15–21: Landingpages, E-Mail, Produktbeschreibungen und Social Media. Tag 22–30: Überarbeitung, Testing, KI, Portfolio, Positionierung und Akquise.","Täglich praktisch schreiben.","Starte heute mit Tag 1."],
+["Tägliche Headlines","Eine besonders gute Übung sind 10 Headlines pro Tag. Nutze jeden Tag ein anderes Produkt.","Nach 30 Tagen hast du 300 Headlines geschrieben.","Schreibe heute deine ersten 10 Headlines."],
+["Werbung analysieren","Analysiere gute und schlechte Werbung. Suche Headline, Hook, Zielgruppe, Problem, Benefit, Emotion, CTA, Beweise und Einwände.","Danach schreibe deine eigene Version.","Analysiere eine beliebige Werbung."],
+["Copywriting-Muskeln","Nimm ein Produkt und schreibe 10 Headlines, 10 Hooks, 10 Benefits, 5 CTAs, 3 Ads, 1 E-Mail und 1 Landingpage.","Regelmäßige Praxis baut Geschwindigkeit und Qualität auf.","Wähle ein Produkt und erstelle das komplette Set."],
+["Dein Ziel","Langfristig geht es nicht darum, einfach Texte schreiben zu können. Du solltest Unternehmen helfen können, ihre Kommunikation und Ergebnisse zu verbessern.","Research → Strategie → Messaging → Copy → Optimierung.","Formuliere dein eigenes Leistungsversprechen."],
+["Dein nächster Schritt","Deine erste große Übung: Buyer Persona, 10 Probleme, 10 Wünsche, 10 Headlines, 10 Hooks, 5 Benefits, 5 CTAs, AIDA, PAS und komplette Landingpage für einen Online-Copywriting-Kurs.","Versuche zuerst selbst Lösungen zu entwickeln und überprüfe sie anschließend.","Beginne mit der Buyer Persona."]
+];
 
+function renderLessons(){
+  const container=document.getElementById("copyLessons");
+  container.innerHTML="";
+  copyLessons.forEach((x,i)=>{
+    const key="copy_"+i;
+    const done=localStorage.getItem(key)==="done";
+    container.innerHTML+=`
+    <article class="lesson ${done?'done':''}" data-search="${(i+1)+" "+x[0]+" "+x[1]}">
+      <div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+        <div class="lesson-number">${i+1}</div>
+        <div class="lesson-title">${x[0]}</div>
+        <div class="lesson-check" onclick="event.stopPropagation();completeLesson('${key}',this)">●</div>
+      </div>
+      <div class="lesson-body">
+        <p>${x[1]}</p>
+        <div class="example"><strong>Praxis:</strong><br>${x[2]}</div>
+        <div class="exercise">
+          <strong>Übung</strong>
+          <p>${x[3]}</p>
+          <textarea id="answer_${key}" placeholder="Deine Antwort hier…">${localStorage.getItem("answer_"+key)||""}</textarea>
+          <button class="btn primary" onclick="saveAnswer('${key}')">Antwort speichern</button>
+        </div>
+      </div>
+    </article>`;
+  });
+}
+renderLessons();
+</script>
 
-/* =========================
-   NAVIGATION
-========================= */
+</div>
+</section>
 
-const navButtons =
-    document.querySelectorAll(
-        ".nav-button"
-    );
+<!-- CONTENT -->
+<section id="content" class="section">
 
-const sections =
-    document.querySelectorAll(
-        ".section"
-    );
+<div class="section-title">
+<h2>KI-Content-Service</h2>
+<p>Von 0 zum ersten Kunden.</p>
+</div>
 
+<div class="notice">
+<strong>Grundprinzip:</strong> Du verkaufst nicht „KI-Texte“. Du verkaufst fertige,
+professionell bearbeitete Inhalte. KI ist dabei ein Werkzeug.
+</div>
 
-function openSection(
-    name
-) {
+<div class="grid">
 
-    sections.forEach(
-        section => {
+<div class="card">
+<h3>1. Copywriting</h3>
+<p>Headlines, Hooks, CTAs, Zielgruppen, Benefits und überzeugende Texte lernen.</p>
+</div>
 
-            section.classList.remove(
-                "active"
-            );
+<div class="card">
+<h3>2. Social Media</h3>
+<p>Instagram Posts, Carousels, Reels, Stories, TikTok und LinkedIn verstehen.</p>
+</div>
 
-        }
-    );
+<div class="card">
+<h3>3. Content-Strategie</h3>
+<p>Nicht zufällige Posts erstellen, sondern Inhalte mit einem konkreten Ziel planen.</p>
+</div>
 
+<div class="card">
+<h3>4. KI</h3>
+<p>KI mit klaren Briefings aus Rolle, Unternehmen, Zielgruppe, Ziel, Plattform und Tonalität steuern.</p>
+</div>
 
-    navButtons.forEach(
-        button => {
+<div class="card">
+<h3>5. Qualitätskontrolle</h3>
+<p>Fakten prüfen, Wiederholungen entfernen und generische KI-Sprache verbessern.</p>
+</div>
 
-            button.classList.remove(
-                "active"
-            );
+<div class="card">
+<h3>6. Design</h3>
+<p>Canva, Typografie, Abstände, Farben, Layout und visuelle Hierarchie lernen.</p>
+</div>
 
-        }
-    );
+</div>
 
+<h2 style="margin-top:40px">Vom Lernen zum ersten Kunden</h2>
 
-    const section =
-        document.getElementById(
-            name
-        );
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">1</div>
+<div class="lesson-title">Woche 1 – Copywriting</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Übe Headlines, Hooks, Benefits, Zielgruppen, CTAs, AIDA, PAS und Storytelling.</p>
+</div>
+</div>
 
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">2</div>
+<div class="lesson-title">Woche 2 – Social Media</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Erstelle für einen Friseur, ein Fitnessstudio und ein Café jeweils Post-Ideen, Hooks, Posts, CTAs und Reel-Ideen.</p>
+</div>
+</div>
 
-    if (section) {
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">3</div>
+<div class="lesson-title">Woche 3 – KI richtig einsetzen</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Erstelle Briefings, lass Ideen entwickeln, überarbeite KI-Ergebnisse und führe anschließend eine Qualitätskontrolle durch.</p>
+</div>
+</div>
 
-        section.classList.add(
-            "active"
-        );
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">4</div>
+<div class="lesson-title">Woche 4 – Canva</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Erstelle aus deinen Texten professionelle Social-Media-Grafiken und einen Content-Kalender.</p>
+</div>
+</div>
 
-    }
+<h2 style="margin-top:40px">Testkunden</h2>
 
+<div class="grid">
+<div class="card">
+<h3>Mini-Test · 29 €</h3>
+<p>3 Posts<br>3 Captions<br>3 Hooks<br>3 einfache Canva-Grafiken</p>
+</div>
 
-    const button =
-        document.querySelector(
-            `[data-section="${name}"]`
-        );
+<div class="card">
+<h3>Starter · 49 €</h3>
+<p>5 Posts<br>5 Captions<br>5 Hooks<br>5 Grafiken<br>1 Reel-Skript</p>
+</div>
 
+<div class="card">
+<h3>Content-Test · 79 €</h3>
+<p>10 Posts<br>10 Captions<br>10 Hooks<br>10 Grafiken<br>3 Reel-Skripte<br>Content-Kalender</p>
+</div>
+</div>
 
-    if (button) {
+<h2 style="margin-top:40px">Weiterentwicklung</h2>
 
-        button.classList.add(
-            "active"
-        );
+<div class="grid">
+<div class="card"><h3>149 €/Monat</h3><p>8 Posts, Captions und Grafiken.</p></div>
+<div class="card"><h3>249 €/Monat</h3><p>16 Posts, Captions, Grafiken, 4 Reel-Skripte und Content-Kalender.</p></div>
+<div class="card"><h3>399 €/Monat</h3><p>20 Posts, 20 Grafiken, 8 Reel-Skripte, Strategie und monatliche Planung.</p></div>
+</div>
 
-    }
+<h2 style="margin-top:40px">Der langfristige Weg</h2>
+<div class="example">
+0 Kunden → Portfolio → Testkunde → Bewertungen → höhere Preise → Website →
+Lead-System → Automatisierung → digitale Marketing-Lösung
+</div>
 
+</section>
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+<!-- SERVICES -->
+<section id="services" class="section">
 
+<div class="section-title">
+<h2>Digitale Dienstleistungen</h2>
+<p>Was kannst du anbieten, wie lernst du es und was kann es wert sein?</p>
+</div>
+
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Tätigkeit</th>
+<th>Was macht man?</th>
+<th>Wie lernen?</th>
+<th>Aufwand</th>
+<th>Preisbereich</th>
+</tr>
+</thead>
+<tbody>
+
+<tr><td>Copywriting</td><td>Werbetexte, Landingpages, E-Mails und Anzeigen</td><td>Werbung analysieren, schreiben üben</td><td>2–8 h</td><td>50–1.000+ €</td></tr>
+<tr><td>Korrekturlesen</td><td>Rechtschreibung, Grammatik und Stil verbessern</td><td>Grammatik und Sprachregeln</td><td>1–5 h</td><td>20–200 €</td></tr>
+<tr><td>Ghostwriting</td><td>Texte unter dem Namen anderer schreiben</td><td>Schreiben und Stile analysieren</td><td>2–10 h</td><td>50–1.000+ €</td></tr>
+<tr><td>Social-Media-Texte</td><td>Posts, Captions, Hooks und Ideen</td><td>Accounts analysieren</td><td>2–8 h</td><td>50–500+ €</td></tr>
+<tr><td>Produktbeschreibungen</td><td>Produkte verkaufsstark beschreiben</td><td>E-Commerce + Copywriting</td><td>30 min–3 h</td><td>10–100 €</td></tr>
+<tr><td>Blogartikel</td><td>Informative Websiteartikel</td><td>Recherche + Schreiben</td><td>2–8 h</td><td>50–500 €</td></tr>
+<tr><td>SEO-Texte</td><td>Suchmaschinenorientierte Inhalte</td><td>SEO-Grundlagen</td><td>2–8 h</td><td>50–500 €</td></tr>
+<tr><td>Transkription</td><td>Audio/Video in Text umwandeln</td><td>Übung + schnelles Tippen</td><td>1–5 h</td><td>10–100+ €</td></tr>
+<tr><td>Übersetzung</td><td>Texte zwischen Sprachen übertragen</td><td>Sprachen + Übersetzung</td><td>1–8 h</td><td>20–300+ €</td></tr>
+<tr><td>Virtuelle Assistenz</td><td>E-Mails, Recherche, Dateien und Organisation</td><td>Office + Organisation</td><td>2–20 h/Woche</td><td>10–40 €/h</td></tr>
+<tr><td>Lead-Recherche</td><td>Potenzielle Kunden recherchieren</td><td>Google, Verzeichnisse, Sheets</td><td>2–10 h</td><td>50–500+ €</td></tr>
+<tr><td>Dateneingabe</td><td>Daten in Tabellen/Systeme übertragen</td><td>Schnell lernbar</td><td>1–10 h</td><td>10–30 €/h</td></tr>
+<tr><td>Online-Recherche</td><td>Informationen für Unternehmen recherchieren</td><td>Suchtechniken + Quellenbewertung</td><td>1–10 h</td><td>20–50 €/h</td></tr>
+<tr><td>Präsentationen</td><td>PowerPoint/Canva-Präsentationen</td><td>Design + Präsentation</td><td>2–10 h</td><td>50–500 €</td></tr>
+<tr><td>Canva-Design</td><td>Grafiken, Posts, Flyer und PDFs</td><td>Canva + Design-Grundlagen</td><td>30 min–5 h</td><td>20–300+ €</td></tr>
+<tr><td>YouTube-Thumbnails</td><td>Vorschaubilder erstellen</td><td>Canva/Photoshop + Analyse</td><td>30 min–2 h</td><td>10–100 €</td></tr>
+<tr><td>Untertitel</td><td>Videos mit Untertiteln versehen</td><td>CapCut etc.</td><td>30 min–4 h</td><td>20–200+ €</td></tr>
+<tr><td>KI-Content-Service</td><td>KI-gestützten Content produzieren und bearbeiten</td><td>KI + Copywriting + Kontrolle</td><td>1–10 h</td><td>50–1.000+ €</td></tr>
+<tr><td>No-Code-Websites</td><td>Websites ohne klassische Programmierung</td><td>Framer/Webflow/Wix</td><td>5–30 h</td><td>100–2.000+ €</td></tr>
+<tr><td>Webentwicklung</td><td>Websites mit HTML/CSS/JS</td><td>Kurse + eigene Projekte</td><td>5–40+ h</td><td>200–3.000+ €</td></tr>
+<tr><td>Automatisierungen</td><td>Wiederkehrende Unternehmensaufgaben automatisieren</td><td>Make, APIs, Python</td><td>2–20+ h</td><td>100–2.000+ €</td></tr>
+
+</tbody>
+</table>
+</div>
+
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="section">
+
+<div class="section-title">
+<h2>Portfolio aufbauen</h2>
+<p>Du brauchst am Anfang keine 100 Projekte.</p>
+</div>
+
+<div class="grid">
+<div class="card">
+<div class="icon">01</div>
+<h3>Friseur</h3>
+<p>5 Instagram Posts · 2 Carousels · 2 Reel-Skripte · 5 Grafiken</p>
+</div>
+<div class="card">
+<div class="icon">02</div>
+<h3>Fitnessstudio</h3>
+<p>5 Posts · 2 Carousels · 2 Reel-Skripte · mehrere Grafiken</p>
+</div>
+<div class="card">
+<div class="icon">03</div>
+<h3>Café</h3>
+<p>5 Posts · 2 Carousels · 2 Reel-Skripte · mehrere Grafiken</p>
+</div>
+</div>
+
+<div class="notice" style="margin-top:20px">
+<strong>Wichtig:</strong> Fiktive Projekte im Portfolio immer als Beispiel- oder
+Übungsprojekte kennzeichnen. Keine erfundenen Kunden oder Ergebnisse darstellen.
+</div>
+
+</section>
+
+<!-- CLIENTS -->
+<section id="clients" class="section">
+
+<div class="section-title">
+<h2>Kunden finden</h2>
+<p>Von der ersten Recherche bis zum Testkunden.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Friseure</h3><p>Social Media, Website, Texte, Bewertungen.</p></div>
+<div class="card"><h3>Restaurants</h3><p>Social Media, Angebote, Website und Content.</p></div>
+<div class="card"><h3>Cafés</h3><p>Posts, Grafiken, Aktionen und lokale Sichtbarkeit.</p></div>
+<div class="card"><h3>Fitnessstudios</h3><p>Content, Ads, Landingpages und Social Media.</p></div>
+<div class="card"><h3>Handwerker</h3><p>Websites, Texte und Lead-Generierung.</p></div>
+<div class="card"><h3>Dienstleister</h3><p>Websites, Copywriting und digitale Prozesse.</p></div>
+</div>
+
+<h2 style="margin-top:40px">Recherche-Checkliste</h2>
+
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">1</div>
+<div class="lesson-title">Unternehmen auswählen</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Suche Unternehmen mit einem konkreten Problem, das du tatsächlich verbessern kannst.</p>
+</div>
+</div>
+
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">2</div>
+<div class="lesson-title">Website und Social Media prüfen</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Suche nach veralteten Inhalten, unklaren Angeboten, schwachen CTAs oder unregelmäßigem Content.</p>
+</div>
+</div>
+
+<div class="lesson">
+<div class="lesson-head" onclick="toggleLesson(this.parentElement)">
+<div class="lesson-number">3</div>
+<div class="lesson-title">Konkrete Verbesserung finden</div>
+<div>＋</div>
+</div>
+<div class="lesson-body">
+<p>Notiere eine konkrete Beobachtung und entwickle eine kleine Verbesserungsidee.</p>
+</div>
+</div>
+
+</section>
+
+<!-- EXERCISES -->
+<section id="exercises" class="section">
+
+<div class="section-title">
+<h2>Übungsbereich</h2>
+<p>Hier kannst du direkt im Browser trainieren.</p>
+</div>
+
+<div class="card">
+<h3>Dein erstes Copywriting-Training</h3>
+<p>
+Produkt: Online-Copywriting-Kurs für Anfänger.<br>
+Zielgruppe: Menschen, die Copywriting lernen und damit online Geld verdienen möchten.
+</p>
+
+<p><strong>Aufgaben:</strong></p>
+<ol>
+<li>Buyer Persona erstellen</li>
+<li>10 Probleme finden</li>
+<li>10 Wünsche finden</li>
+<li>10 Headlines schreiben</li>
+<li>10 Hooks schreiben</li>
+<li>5 Benefits schreiben</li>
+<li>5 CTAs schreiben</li>
+<li>AIDA-Werbung schreiben</li>
+<li>PAS-Werbung schreiben</li>
+<li>Landingpage schreiben</li>
+</ol>
+
+<textarea id="mainExercise" placeholder="Bearbeite die Aufgabe hier…"></textarea>
+<button class="btn primary" onclick="saveMainExercise()">Fortschritt speichern</button>
+</div>
+
+</section>
+
+<!-- PLAN -->
+<section id="plan" class="section">
+
+<div class="section-title">
+<h2>30-Tage-Lernplan</h2>
+<p>Jeden Tag ein konkreter Schritt.</p>
+</div>
+
+<div id="planList"></div>
+
+</section>
+
+<div class="footer">
+Kraus Digital Solutions · Premium Academy
+</div>
+
+</main>
+</div>
+
+<script>
+function toggleMenu(){
+  document.getElementById("sidebar").classList.toggle("open");
 }
 
+function showSection(id,button){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  const target=document.getElementById(id);
+  if(target) target.classList.add("active");
 
-navButtons.forEach(
-    button => {
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
+  if(button) button.classList.add("active");
 
-        button.addEventListener(
-            "click",
-            () => {
-
-                openSection(
-                    button.dataset.section
-                );
-
-            }
-        );
-
-    }
-);
-
-
-/* =========================
-   TEXT TOOL
-========================= */
-
-const textTool =
-    document.getElementById(
-        "textTool"
-    );
-
-
-function updateStats() {
-
-    const text =
-        textTool.value;
-
-
-    const words =
-        text.trim()
-            ? text.trim().split(/\s+/).length
-            : 0;
-
-
-    document.getElementById(
-        "words"
-    ).textContent =
-        words;
-
-
-    document.getElementById(
-        "characters"
-    ).textContent =
-        text.length;
-
-
-    document.getElementById(
-        "charactersNoSpace"
-    ).textContent =
-        text.replace(
-            /\s/g,
-            ""
-        ).length;
-
+  document.getElementById("sidebar").classList.remove("open");
+  window.scrollTo(0,0);
 }
 
-
-textTool.addEventListener(
-    "input",
-    updateStats
-);
-
-
-function upper() {
-
-    textTool.value =
-        textTool.value.toUpperCase();
-
-    updateStats();
-
+function toggleLesson(el){
+  el.classList.toggle("open");
 }
 
-
-function lower() {
-
-    textTool.value =
-        textTool.value.toLowerCase();
-
-    updateStats();
-
+function completeLesson(key,element){
+  if(localStorage.getItem(key)==="done"){
+    localStorage.removeItem(key);
+    element.parentElement.parentElement.classList.remove("done");
+  }else{
+    localStorage.setItem(key,"done");
+    element.parentElement.parentElement.classList.add("done");
+  }
+  updateProgress();
 }
 
-
-function cleanText() {
-
-    textTool.value =
-        textTool.value
-            .replace(
-                /[ \t]+/g,
-                " "
-            )
-            .replace(
-                /\n{3,}/g,
-                "\n\n"
-            )
-            .trim();
-
-    updateStats();
-
+function saveAnswer(key){
+  const area=document.getElementById("answer_"+key);
+  localStorage.setItem("answer_"+key,area.value);
+  alert("Antwort gespeichert.");
 }
 
-
-async function copyText() {
-
-    if (!textTool.value) {
-
-        alert(
-            "Bitte zuerst einen Text eingeben."
-        );
-
-        return;
-
-    }
-
-
-    await navigator.clipboard.writeText(
-        textTool.value
-    );
-
-
-    alert(
-        "Text wurde kopiert."
-    );
-
+function saveMainExercise(){
+  localStorage.setItem("mainExercise",document.getElementById("mainExercise").value);
+  alert("Fortschritt gespeichert.");
 }
 
-
-function clearText() {
-
-    textTool.value = "";
-
-    updateStats();
-
+function filterLessons(inputId,containerId){
+  const query=document.getElementById(inputId).value.toLowerCase();
+  document.querySelectorAll("#"+containerId+" .lesson").forEach(l=>{
+    l.style.display=l.dataset.search.toLowerCase().includes(query)?"block":"none";
+  });
 }
 
+const days=[
+"Copywriting-Grundlagen lernen.",
+"Features und Benefits üben.",
+"Zielgruppen analysieren.",
+"Buyer Personas erstellen.",
+"Research üben.",
+"20 Headlines schreiben.",
+"10 Hooks schreiben.",
+"AIDA lernen.",
+"AIDA-Übungen durchführen.",
+"PAS lernen.",
+"PAS-Übungen durchführen.",
+"Storytelling lernen.",
+"CTAs schreiben.",
+"Werbeanzeigen analysieren.",
+"Drei eigene Ads schreiben.",
+"Landingpages analysieren.",
+"Eine Landingpage schreiben.",
+"E-Mail-Copywriting lernen.",
+"Eine Verkaufsmail schreiben.",
+"Produktbeschreibungen schreiben.",
+"Social-Media-Copy üben.",
+"Texte überarbeiten.",
+"A/B-Testing verstehen.",
+"KI als Copywriting-Werkzeug einsetzen.",
+"Portfolio-Projekt starten.",
+"Portfolio-Projekt fertigstellen.",
+"Positionierung entwickeln.",
+"Angebote erstellen.",
+"Kundenakquise üben.",
+"Erste Bewerbungen und Akquise starten."
+];
 
-/* =========================
-   WEBSITE CHECK
-========================= */
-
-const checks =
-    document.querySelectorAll(
-        "#website .check input"
-    );
-
-
-function updateChecklist() {
-
-    const total =
-        checks.length;
-
-
-    const completed =
-        [...checks].filter(
-            item => item.checked
-        ).length;
-
-
-    const percentage =
-        Math.round(
-            completed / total * 100
-        );
-
-
-    document.getElementById(
-        "percentage"
-    ).textContent =
-        percentage + "%";
-
-
-    document.getElementById(
-        "progress"
-    ).style.width =
-        percentage + "%";
-
-
-    localStorage.setItem(
-        "kds_checklist",
-        JSON.stringify(
-            [...checks].map(
-                item => item.checked
-            )
-        )
-    );
-
+function renderPlan(){
+ const el=document.getElementById("planList");
+ el.innerHTML=days.map((text,i)=>{
+   const key="day_"+(i+1);
+   const done=localStorage.getItem(key)==="done";
+   return `
+   <div class="lesson ${done?'done':''}">
+     <div class="lesson-head">
+       <div class="lesson-number">${i+1}</div>
+       <div class="lesson-title">Tag ${i+1} – ${text}</div>
+       <div class="lesson-check" onclick="completeDay('${key}',this)">●</div>
+     </div>
+   </div>`;
+ }).join("");
 }
 
-
-checks.forEach(
-    check => {
-
-        check.addEventListener(
-            "change",
-            updateChecklist
-        );
-
-    }
-);
-
-
-try {
-
-    const saved =
-        JSON.parse(
-            localStorage.getItem(
-                "kds_checklist"
-            )
-        );
-
-
-    if (
-        Array.isArray(saved)
-    ) {
-
-        saved.forEach(
-            (value, index) => {
-
-                if (checks[index]) {
-
-                    checks[index].checked =
-                        value;
-
-                }
-
-            }
-        );
-
-    }
-
-}
-catch {}
-
-
-updateChecklist();
-
-
-/* =========================
-   TEMPLATES
-========================= */
-
-async function copyTemplate(
-    button
-) {
-
-    const textarea =
-        button.parentElement
-            .querySelector(
-                "textarea"
-            );
-
-
-    await navigator.clipboard.writeText(
-        textarea.value
-    );
-
-
-    const original =
-        button.textContent;
-
-
-    button.textContent =
-        "Kopiert ✓";
-
-
-    setTimeout(
-        () => {
-
-            button.textContent =
-                original;
-
-        },
-        1500
-    );
-
+function completeDay(key,el){
+ if(localStorage.getItem(key)==="done"){
+   localStorage.removeItem(key);
+   el.closest(".lesson").classList.remove("done");
+ }else{
+   localStorage.setItem(key,"done");
+   el.closest(".lesson").classList.add("done");
+ }
+ updateProgress();
 }
 
+function updateProgress(){
+ let total=copyLessons.length+days.length;
+ let done=0;
 
-/* =========================
-   PROJECTS
-========================= */
+ copyLessons.forEach((_,i)=>{
+   if(localStorage.getItem("copy_"+i)==="done") done++;
+ });
 
-function getProjects() {
+ days.forEach((_,i)=>{
+   if(localStorage.getItem("day_"+(i+1))==="done") done++;
+ });
 
-    try {
+ const percent=Math.round(done/total*100);
 
-        return JSON.parse(
-            localStorage.getItem(
-                "kds_projects"
-            )
-        ) || [];
-
-    }
-    catch {
-
-        return [];
-
-    }
-
+ document.getElementById("progressBar").style.width=percent+"%";
+ document.getElementById("progressText").textContent=percent+"%";
+ document.getElementById("doneCount").textContent=done;
 }
 
-
-function saveProjects(
-    projects
-) {
-
-    localStorage.setItem(
-        "kds_projects",
-        JSON.stringify(
-            projects
-        )
-    );
-
-}
-
-
-function addProject() {
-
-    const name =
-        document.getElementById(
-            "projectName"
-        ).value.trim();
-
-
-    const description =
-        document.getElementById(
-            "projectDescription"
-        ).value.trim();
-
-
-    if (!name) {
-
-        alert(
-            "Bitte einen Projektnamen eingeben."
-        );
-
-        return;
-
-    }
-
-
-    const projects =
-        getProjects();
-
-
-    projects.unshift({
-
-        id:
-            Date.now(),
-
-        name:
-            name,
-
-        description:
-            description,
-
-        date:
-            new Date()
-                .toLocaleDateString(
-                    "de-DE"
-                )
-
-    });
-
-
-    saveProjects(
-        projects
-    );
-
-
-    document.getElementById(
-        "projectName"
-    ).value = "";
-
-
-    document.getElementById(
-        "projectDescription"
-    ).value = "";
-
-
-    renderProjects();
-
-}
-
-
-function deleteProject(
-    id
-) {
-
-    const projects =
-        getProjects()
-            .filter(
-                project =>
-                    project.id !== id
-            );
-
-
-    saveProjects(
-        projects
-    );
-
-
-    renderProjects();
-
-}
-
-
-function escapeHTML(
-    text
-) {
-
-    return String(text)
-        .replace(
-            /&/g,
-            "&amp;"
-        )
-        .replace(
-            /</g,
-            "&lt;"
-        )
-        .replace(
-            />/g,
-            "&gt;"
-        )
-        .replace(
-            /"/g,
-            "&quot;"
-        )
-        .replace(
-            /'/g,
-            "&#039;"
-        );
-
-}
-
-
-function renderProjects() {
-
-    const list =
-        document.getElementById(
-            "projectsList"
-        );
-
-
-    const projects =
-        getProjects();
-
-
-    if (!projects.length) {
-
-        list.innerHTML = `
-            <div class="card">
-                <p>
-                    Noch keine Projekte gespeichert.
-                </p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-
-    list.innerHTML =
-        projects.map(
-            project => `
-
-                <div class="project">
-
-                    <div>
-
-                        <strong>
-                            ${escapeHTML(project.name)}
-                        </strong>
-
-                        <small>
-                            ${escapeHTML(
-                                project.description ||
-                                "Keine Beschreibung"
-                            )}
-                            ·
-                            ${project.date}
-                        </small>
-
-                    </div>
-
-                    <button
-                        class="secondary"
-                        onclick="deleteProject(${project.id})"
-                    >
-                        Löschen
-                    </button>
-
-                </div>
-
-            `
-        ).join("");
-
-}
-
-
-renderProjects();
-
-
-/* =========================
-   NOTES
-========================= */
-
-const notesArea =
-    document.getElementById(
-        "notesArea"
-    );
-
-
-notesArea.value =
-    localStorage.getItem(
-        "kds_notes"
-    ) || "";
-
-
-function saveNotes() {
-
-    localStorage.setItem(
-        "kds_notes",
-        notesArea.value
-    );
-
-
-    alert(
-        "Notizen gespeichert."
-    );
-
-}
-
-
-function deleteNotes() {
-
-    if (
-        !confirm(
-            "Möchtest du alle Notizen löschen?"
-        )
-    ) {
-
-        return;
-
-    }
-
-
-    notesArea.value = "";
-
-    localStorage.removeItem(
-        "kds_notes"
-    );
-
-}
-
-
-/* =========================
-   DOWNLOADS
-========================= */
-
-function downloadFile(
-    filename,
-    content
-) {
-
-    const blob =
-        new Blob(
-            [content],
-            {
-                type:
-                    "text/plain;charset=utf-8"
-            }
-        );
-
-
-    const url =
-        URL.createObjectURL(
-            blob
-        );
-
-
-    const link =
-        document.createElement(
-            "a"
-        );
-
-
-    link.href = url;
-
-    link.download =
-        filename;
-
-
-    document.body.appendChild(
-        link
-    );
-
-
-    link.click();
-
-    link.remove();
-
-
-    URL.revokeObjectURL(
-        url
-    );
-
-}
-
-
-function downloadChecklist() {
-
-    downloadFile(
-        "kds-website-checkliste.txt",
-
-`KDS WEBSITE-CHECKLISTE
-
-1. Funktioniert die Website auf Smartphones?
-2. Ist die Navigation verständlich?
-3. Sind die Leistungen klar erklärt?
-4. Gibt es einen Call-to-Action?
-5. Sind Kontaktmöglichkeiten leicht zu finden?
-6. Sind die Texte verständlich?
-7. Funktionieren alle Buttons?
-8. Wirkt das Design professionell?
-9. Sind Impressum und Datenschutz vorhanden?
-10. Wurde die Website getestet?`
-    );
-
-}
-
-
-function downloadCopywriting() {
-
-    downloadFile(
-        "kds-copywriting-grundlagen.txt",
-
-`KDS COPYWRITING GRUNDLAGEN
-
-1. Schreibe für den Kunden.
-2. Erkläre den konkreten Nutzen.
-3. Verwende klare Überschriften.
-4. Vermeide unnötig komplizierte Sprache.
-5. Verwende konkrete Call-to-Actions.
-6. Strukturiere lange Texte mit Zwischenüberschriften.
-7. Hebe wichtige Vorteile hervor.`
-    );
-
-}
-
-
-function downloadContent() {
-
-    downloadFile(
-        "kds-website-content-check.txt",
-
-`KDS WEBSITE CONTENT CHECK
-
-HERO
-[ ] Ist sofort klar, was angeboten wird?
-[ ] Wird ein konkreter Nutzen genannt?
-
-LEISTUNGEN
-[ ] Sind Leistungen verständlich erklärt?
-[ ] Werden Vorteile statt nur Funktionen genannt?
-
-VERTRAUEN
-[ ] Gibt es Referenzen?
-[ ] Gibt es Bewertungen?
-
-KONTAKT
-[ ] Ist der Kontakt leicht erreichbar?
-[ ] Gibt es einen klaren CTA?
-
-MOBILE
-[ ] Sind Texte gut lesbar?
-[ ] Sind Buttons groß genug?`
-    );
-
-}
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-function logout() {
-
-    /*
-       Diese Version ist bewusst komplett
-       unabhängig von Supabase.
-
-       Wenn deine Login-Seite später eine
-       eigene Session verwendet, kannst du
-       hier die entsprechende Abmeldefunktion
-       ergänzen.
-    */
-
-    window.location.href =
-        "login.html";
-
-}
-
+document.getElementById("mainExercise").value=
+ localStorage.getItem("mainExercise")||"";
+
+renderPlan();
+updateProgress();
 </script>
 
 </body>
 </html>
-```
