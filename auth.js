@@ -1,425 +1,607 @@
-import { supabase } from "./supabase.js";
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
 
-// ================================
-// ELEMENTE
-// ================================
+    <meta charset="UTF-8">
 
-const loginForm = document.getElementById("loginForm");
-const registerForm = document.getElementById("registerForm");
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-const loginBox = document.getElementById("loginBox");
-const registerBox = document.getElementById("registerBox");
+    <title>KDS Premium – Login</title>
 
-const showRegister = document.getElementById("showRegister");
-const showLogin = document.getElementById("showLogin");
+    <style>
 
-const forgotPassword = document.getElementById("forgotPassword");
+        * {
+            box-sizing: border-box;
+        }
 
-const loginMessage = document.getElementById("loginMessage");
-const registerMessage = document.getElementById("registerMessage");
+        body {
+            margin: 0;
+            min-height: 100vh;
 
+            background: #050505;
+            color: white;
 
-// ================================
-// NACHRICHTEN
-// ================================
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
 
-function showMessage(element, text, type) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-    element.textContent = text;
+            padding: 20px;
+        }
 
-    element.className = "message " + type;
+        body::before {
+            content: "";
 
-}
+            position: fixed;
+            inset: 0;
 
+            pointer-events: none;
 
-// ================================
-// LOGIN / REGISTRIERUNG WECHSELN
-// ================================
+            background:
+                radial-gradient(
+                    circle at 20% 20%,
+                    rgba(255, 106, 0, 0.14),
+                    transparent 30%
+                ),
 
-showRegister.addEventListener("click", () => {
+                radial-gradient(
+                    circle at 80% 80%,
+                    rgba(255, 106, 0, 0.08),
+                    transparent 30%
+                );
+        }
 
-    loginBox.classList.add("hidden");
+        .container {
+            width: 100%;
+            max-width: 460px;
+            position: relative;
+        }
 
-    registerBox.classList.remove("hidden");
+        .logo {
+            text-align: center;
 
-    loginMessage.className = "message";
+            font-size: 22px;
+            font-weight: 800;
 
-});
+            margin-bottom: 25px;
+        }
 
+        .logo span {
+            color: #ff6a00;
+        }
 
-showLogin.addEventListener("click", () => {
+        .card {
+            background: #0b0b0b;
 
-    registerBox.classList.add("hidden");
+            border: 1px solid #262626;
 
-    loginBox.classList.remove("hidden");
+            border-radius: 18px;
 
-    registerMessage.className = "message";
+            padding: 35px;
 
-});
+            box-shadow:
+                0 20px 60px
+                rgba(0, 0, 0, 0.45);
+        }
 
+        .badge {
+            display: inline-block;
 
-// ================================
-// REGISTRIERUNG
-// ================================
+            padding: 7px 12px;
 
-registerForm.addEventListener("submit", async (event) => {
+            border: 1px solid #ff6a00;
 
-    event.preventDefault();
+            border-radius: 30px;
 
+            color: #ff6a00;
 
-    const name =
-        document.getElementById("registerName")
-        .value
-        .trim();
+            font-size: 10px;
 
-    const email =
-        document.getElementById("registerEmail")
-        .value
-        .trim();
+            font-family: monospace;
 
-    const password =
-        document.getElementById("registerPassword")
-        .value;
+            letter-spacing: 2px;
 
-    const passwordRepeat =
-        document.getElementById("registerPasswordRepeat")
-        .value;
+            margin-bottom: 18px;
+        }
 
+        h1 {
+            font-size: 36px;
 
-    // Passwörter vergleichen
+            line-height: 1.05;
 
-    if (password !== passwordRepeat) {
+            margin: 0 0 10px;
+        }
 
-        showMessage(
-            registerMessage,
-            "Die Passwörter stimmen nicht überein.",
-            "error"
-        );
+        h1 span {
+            color: #ff6a00;
+        }
 
-        return;
-    }
+        .description {
+            color: #888;
 
+            font-size: 14px;
 
-    // Passwortlänge
+            line-height: 1.6;
 
-    if (password.length < 6) {
+            margin-bottom: 25px;
+        }
 
-        showMessage(
-            registerMessage,
-            "Das Passwort muss mindestens 6 Zeichen lang sein.",
-            "error"
-        );
+        label {
+            display: block;
 
-        return;
-    }
+            color: #aaa;
 
+            font-size: 12px;
 
-    showMessage(
-        registerMessage,
-        "Konto wird erstellt...",
-        "success"
-    );
+            margin: 15px 0 7px;
+        }
 
+        input,
+        textarea {
+            width: 100%;
 
-    try {
+            padding: 14px;
 
-        const { data, error } =
-            await supabase.auth.signUp({
+            background: #111;
 
-                email: email,
+            color: white;
 
-                password: password,
+            border: 1px solid #292929;
 
-                options: {
+            border-radius: 8px;
 
-                    data: {
+            outline: none;
 
-                        full_name: name
+            font-size: 14px;
 
-                    }
+            font-family: inherit;
+        }
 
-                }
+        textarea {
+            min-height: 120px;
 
-            });
+            resize: vertical;
+        }
 
+        input:focus,
+        textarea:focus {
+            border-color: #ff6a00;
 
-        if (error) {
+            box-shadow:
+                0 0 0 2px
+                rgba(255, 106, 0, 0.08);
+        }
 
-            throw error;
+        button {
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #ff6a00;
+
+            color: white;
+
+            font-weight: bold;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        button:hover {
+            background: #ff791c;
+
+            transform:
+                translateY(-1px);
+        }
+
+        .forgot {
+            display: block;
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            color: #777;
+
+            background: none;
+
+            font-size: 12px;
+        }
+
+        .forgot:hover {
+            color: #ff6a00;
+
+            background: none;
+
+            transform: none;
+        }
+
+        .secondary {
+            background: transparent;
+
+            border: 1px solid #333;
+
+            color: #ff6a00;
+        }
+
+        .secondary:hover {
+            background: #111;
+
+            border-color: #ff6a00;
+        }
+
+        .message {
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 7px;
+
+            display: none;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .message.error {
+            display: block;
+
+            background:
+                rgba(255, 60, 60, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 60, 60, 0.3);
+
+            color: #ff7777;
+        }
+
+        .message.success {
+            display: block;
+
+            background:
+                rgba(255, 106, 0, 0.08);
+
+            border:
+                1px solid
+                rgba(255, 106, 0, 0.3);
+
+            color: #ff6a00;
+        }
+
+        .request-link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top: 1px solid #202020;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .request-link button {
+            margin-top: 10px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #666;
+
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        .close {
+            background: transparent;
+
+            border: 1px solid #292929;
+
+            color: #777;
+
+            margin-top: 10px;
+        }
+
+        .close:hover {
+            color: white;
+
+            border-color: #555;
+
+            background: #111;
+        }
+
+        @media(max-width: 500px) {
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
 
         }
 
+    </style>
 
-        // ================================
-        // E-MAIL-BESTÄTIGUNG
-        // ================================
+</head>
 
-        if (data.user && !data.session) {
 
-            showMessage(
-                registerMessage,
-                "Konto erstellt. Bitte bestätige deine E-Mail-Adresse.",
-                "success"
-            );
+<body>
 
-            return;
 
-        }
+<div class="container">
 
 
-        // ================================
-        // DIREKT EINGELOGGT
-        // ================================
+    <!-- LOGO -->
 
-        showMessage(
-            registerMessage,
-            "Konto erfolgreich erstellt.",
-            "success"
-        );
+    <div class="logo">
 
+        Kraus
 
-        setTimeout(() => {
+        <span>
+            Digital Solutions
+        </span>
 
-            window.location.href =
-                "dashboard.html";
+    </div>
 
-        }, 1000);
 
 
-    } catch (error) {
+    <!-- LOGIN -->
 
-        console.error(error);
+    <div
+        class="card"
+        id="loginCard"
+    >
 
+        <div class="badge">
+            KDS PREMIUM
+        </div>
 
-        showMessage(
-            registerMessage,
-            translateError(error.message),
-            "error"
-        );
 
-    }
+        <h1>
 
-});
+            Willkommen<br>
 
+            <span>
+                zurück.
+            </span>
 
-// ================================
-// LOGIN
-// ================================
+        </h1>
 
-loginForm.addEventListener("submit", async (event) => {
 
-    event.preventDefault();
+        <p class="description">
 
+            Melde dich bei deinem
+            KDS Premium-Konto an.
 
-    const email =
-        document.getElementById("loginEmail")
-        .value
-        .trim();
+        </p>
 
-    const password =
-        document.getElementById("loginPassword")
-        .value;
 
+        <form id="loginForm">
 
-    showMessage(
-        loginMessage,
-        "Anmeldung läuft...",
-        "success"
-    );
 
+            <label for="loginEmail">
+                E-Mail-Adresse
+            </label>
 
-    try {
 
-        const { data, error } =
-            await supabase.auth.signInWithPassword({
+            <input
+                id="loginEmail"
+                type="email"
+                placeholder="name@beispiel.de"
+                autocomplete="email"
+                required
+            >
 
-                email: email,
 
-                password: password
+            <label for="loginPassword">
+                Passwort
+            </label>
 
-            });
 
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••"
+                autocomplete="current-password"
+                required
+            >
 
-        if (error) {
 
-            throw error;
+            <button type="submit">
+                Einloggen →
+            </button>
 
-        }
 
+        </form>
 
-        showMessage(
-            loginMessage,
-            "Login erfolgreich.",
-            "success"
-        );
 
+        <button
+            type="button"
+            class="forgot"
+            id="forgotPassword"
+        >
+            Passwort vergessen?
+        </button>
 
-        setTimeout(() => {
 
-            window.location.href =
-                "dashboard.html";
+        <div
+            id="loginMessage"
+            class="message"
+        ></div>
 
-        }, 700);
 
+        <div class="request-link">
 
-    } catch (error) {
+            Noch kein KDS Premium-Konto?
 
-        console.error(error);
+            <button
+                type="button"
+                class="secondary"
+                id="showRequest"
+            >
+                Zugang anfragen
+            </button>
 
+        </div>
 
-        showMessage(
-            loginMessage,
-            translateError(error.message),
-            "error"
-        );
 
-    }
+    </div>
 
-});
 
 
-// ================================
-// PASSWORT VERGESSEN
-// ================================
+    <!-- ANFRAGE -->
 
-forgotPassword.addEventListener("click", async () => {
+    <div
+        class="card hidden"
+        id="requestCard"
+    >
 
-    const email =
-        document.getElementById("loginEmail")
-        .value
-        .trim();
+        <div class="badge">
+            KDS PREMIUM
+        </div>
 
 
-    if (!email) {
+        <h1>
 
-        showMessage(
-            loginMessage,
-            "Bitte gib zuerst deine E-Mail-Adresse ein.",
-            "error"
-        );
+            Zugang<br>
 
-        return;
+            <span>
+                anfragen.
+            </span>
 
-    }
+        </h1>
 
 
-    try {
+        <p class="description">
 
-        const { error } =
-            await supabase.auth.resetPasswordForEmail(
+            Premium-Zugänge werden persönlich
+            von Kraus Digital Solutions vergeben.
 
-                email,
+        </p>
 
-                {
 
-                    redirectTo:
-                        window.location.origin +
-                        "/reset-password.html"
+        <form id="requestForm">
 
-                }
 
-            );
+            <label for="requestName">
+                Vor- und Nachname
+            </label>
 
 
-        if (error) {
+            <input
+                id="requestName"
+                type="text"
+                placeholder="Max Mustermann"
+                required
+            >
 
-            throw error;
 
-        }
+            <label for="requestEmail">
+                E-Mail-Adresse
+            </label>
 
 
-        showMessage(
-            loginMessage,
-            "Eine E-Mail zum Zurücksetzen des Passworts wurde gesendet.",
-            "success"
-        );
+            <input
+                id="requestEmail"
+                type="email"
+                placeholder="max@beispiel.de"
+                required
+            >
 
 
-    } catch (error) {
+            <label for="requestMessage">
+                Nachricht
+            </label>
 
-        console.error(error);
 
+            <textarea
+                id="requestMessage"
+                placeholder="Warum möchtest du KDS Premium nutzen?"
+            ></textarea>
 
-        showMessage(
-            loginMessage,
-            translateError(error.message),
-            "error"
-        );
 
-    }
+            <button type="submit">
+                Anfrage senden →
+            </button>
 
-});
 
+        </form>
 
-// ================================
-// FEHLER ÜBERSETZEN
-// ================================
 
-function translateError(message) {
+        <div
+            id="requestStatus"
+            class="message"
+        ></div>
 
-    if (!message) {
 
-        return "Ein unbekannter Fehler ist aufgetreten.";
+        <button
+            type="button"
+            class="close"
+            id="backToLogin"
+        >
+            ← Zurück zum Login
+        </button>
 
-    }
 
+    </div>
 
-    if (
-        message.includes(
-            "Invalid login credentials"
-        )
-    ) {
 
-        return "E-Mail-Adresse oder Passwort ist falsch.";
 
-    }
+    <a
+        class="back"
+        href="index.html"
+    >
+        ← Zur KDS Website
+    </a>
 
 
-    if (
-        message.includes(
-            "User already registered"
-        )
-    ) {
+</div>
 
-        return "Diese E-Mail-Adresse ist bereits registriert.";
 
-    }
 
+<script
+    type="module"
+    src="auth.js"
+></script>
 
-    if (
-        message.includes(
-            "Password should be at least"
-        )
-    ) {
 
-        return "Das Passwort ist zu kurz.";
+</body>
 
-    }
-
-
-    if (
-        message.includes(
-            "Invalid email"
-        )
-    ) {
-
-        return "Bitte gib eine gültige E-Mail-Adresse ein.";
-
-    }
-
-
-    if (
-        message.includes(
-            "Email not confirmed"
-        )
-    ) {
-
-        return "Bitte bestätige zuerst deine E-Mail-Adresse.";
-
-    }
-
-
-    return message;
-
-}
+</html>
