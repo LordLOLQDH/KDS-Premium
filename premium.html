@@ -1,0 +1,763 @@
+```html
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>KDS Premium</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #08090b;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .topbar {
+            padding: 22px 25px;
+            background: #0d0f12;
+            border-bottom: 1px solid #24272d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .brand span {
+            color: #9da3ad;
+        }
+
+        .logout {
+            border: 1px solid #30343b;
+            background: #17191e;
+            color: #ffffff;
+            padding: 9px 14px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .logout:hover {
+            background: #202329;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 45px 20px 60px;
+        }
+
+        .hero {
+            margin-bottom: 30px;
+        }
+
+        .label {
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 1.5px;
+            color: #8d939d;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 10px 0 12px;
+            font-size: 38px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .description {
+            margin: 0;
+            max-width: 650px;
+            color: #aeb4bd;
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        .status-card {
+            margin-bottom: 25px;
+            padding: 22px;
+            background: #111317;
+            border: 1px solid #24272d;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .status-title {
+            font-size: 14px;
+            color: #8d939d;
+            margin-bottom: 6px;
+        }
+
+        .status {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .status-badge {
+            padding: 8px 12px;
+            border-radius: 20px;
+            background: #17221a;
+            border: 1px solid #29412f;
+            color: #a9d6b2;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(220px, 1fr)
+            );
+            gap: 15px;
+        }
+
+        .card {
+            padding: 24px;
+            background: #111317;
+            border: 1px solid #24272d;
+            border-radius: 12px;
+        }
+
+        .card-label {
+            font-size: 12px;
+            color: #858b95;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card h2 {
+            margin: 9px 0 0;
+            font-size: 19px;
+        }
+
+        .card p {
+            margin: 9px 0 0;
+            color: #9da3ad;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-top: 35px;
+        }
+
+        .section-title {
+            margin-bottom: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .welcome {
+            padding: 25px;
+            background: #17191e;
+            border: 1px solid #282c33;
+            border-radius: 12px;
+        }
+
+        .welcome h2 {
+            margin: 0 0 8px;
+            font-size: 21px;
+        }
+
+        .welcome p {
+            margin: 0;
+            color: #9da3ad;
+            line-height: 1.7;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: #9da3ad;
+        }
+
+        .error {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 30px;
+            text-align: center;
+            background: #111317;
+            border: 1px solid #24272d;
+            border-radius: 12px;
+        }
+
+        .error h2 {
+            margin-top: 0;
+        }
+
+        .error p {
+            color: #9da3ad;
+            line-height: 1.6;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 18px;
+            }
+
+            .container {
+                padding: 35px 15px 50px;
+            }
+
+            h1 {
+                font-size: 31px;
+            }
+
+            .status-card {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================================ -->
+    <!-- LOADING -->
+    <!-- ================================ -->
+
+    <div
+        id="loading"
+        class="loading"
+    >
+        Premium-Bereich wird geladen...
+    </div>
+
+
+    <!-- ================================ -->
+    <!-- APP -->
+    <!-- ================================ -->
+
+    <div
+        id="app"
+        class="hidden"
+    >
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="brand">
+                KDS <span>Premium</span>
+            </div>
+
+            <button
+                id="logoutButton"
+                class="logout"
+            >
+                Abmelden
+            </button>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <main class="container">
+
+            <section class="hero">
+
+                <div class="label">
+                    KDS PREMIUM
+                </div>
+
+                <h1>
+                    Willkommen,
+                    <span id="userName">
+                        Mitglied
+                    </span>.
+                </h1>
+
+                <p class="description">
+                    Willkommen im Premium-Bereich von
+                    Kraus Digital Solutions. Hier findest
+                    du deine persönlichen Premium-Funktionen
+                    und Informationen.
+                </p>
+
+            </section>
+
+
+            <!-- STATUS -->
+
+            <section class="status-card">
+
+                <div>
+
+                    <div class="status-title">
+                        Mitgliedschaft
+                    </div>
+
+                    <div class="status">
+                        Premium-Zugang
+                    </div>
+
+                </div>
+
+                <div
+                    id="statusBadge"
+                    class="status-badge"
+                >
+                    PREMIUM AKTIV
+                </div>
+
+            </section>
+
+
+            <!-- INFO CARDS -->
+
+            <section class="grid">
+
+                <div class="card">
+
+                    <div class="card-label">
+                        Mitglied
+                    </div>
+
+                    <h2 id="memberName">
+                        —
+                    </h2>
+
+                    <p>
+                        Dein Name, der in deinem
+                        KDS Premium-Konto hinterlegt ist.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-label">
+                        E-Mail
+                    </div>
+
+                    <h2
+                        id="memberEmail"
+                        style="
+                            word-break: break-word;
+                        "
+                    >
+                        —
+                    </h2>
+
+                    <p>
+                        Deine E-Mail-Adresse für
+                        dein KDS Premium-Konto.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="card-label">
+                        Status
+                    </div>
+
+                    <h2>
+                        Aktiv
+                    </h2>
+
+                    <p>
+                        Dein Premium-Zugang ist
+                        derzeit freigeschaltet.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- WELCOME -->
+
+            <section class="section">
+
+                <div class="section-title">
+                    Dein Premium-Bereich
+                </div>
+
+                <div class="welcome">
+
+                    <h2>
+                        Mehr Möglichkeiten mit KDS Premium
+                    </h2>
+
+                    <p>
+                        Dieser Bereich wird Schritt für
+                        Schritt erweitert. Hier können
+                        später exklusive Tools,
+                        Dienstleistungen, Downloads,
+                        Anfragen und weitere
+                        Premium-Funktionen verfügbar
+                        gemacht werden.
+                    </p>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <!-- ================================ -->
+    <!-- ERROR -->
+    <!-- ================================ -->
+
+    <div
+        id="error"
+        class="error hidden"
+    >
+
+        <h2>
+            Zugriff verweigert
+        </h2>
+
+        <p id="errorMessage">
+            Dein Premium-Zugang konnte nicht
+            überprüft werden.
+        </p>
+
+        <button
+            class="logout"
+            onclick="window.location.href='login.html'"
+        >
+            Zum Login
+        </button>
+
+    </div>
+
+
+    <!-- ================================ -->
+    <!-- SUPABASE -->
+    <!-- ================================ -->
+
+    <script type="module">
+
+        import {
+            createClient
+        } from
+        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+        // ========================================
+        // SUPABASE
+        // ========================================
+
+        const SUPABASE_URL =
+            "https://wpsgjzqbwpyfpmdawwnn.supabase.co";
+
+
+        const SUPABASE_ANON_KEY =
+            "sb_publishable_flgB5CSE4scG3m3Fyx5lUA_GfLn6xh6";
+
+
+        const supabase =
+            createClient(
+                SUPABASE_URL,
+                SUPABASE_ANON_KEY
+            );
+
+
+        // ========================================
+        // ELEMENTE
+        // ========================================
+
+        const loading =
+            document.getElementById(
+                "loading"
+            );
+
+        const app =
+            document.getElementById(
+                "app"
+            );
+
+        const errorBox =
+            document.getElementById(
+                "error"
+            );
+
+        const errorMessage =
+            document.getElementById(
+                "errorMessage"
+            );
+
+        const userName =
+            document.getElementById(
+                "userName"
+            );
+
+        const memberName =
+            document.getElementById(
+                "memberName"
+            );
+
+        const memberEmail =
+            document.getElementById(
+                "memberEmail"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        // ========================================
+        // FEHLER ANZEIGEN
+        // ========================================
+
+        function showError(
+            message
+        ) {
+
+            loading.classList.add(
+                "hidden"
+            );
+
+            app.classList.add(
+                "hidden"
+            );
+
+            errorBox.classList.remove(
+                "hidden"
+            );
+
+            errorMessage.textContent =
+                message;
+        }
+
+
+        // ========================================
+        // DASHBOARD LADEN
+        // ========================================
+
+        async function loadDashboard() {
+
+            try {
+
+                // --------------------------------
+                // SESSION
+                // --------------------------------
+
+                const {
+                    data: sessionData,
+                    error: sessionError
+                } =
+                    await supabase.auth.getSession();
+
+
+                if (
+                    sessionError ||
+                    !sessionData.session
+                ) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                const user =
+                    sessionData.session.user;
+
+
+                // --------------------------------
+                // PROFIL
+                // --------------------------------
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabase
+
+                        .from("profiles")
+
+                        .select(
+                            "id, full_name, premium, role, created_at"
+                        )
+
+                        .eq(
+                            "id",
+                            user.id
+                        )
+
+                        .maybeSingle();
+
+
+                if (profileError) {
+
+                    console.error(
+                        profileError
+                    );
+
+                    showError(
+                        "Deine Kontodaten konnten nicht geladen werden."
+                    );
+
+                    return;
+                }
+
+
+                if (!profile) {
+
+                    showError(
+                        "Für dein Konto wurde kein Profil gefunden."
+                    );
+
+                    return;
+                }
+
+
+                // --------------------------------
+                // PREMIUM PRÜFEN
+                // --------------------------------
+
+                if (
+                    profile.premium !==
+                    true
+                ) {
+
+                    showError(
+                        "Dein Konto besitzt keinen aktiven Premium-Zugang."
+                    );
+
+                    return;
+                }
+
+
+                // --------------------------------
+                // NAME
+                // --------------------------------
+
+                const name =
+                    profile.full_name ||
+                    user.email ||
+                    "Mitglied";
+
+
+                userName.textContent =
+                    name;
+
+                memberName.textContent =
+                    profile.full_name ||
+                    "Nicht angegeben";
+
+                memberEmail.textContent =
+                    user.email ||
+                    "Nicht angegeben";
+
+
+                // --------------------------------
+                // DASHBOARD ANZEIGEN
+                // --------------------------------
+
+                loading.classList.add(
+                    "hidden"
+                );
+
+                app.classList.remove(
+                    "hidden"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+                showError(
+                    "Beim Laden des Premium-Bereichs ist ein Fehler aufgetreten."
+                );
+            }
+        }
+
+
+        // ========================================
+        // LOGOUT
+        // ========================================
+
+        logoutButton.addEventListener(
+            "click",
+            async () => {
+
+                logoutButton.disabled =
+                    true;
+
+                logoutButton.textContent =
+                    "Abmelden...";
+
+
+                await supabase.auth.signOut();
+
+
+                window.location.href =
+                    "login.html";
+            }
+        );
+
+
+        // ========================================
+        // SESSION-ÄNDERUNGEN
+        // ========================================
+
+        supabase.auth.onAuthStateChange(
+            (event) => {
+
+                if (
+                    event ===
+                    "SIGNED_OUT"
+                ) {
+
+                    window.location.href =
+                        "login.html";
+                }
+            }
+        );
+
+
+        // ========================================
+        // START
+        // ========================================
+
+        loadDashboard();
+
+    </script>
+
+</body>
+</html>
+```
