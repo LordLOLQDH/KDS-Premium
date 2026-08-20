@@ -1,381 +1,778 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090b">
+
 <title>KDS Premium</title>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    min-height: 100vh;
     background:
-        radial-gradient(circle at 85% 0%, rgba(255, 80, 20, 0.10), transparent 28%),
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(255, 75, 20, 0.09),
+            transparent 28%
+        ),
         #08090b;
     color: #fff;
     font-family: Arial, Helvetica, sans-serif;
 }
 
+button,
+input,
+textarea {
+    font: inherit;
+}
+
 button {
-    font-family: inherit;
-}
-
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    padding: 18px 25px;
-    background: rgba(13, 15, 18, 0.94);
-    backdrop-filter: blur(14px);
-    border-bottom: 1px solid #24272d;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.brand {
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.brand span {
-    background: linear-gradient(90deg, #ff3d16, #ff8a18);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logout {
-    border: 1px solid #30343b;
-    background: #17191e;
-    color: #fff;
-    padding: 9px 14px;
-    border-radius: 8px;
     cursor: pointer;
-}
-
-.logout:hover {
-    background: #202329;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 42px 20px 70px;
-}
-
-.hero {
-    position: relative;
-    overflow: hidden;
-    padding: 38px;
-    border: 1px solid #292c32;
-    border-radius: 18px;
-    background:
-        linear-gradient(135deg, rgba(255, 61, 22, .10), transparent 50%),
-        #111317;
-    margin-bottom: 20px;
-}
-
-.hero::after {
-    content: "";
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    right: -100px;
-    top: -100px;
-    border-radius: 50%;
-    background: rgba(255, 106, 20, .12);
-    filter: blur(20px);
-}
-
-.label {
-    position: relative;
-    z-index: 1;
-    color: #ff6a1a;
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 1.7px;
-}
-
-h1 {
-    position: relative;
-    z-index: 1;
-    margin: 10px 0;
-    font-size: 40px;
-    line-height: 1.12;
-    letter-spacing: -1px;
-}
-
-.description {
-    position: relative;
-    z-index: 1;
-    max-width: 700px;
-    margin: 0;
-    color: #aeb4bd;
-    line-height: 1.7;
-}
-
-.status-row {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-.status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    border-radius: 20px;
-    background: rgba(255, 72, 20, .10);
-    border: 1px solid rgba(255, 91, 25, .25);
-    color: #ff9a6d;
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #ff6a1a;
-    box-shadow: 0 0 10px rgba(255, 106, 26, .7);
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 15px;
-}
-
-.card {
-    padding: 24px;
-    background: #111317;
-    border: 1px solid #24272d;
-    border-radius: 13px;
-}
-
-.card:hover {
-    border-color: #3a2c26;
-}
-
-.card-icon {
-    width: 42px;
-    height: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 10px;
-    background: rgba(255, 79, 22, .10);
-    border: 1px solid rgba(255, 79, 22, .20);
-    color: #ff752c;
-    font-size: 18px;
-    margin-bottom: 18px;
-}
-
-.card-label {
-    color: #858b95;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.card h2 {
-    margin: 8px 0;
-    font-size: 19px;
-}
-
-.card p {
-    margin: 0;
-    color: #9da3ad;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
-.card-button {
-    width: 100%;
-    margin-top: 18px;
-    padding: 11px 13px;
-    border: 1px solid #34373d;
-    border-radius: 8px;
-    background: #181a1f;
-    color: #fff;
-    cursor: pointer;
-    text-align: left;
-}
-
-.card-button:hover {
-    border-color: #ff6122;
-    background: #201b19;
-}
-
-.section {
-    margin-top: 32px;
-}
-
-.section-heading {
-    margin-bottom: 14px;
-    font-size: 21px;
-    font-weight: 800;
-}
-
-.feature-wide {
-    display: grid;
-    grid-template-columns: 1.3fr .7fr;
-    gap: 15px;
-}
-
-.project {
-    padding: 26px;
-    border-radius: 13px;
-    background: #111317;
-    border: 1px solid #24272d;
-}
-
-.project h2 {
-    margin: 0 0 8px;
-}
-
-.project p {
-    color: #9da3ad;
-    line-height: 1.6;
-}
-
-.orange-button {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 12px 17px;
-    border: 0;
-    border-radius: 8px;
-    background: linear-gradient(90deg, #ff3d16, #ff7b18);
-    color: #fff;
-    font-weight: 800;
-    cursor: pointer;
-}
-
-.account {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
-
-.account-item {
-    padding: 17px;
-    background: #17191e;
-    border: 1px solid #282c33;
-    border-radius: 9px;
-}
-
-.account-label {
-    color: #777e88;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 7px;
-}
-
-.account-value {
-    color: #fff;
-    font-size: 13px;
-    word-break: break-word;
-}
-
-.loading {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #aeb4bd;
-}
-
-.error {
-    max-width: 500px;
-    margin: 100px auto;
-    padding: 30px;
-    text-align: center;
-    background: #111317;
-    border: 1px solid #30282a;
-    border-radius: 13px;
-}
-
-.error p {
-    color: #9da3ad;
-    line-height: 1.6;
 }
 
 .hidden {
     display: none !important;
 }
 
-footer {
-    padding: 25px;
-    text-align: center;
-    color: #626872;
-    font-size: 11px;
-    border-top: 1px solid #1c1f24;
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 20px;
+
+    background: rgba(13, 15, 18, 0.94);
+    backdrop-filter: blur(14px);
+
+    border-bottom: 1px solid #25282e;
 }
 
+.logo {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.logo span {
+    background: linear-gradient(
+        90deg,
+        #ff4218,
+        #ff8b1b
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logout {
+    padding: 9px 13px;
+
+    background: #17191e;
+
+    border: 1px solid #30343b;
+    border-radius: 8px;
+
+    color: white;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 28px 16px 70px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 32px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #292d33;
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 70, 20, 0.11),
+            transparent 55%
+        ),
+        #111317;
+}
+
+.label {
+    color: #ff6b26;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    letter-spacing: 1.7px;
+}
+
+.hero h1 {
+    margin: 10px 0 12px;
+
+    font-size: 37px;
+    line-height: 1.15;
+}
+
+.hero p {
+    max-width: 720px;
+
+    margin: 0;
+
+    color: #aeb4bd;
+
+    line-height: 1.7;
+}
+
+.premium-status {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 8px;
+
+    margin-top: 18px;
+
+    padding: 8px 12px;
+
+    background: rgba(255, 75, 20, 0.10);
+
+    border: 1px solid rgba(255, 75, 20, 0.25);
+
+    border-radius: 20px;
+
+    color: #ff9c72;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff6a20;
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.nav {
+    display: flex;
+
+    gap: 6px;
+
+    overflow-x: auto;
+
+    padding: 5px;
+
+    margin-bottom: 24px;
+
+    background: #0d0f12;
+
+    border: 1px solid #25282e;
+
+    border-radius: 10px;
+}
+
+.nav button {
+    flex: 0 0 auto;
+
+    padding: 10px 13px;
+
+    background: transparent;
+
+    border: 0;
+    border-radius: 7px;
+
+    color: #858b95;
+
+    font-size: 13px;
+}
+
+.nav button.active,
+.nav button:hover {
+    background: #1a1c21;
+
+    color: white;
+}
+
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.title {
+    margin-bottom: 5px;
+
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.description {
+    margin: 0 0 18px;
+
+    color: #858b95;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 13px;
+}
+
+.card {
+    padding: 21px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 12px;
+}
+
+.card-icon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 14px;
+
+    background: rgba(255, 80, 20, 0.10);
+
+    border: 1px solid rgba(255, 80, 20, 0.20);
+
+    border-radius: 10px;
+
+    color: #ff762d;
+
+    font-weight: bold;
+}
+
+.card-label {
+    color: #777e88;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+.card h3 {
+    margin: 7px 0;
+
+    font-size: 18px;
+}
+
+.card p {
+    margin: 0;
+
+    color: #9da3ad;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+.primary {
+    padding: 11px 15px;
+
+    border: 0;
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4017,
+            #ff811b
+        );
+
+    color: white;
+
+    font-weight: 800;
+}
+
+.secondary {
+    padding: 10px 14px;
+
+    background: #181a1f;
+
+    border: 1px solid #34373d;
+
+    border-radius: 8px;
+
+    color: white;
+}
+
+.secondary:hover {
+    border-color: #ff6122;
+}
+
+.full {
+    width: 100%;
+}
+
+
+/* =========================
+   TEXT TOOL
+========================= */
+
+.textarea {
+    width: 100%;
+
+    min-height: 270px;
+
+    padding: 16px;
+
+    resize: vertical;
+
+    background: #0d0f12;
+
+    border: 1px solid #292d33;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    color: white;
+
+    line-height: 1.7;
+}
+
+.textarea:focus,
+.input:focus,
+.notes:focus {
+    border-color: #ff6122;
+}
+
+.toolbar {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.stats {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.stat {
+    padding: 14px;
+
+    background: #17191e;
+
+    border: 1px solid #282c33;
+
+    border-radius: 9px;
+}
+
+.stat-label {
+    margin-bottom: 5px;
+
+    color: #777e88;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+}
+
+.stat-value {
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   INPUTS
+========================= */
+
+.input {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    background: #0d0f12;
+
+    border: 1px solid #292d33;
+
+    border-radius: 9px;
+
+    outline: none;
+
+    color: white;
+}
+
+
+/* =========================
+   CHECKLIST
+========================= */
+
+.progress-box {
+    padding: 20px;
+
+    margin-bottom: 14px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 12px;
+}
+
+.progress {
+    height: 8px;
+
+    margin-top: 12px;
+
+    overflow: hidden;
+
+    background: #24272d;
+
+    border-radius: 10px;
+}
+
+.progress-fill {
+    width: 0%;
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4017,
+            #ff891b
+        );
+
+    transition: width .25s;
+}
+
+.checklist {
+    display: grid;
+
+    gap: 9px;
+}
+
+.check {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 9px;
+}
+
+.check input {
+    width: 18px;
+    height: 18px;
+
+    accent-color: #ff5b20;
+}
+
+.check span {
+    color: #c1c6ce;
+
+    font-size: 14px;
+}
+
+
+/* =========================
+   TEMPLATES
+========================= */
+
+.template textarea {
+    width: 100%;
+
+    min-height: 160px;
+
+    margin: 10px 0;
+
+    padding: 13px;
+
+    resize: vertical;
+
+    background: #0d0f12;
+
+    border: 1px solid #292d33;
+
+    border-radius: 8px;
+
+    color: white;
+}
+
+
+/* =========================
+   PROJECTS
+========================= */
+
+.project-list {
+    display: grid;
+
+    gap: 10px;
+
+    margin-top: 14px;
+}
+
+.project {
+    padding: 16px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.project strong {
+    display: block;
+
+    margin-bottom: 5px;
+}
+
+.project small {
+    color: #777e88;
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+.notes {
+    width: 100%;
+
+    min-height: 300px;
+
+    padding: 16px;
+
+    resize: vertical;
+
+    background: #0d0f12;
+
+    border: 1px solid #292d33;
+
+    border-radius: 10px;
+
+    outline: none;
+
+    color: white;
+
+    line-height: 1.7;
+}
+
+
+/* =========================
+   TIPS
+========================= */
+
+.tip {
+    padding: 20px;
+
+    margin-bottom: 10px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 11px;
+}
+
+.tip strong {
+    display: block;
+
+    margin-bottom: 7px;
+}
+
+.tip p {
+    margin: 0;
+
+    color: #9da3ad;
+
+    line-height: 1.6;
+}
+
+
+/* =========================
+   DOWNLOADS
+========================= */
+
+.download {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 17px;
+
+    margin-bottom: 9px;
+
+    background: #111317;
+
+    border: 1px solid #24272d;
+
+    border-radius: 10px;
+}
+
+.download small {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #777e88;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    padding: 30px;
+
+    text-align: center;
+
+    color: #555b64;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
 @media (max-width: 800px) {
+
     .grid {
         grid-template-columns: 1fr 1fr;
     }
 
-    .feature-wide {
-        grid-template-columns: 1fr;
-    }
-
-    .account {
-        grid-template-columns: 1fr 1fr;
-    }
 }
 
 @media (max-width: 550px) {
-    .container {
-        padding: 25px 15px 50px;
-    }
 
     .hero {
-        padding: 27px 21px;
+        padding: 25px 20px;
     }
 
-    h1 {
+    .hero h1 {
         font-size: 30px;
     }
 
     .grid,
-    .account {
+    .stats {
         grid-template-columns: 1fr;
     }
 
-    .topbar {
-        padding: 17px;
+    .project {
+        flex-direction: column;
     }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<div id="loading" class="loading">
-    Premium-Bereich wird geladen...
-</div>
-
-
-<div id="app" class="hidden">
 
 <header class="topbar">
 
-    <div class="brand">
+    <div class="logo">
         KDS <span>PREMIUM</span>
     </div>
 
-    <button id="logoutButton" class="logout">
+    <button
+        class="logout"
+        onclick="logout()"
+    >
         Abmelden
     </button>
 
@@ -384,256 +781,290 @@ footer {
 
 <main class="container">
 
+
 <section class="hero">
 
     <div class="label">
-        KDS PREMIUM
+        KRAUS DIGITAL SOLUTIONS
     </div>
 
     <h1>
-        Willkommen,
-        <span id="userName">Mitglied</span>.
+        Deine Premium-Zentrale.
     </h1>
 
-    <p class="description">
-        Deine Premium-Zentrale für digitale Tools,
-        KI, Website-Optimierung und exklusive
-        KDS-Funktionen.
+    <p>
+        Tools, Vorlagen, Projekte, Checklisten
+        und digitale Ressourcen – direkt auf
+        deinem Gerät.
     </p>
 
-    <div class="status-row">
-
-        <div class="status">
-            <span class="dot"></span>
-            PREMIUM AKTIV
-        </div>
-
+    <div class="premium-status">
+        <span class="dot"></span>
+        PREMIUM
     </div>
 
 </section>
 
 
-<section class="grid">
+<nav class="nav">
 
-    <div class="card">
+    <button
+        class="nav-button active"
+        data-section="dashboard"
+    >
+        Übersicht
+    </button>
 
-        <div class="card-icon">✦</div>
+    <button
+        class="nav-button"
+        data-section="tools"
+    >
+        Tools
+    </button>
 
-        <div class="card-label">
-            KI
-        </div>
+    <button
+        class="nav-button"
+        data-section="website"
+    >
+        Website-Check
+    </button>
 
-        <h2>
-            KDS AI Assistant
-        </h2>
+    <button
+        class="nav-button"
+        data-section="templates"
+    >
+        Vorlagen
+    </button>
 
-        <p>
-            Texte schreiben, Ideen entwickeln,
-            Inhalte verbessern und Aufgaben
-            schneller erledigen.
-        </p>
+    <button
+        class="nav-button"
+        data-section="projects"
+    >
+        Projekte
+    </button>
 
-        <button
-            class="card-button"
-            onclick="comingSoon('KDS AI Assistant')"
-        >
-            AI Assistant öffnen →
-        </button>
+    <button
+        class="nav-button"
+        data-section="notes"
+    >
+        Notizen
+    </button>
 
+    <button
+        class="nav-button"
+        data-section="downloads"
+    >
+        Downloads
+    </button>
+
+    <button
+        class="nav-button"
+        data-section="tips"
+    >
+        Tipps
+    </button>
+
+</nav>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<section
+    id="dashboard"
+    class="section active"
+>
+
+    <div class="title">
+        Premium-Funktionen
     </div>
 
-
-    <div class="card">
-
-        <div class="card-icon">↗</div>
-
-        <div class="card-label">
-            Analyse
-        </div>
-
-        <h2>
-            Website Check
-        </h2>
-
-        <p>
-            Lass deine Website auf Design,
-            Texte, Struktur und Nutzerfreundlichkeit
-            überprüfen.
-        </p>
-
-        <button
-            class="card-button"
-            onclick="comingSoon('Website Check')"
-        >
-            Website analysieren →
-        </button>
-
-    </div>
+    <p class="description">
+        Wähle einen Bereich aus.
+    </p>
 
 
-    <div class="card">
-
-        <div class="card-icon">▣</div>
-
-        <div class="card-label">
-            Vorlagen
-        </div>
-
-        <h2>
-            Premium Templates
-        </h2>
-
-        <p>
-            Exklusive Vorlagen für Websites,
-            Texte, Angebote und digitale
-            Projekte.
-        </p>
-
-        <button
-            class="card-button"
-            onclick="comingSoon('Premium Templates')"
-        >
-            Vorlagen öffnen →
-        </button>
-
-    </div>
+    <div class="grid">
 
 
-    <div class="card">
+        <div class="card">
 
-        <div class="card-icon">⚙</div>
-
-        <div class="card-label">
-            Automatisierung
-        </div>
-
-        <h2>
-            Automation Hub
-        </h2>
-
-        <p>
-            Entdecke praktische Automatisierungen
-            für wiederkehrende digitale Aufgaben.
-        </p>
-
-        <button
-            class="card-button"
-            onclick="comingSoon('Automation Hub')"
-        >
-            Automation Hub →
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="card-icon">↓</div>
-
-        <div class="card-label">
-            Downloads
-        </div>
-
-        <h2>
-            Premium Downloads
-        </h2>
-
-        <p>
-            Ressourcen, Checklisten, Vorlagen
-            und weitere Dateien exklusiv
-            für Premium-Mitglieder.
-        </p>
-
-        <button
-            class="card-button"
-            onclick="comingSoon('Premium Downloads')"
-        >
-            Downloads öffnen →
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="card-icon">?</div>
-
-        <div class="card-label">
-            Support
-        </div>
-
-        <h2>
-            Premium Support
-        </h2>
-
-        <p>
-            Stelle Fragen oder sende
-            eine Anfrage direkt aus
-            deinem Premium-Bereich.
-        </p>
-
-        <button
-            class="card-button"
-            onclick="comingSoon('Premium Support')"
-        >
-            Support öffnen →
-        </button>
-
-    </div>
-
-</section>
-
-
-<section class="section">
-
-    <div class="section-heading">
-        Persönlicher Bereich
-    </div>
-
-    <div class="feature-wide">
-
-        <div class="project">
-
-            <div class="card-label">
-                Mein Bereich
+            <div class="card-icon">
+                Aa
             </div>
 
-            <h2>
-                Deine digitalen Projekte
-            </h2>
+            <div class="card-label">
+                Tool
+            </div>
+
+            <h3>
+                Text-Tools
+            </h3>
 
             <p>
-                Hier können später deine gespeicherten
-                KI-Ergebnisse, Website-Analysen,
-                Projekte und persönlichen Dateien
-                gesammelt werden.
+                Texte analysieren, bereinigen,
+                formatieren und kopieren.
             </p>
 
             <button
-                class="orange-button"
-                onclick="comingSoon('Meine Projekte')"
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('tools')"
             >
-                Meine Projekte
+                Öffnen →
             </button>
 
         </div>
 
 
-        <div class="project">
+        <div class="card">
+
+            <div class="card-icon">
+                ✓
+            </div>
 
             <div class="card-label">
-                Neu
+                Check
             </div>
 
-            <h2>
-                Premium wird erweitert
-            </h2>
+            <h3>
+                Website-Check
+            </h3>
 
             <p>
-                Neue Tools und Funktionen werden
-                nach und nach direkt hier verfügbar.
+                Prüfe wichtige Punkte deiner
+                Website Schritt für Schritt.
             </p>
 
+            <button
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('website')"
+            >
+                Check starten →
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ▣
+            </div>
+
+            <div class="card-label">
+                Ressourcen
+            </div>
+
+            <h3>
+                Vorlagen
+            </h3>
+
+            <p>
+                Professionelle Texte und
+                Strukturen zum direkten Kopieren.
+            </p>
+
+            <button
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('templates')"
+            >
+                Vorlagen →
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ◇
+            </div>
+
+            <div class="card-label">
+                Organisation
+            </div>
+
+            <h3>
+                Projekte
+            </h3>
+
+            <p>
+                Kleine Projekte direkt im Browser
+                speichern und verwalten.
+            </p>
+
+            <button
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('projects')"
+            >
+                Projekte →
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ✎
+            </div>
+
+            <div class="card-label">
+                Persönlich
+            </div>
+
+            <h3>
+                Notizen
+            </h3>
+
+            <p>
+                Ideen und wichtige Informationen
+                auf deinem Gerät speichern.
+            </p>
+
+            <button
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('notes')"
+            >
+                Notizen →
+            </button>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-icon">
+                ↓
+            </div>
+
+            <div class="card-label">
+                Ressourcen
+            </div>
+
+            <h3>
+                Downloads
+            </h3>
+
+            <p>
+                Kostenlose Premium-Ressourcen
+                direkt herunterladen.
+            </p>
+
+            <button
+                class="secondary full"
+                style="margin-top:15px"
+                onclick="openSection('downloads')"
+            >
+                Downloads →
+            </button>
+
         </div>
 
     </div>
@@ -641,73 +1072,114 @@ footer {
 </section>
 
 
-<section class="section">
+<!-- =========================
+     TOOLS
+========================= -->
 
-    <div class="section-heading">
-        Konto
+<section
+    id="tools"
+    class="section"
+>
+
+    <div class="title">
+        Text-Tools
     </div>
 
-    <div class="account">
+    <p class="description">
+        Praktische Werkzeuge für deine Texte.
+    </p>
 
-        <div class="account-item">
 
-            <div class="account-label">
-                Name
-            </div>
+    <div class="card">
 
-            <div
-                id="memberName"
-                class="account-value"
+        <textarea
+            id="textTool"
+            class="textarea"
+            placeholder="Text hier eingeben..."
+        ></textarea>
+
+
+        <div class="toolbar">
+
+            <button
+                class="secondary"
+                onclick="upper()"
             >
-                —
-            </div>
+                GROSS
+            </button>
+
+            <button
+                class="secondary"
+                onclick="lower()"
+            >
+                klein
+            </button>
+
+            <button
+                class="secondary"
+                onclick="cleanText()"
+            >
+                Bereinigen
+            </button>
+
+            <button
+                class="secondary"
+                onclick="copyText()"
+            >
+                Kopieren
+            </button>
+
+            <button
+                class="secondary"
+                onclick="clearText()"
+            >
+                Leeren
+            </button>
 
         </div>
 
 
-        <div class="account-item">
+        <div class="stats">
 
-            <div class="account-label">
-                E-Mail
+            <div class="stat">
+                <div class="stat-label">
+                    Wörter
+                </div>
+
+                <div
+                    id="words"
+                    class="stat-value"
+                >
+                    0
+                </div>
             </div>
 
-            <div
-                id="memberEmail"
-                class="account-value"
-            >
-                —
+
+            <div class="stat">
+                <div class="stat-label">
+                    Zeichen
+                </div>
+
+                <div
+                    id="characters"
+                    class="stat-value"
+                >
+                    0
+                </div>
             </div>
 
-        </div>
 
+            <div class="stat">
+                <div class="stat-label">
+                    Ohne Leerzeichen
+                </div>
 
-        <div class="account-item">
-
-            <div class="account-label">
-                Rolle
-            </div>
-
-            <div
-                id="memberRole"
-                class="account-value"
-            >
-                —
-            </div>
-
-        </div>
-
-
-        <div class="account-item">
-
-            <div class="account-label">
-                Mitglied seit
-            </div>
-
-            <div
-                id="createdAt"
-                class="account-value"
-            >
-                —
+                <div
+                    id="charactersNoSpace"
+                    class="stat-value"
+                >
+                    0
+                </div>
             </div>
 
         </div>
@@ -715,253 +1187,1291 @@ footer {
     </div>
 
 </section>
+
+
+<!-- =========================
+     WEBSITE CHECK
+========================= -->
+
+<section
+    id="website"
+    class="section"
+>
+
+    <div class="title">
+        Website-Check
+    </div>
+
+    <p class="description">
+        Eine praktische manuelle Qualitätsprüfung.
+    </p>
+
+
+    <div class="progress-box">
+
+        <strong>
+            Fortschritt:
+            <span id="percentage">
+                0%
+            </span>
+        </strong>
+
+        <div class="progress">
+
+            <div
+                id="progress"
+                class="progress-fill"
+            ></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="checklist">
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die Website funktioniert auf Smartphones.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die Navigation ist verständlich.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die wichtigsten Leistungen sind sofort erkennbar.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Es gibt einen klaren Call-to-Action.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Kontaktmöglichkeiten sind leicht auffindbar.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die Texte sind verständlich.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die wichtigsten Buttons funktionieren.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die Website wirkt professionell und einheitlich.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Impressum und Datenschutz sind vorhanden.</span>
+        </label>
+
+        <label class="check">
+            <input type="checkbox">
+            <span>Die Website wurde auf mehreren Bildschirmgrößen getestet.</span>
+        </label>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TEMPLATES
+========================= -->
+
+<section
+    id="templates"
+    class="section"
+>
+
+    <div class="title">
+        Premium-Vorlagen
+    </div>
+
+    <p class="description">
+        Fertige Inhalte für Websites und Kommunikation.
+    </p>
+
+
+    <div class="grid">
+
+
+        <div class="card template">
+
+            <h3>
+                Website Hero
+            </h3>
+
+            <p>
+                Starker Einstieg für eine Unternehmenswebsite.
+            </p>
+
+            <textarea readonly>
+Ihre digitale Präsenz.
+Neu gedacht.
+
+Wir entwickeln moderne digitale Lösungen,
+die Ihr Unternehmen professionell,
+verständlich und überzeugend präsentieren.</textarea>
+
+            <button
+                class="primary"
+                onclick="copyTemplate(this)"
+            >
+                Kopieren
+            </button>
+
+        </div>
+
+
+        <div class="card template">
+
+            <h3>
+                Call-to-Action
+            </h3>
+
+            <p>
+                Für Landingpages und Angebotsseiten.
+            </p>
+
+            <textarea readonly>
+Bereit für den nächsten Schritt?
+
+Kontaktieren Sie uns und erfahren Sie,
+wie wir Ihren digitalen Auftritt verbessern können.</textarea>
+
+            <button
+                class="primary"
+                onclick="copyTemplate(this)"
+            >
+                Kopieren
+            </button>
+
+        </div>
+
+
+        <div class="card template">
+
+            <h3>
+                Kontakt-Antwort
+            </h3>
+
+            <p>
+                Professionelle automatische Antwort.
+            </p>
+
+            <textarea readonly>
+Vielen Dank für Ihre Nachricht.
+
+Ihre Anfrage wurde erfolgreich übermittelt.
+Wir melden uns so schnell wie möglich
+persönlich bei Ihnen zurück.</textarea>
+
+            <button
+                class="primary"
+                onclick="copyTemplate(this)"
+            >
+                Kopieren
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     PROJECTS
+========================= -->
+
+<section
+    id="projects"
+    class="section"
+>
+
+    <div class="title">
+        Meine Projekte
+    </div>
+
+    <p class="description">
+        Deine Projekte werden lokal auf diesem Gerät gespeichert.
+    </p>
+
+
+    <div class="card">
+
+        <input
+            id="projectName"
+            class="input"
+            placeholder="Projektname"
+        >
+
+        <textarea
+            id="projectDescription"
+            class="textarea"
+            style="min-height:130px;margin-top:10px"
+            placeholder="Beschreibung..."
+        ></textarea>
+
+        <button
+            class="primary"
+            style="margin-top:10px"
+            onclick="addProject()"
+        >
+            Projekt speichern
+        </button>
+
+    </div>
+
+
+    <div
+        id="projectsList"
+        class="project-list"
+    ></div>
+
+</section>
+
+
+<!-- =========================
+     NOTES
+========================= -->
+
+<section
+    id="notes"
+    class="section"
+>
+
+    <div class="title">
+        Meine Notizen
+    </div>
+
+    <p class="description">
+        Notizen werden nur auf diesem Gerät gespeichert.
+    </p>
+
+
+    <div class="card">
+
+        <textarea
+            id="notesArea"
+            class="notes"
+            placeholder="Deine Notizen..."
+        ></textarea>
+
+        <button
+            class="primary"
+            style="margin-top:10px"
+            onclick="saveNotes()"
+        >
+            Speichern
+        </button>
+
+        <button
+            class="secondary"
+            style="margin-top:10px"
+            onclick="deleteNotes()"
+        >
+            Löschen
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     DOWNLOADS
+========================= -->
+
+<section
+    id="downloads"
+    class="section"
+>
+
+    <div class="title">
+        Premium Downloads
+    </div>
+
+    <p class="description">
+        Nützliche Ressourcen direkt aus deinem Premium-Bereich.
+    </p>
+
+
+    <div class="download">
+
+        <div>
+            <strong>
+                Website-Checkliste
+            </strong>
+
+            <small>
+                TXT-Datei
+            </small>
+        </div>
+
+        <button
+            class="primary"
+            onclick="downloadChecklist()"
+        >
+            Herunterladen
+        </button>
+
+    </div>
+
+
+    <div class="download">
+
+        <div>
+            <strong>
+                KDS Copywriting Grundlagen
+            </strong>
+
+            <small>
+                TXT-Datei
+            </small>
+        </div>
+
+        <button
+            class="primary"
+            onclick="downloadCopywriting()"
+        >
+            Herunterladen
+        </button>
+
+    </div>
+
+
+    <div class="download">
+
+        <div>
+            <strong>
+                Website-Content Check
+            </strong>
+
+            <small>
+                TXT-Datei
+            </small>
+        </div>
+
+        <button
+            class="primary"
+            onclick="downloadContent()"
+        >
+            Herunterladen
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     TIPS
+========================= -->
+
+<section
+    id="tips"
+    class="section"
+>
+
+    <div class="title">
+        KDS Tipps
+    </div>
+
+    <p class="description">
+        Praktische Tipps für einen besseren digitalen Auftritt.
+    </p>
+
+
+    <div class="tip">
+
+        <strong>
+            01 · Der erste Eindruck
+        </strong>
+
+        <p>
+            Besucher sollten möglichst schnell verstehen,
+            was ein Unternehmen anbietet und welchen Nutzen
+            das Angebot für sie hat.
+        </p>
+
+    </div>
+
+
+    <div class="tip">
+
+        <strong>
+            02 · Klare Call-to-Actions
+        </strong>
+
+        <p>
+            Sag Besuchern konkret, was sie als Nächstes
+            tun können: Kontakt aufnehmen, Angebot ansehen
+            oder Termin vereinbaren.
+        </p>
+
+    </div>
+
+
+    <div class="tip">
+
+        <strong>
+            03 · Mobile Darstellung
+        </strong>
+
+        <p>
+            Eine Website sollte auf einem Smartphone
+            genauso verständlich und bedienbar sein
+            wie auf einem großen Bildschirm.
+        </p>
+
+    </div>
+
+
+    <div class="tip">
+
+        <strong>
+            04 · Vertrauen
+        </strong>
+
+        <p>
+            Referenzen, Bewertungen, transparente
+            Informationen und professionelle Inhalte
+            können die Glaubwürdigkeit erhöhen.
+        </p>
+
+    </div>
+
+
+    <div class="tip">
+
+        <strong>
+            05 · Texte
+        </strong>
+
+        <p>
+            Schreibe nicht nur darüber, was ein Unternehmen
+            macht. Erkläre vor allem, welchen konkreten
+            Vorteil der Kunde davon hat.
+        </p>
+
+    </div>
+
+</section>
+
 
 </main>
 
 
 <footer>
-    Kraus Digital Solutions · KDS Premium
+    Kraus Digital Solutions · Premium
 </footer>
 
-</div>
+
+<script>
 
 
-<div id="error" class="error hidden">
+/* =========================
+   NAVIGATION
+========================= */
 
-    <h2>
-        Zugriff verweigert
-    </h2>
+const navButtons =
+    document.querySelectorAll(
+        ".nav-button"
+    );
 
-    <p id="errorMessage">
-        Dein Premium-Zugang konnte nicht überprüft werden.
-    </p>
-
-    <button
-        class="orange-button"
-        onclick="window.location.href='login.html'"
-    >
-        Zum Login
-    </button>
-
-</div>
-
-
-<script type="module">
-
-import {
-    createClient
-}
-from
-"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-
-const SUPABASE_URL =
-    "https://wpsgjzqbwpyfpmdawwnn.supabase.co";
-
-const SUPABASE_ANON_KEY =
-    "sb_publishable_flgB5CSE4scG3m3Fyx5lUA_GfLn6xh6";
-
-
-const supabase =
-    createClient(
-        SUPABASE_URL,
-        SUPABASE_ANON_KEY
+const sections =
+    document.querySelectorAll(
+        ".section"
     );
 
 
-const loading =
-    document.getElementById("loading");
+function openSection(
+    name
+) {
 
-const app =
-    document.getElementById("app");
+    sections.forEach(
+        section => {
 
-const errorBox =
-    document.getElementById("error");
+            section.classList.remove(
+                "active"
+            );
 
-const errorMessage =
-    document.getElementById("errorMessage");
+        }
+    );
 
 
-function showError(message) {
+    navButtons.forEach(
+        button => {
 
-    loading.classList.add("hidden");
+            button.classList.remove(
+                "active"
+            );
 
-    app.classList.add("hidden");
+        }
+    );
 
-    errorBox.classList.remove("hidden");
 
-    errorMessage.textContent = message;
+    const section =
+        document.getElementById(
+            name
+        );
+
+
+    if (section) {
+
+        section.classList.add(
+            "active"
+        );
+
+    }
+
+
+    const button =
+        document.querySelector(
+            `[data-section="${name}"]`
+        );
+
+
+    if (button) {
+
+        button.classList.add(
+            "active"
+        );
+
+    }
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
 }
 
 
-async function loadDashboard() {
+navButtons.forEach(
+    button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                openSection(
+                    button.dataset.section
+                );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================
+   TEXT TOOL
+========================= */
+
+const textTool =
+    document.getElementById(
+        "textTool"
+    );
+
+
+function updateStats() {
+
+    const text =
+        textTool.value;
+
+
+    const words =
+        text.trim()
+            ? text.trim().split(/\s+/).length
+            : 0;
+
+
+    document.getElementById(
+        "words"
+    ).textContent =
+        words;
+
+
+    document.getElementById(
+        "characters"
+    ).textContent =
+        text.length;
+
+
+    document.getElementById(
+        "charactersNoSpace"
+    ).textContent =
+        text.replace(
+            /\s/g,
+            ""
+        ).length;
+
+}
+
+
+textTool.addEventListener(
+    "input",
+    updateStats
+);
+
+
+function upper() {
+
+    textTool.value =
+        textTool.value.toUpperCase();
+
+    updateStats();
+
+}
+
+
+function lower() {
+
+    textTool.value =
+        textTool.value.toLowerCase();
+
+    updateStats();
+
+}
+
+
+function cleanText() {
+
+    textTool.value =
+        textTool.value
+            .replace(
+                /[ \t]+/g,
+                " "
+            )
+            .replace(
+                /\n{3,}/g,
+                "\n\n"
+            )
+            .trim();
+
+    updateStats();
+
+}
+
+
+async function copyText() {
+
+    if (!textTool.value) {
+
+        alert(
+            "Bitte zuerst einen Text eingeben."
+        );
+
+        return;
+
+    }
+
+
+    await navigator.clipboard.writeText(
+        textTool.value
+    );
+
+
+    alert(
+        "Text wurde kopiert."
+    );
+
+}
+
+
+function clearText() {
+
+    textTool.value = "";
+
+    updateStats();
+
+}
+
+
+/* =========================
+   WEBSITE CHECK
+========================= */
+
+const checks =
+    document.querySelectorAll(
+        "#website .check input"
+    );
+
+
+function updateChecklist() {
+
+    const total =
+        checks.length;
+
+
+    const completed =
+        [...checks].filter(
+            item => item.checked
+        ).length;
+
+
+    const percentage =
+        Math.round(
+            completed / total * 100
+        );
+
+
+    document.getElementById(
+        "percentage"
+    ).textContent =
+        percentage + "%";
+
+
+    document.getElementById(
+        "progress"
+    ).style.width =
+        percentage + "%";
+
+
+    localStorage.setItem(
+        "kds_checklist",
+        JSON.stringify(
+            [...checks].map(
+                item => item.checked
+            )
+        )
+    );
+
+}
+
+
+checks.forEach(
+    check => {
+
+        check.addEventListener(
+            "change",
+            updateChecklist
+        );
+
+    }
+);
+
+
+try {
+
+    const saved =
+        JSON.parse(
+            localStorage.getItem(
+                "kds_checklist"
+            )
+        );
+
+
+    if (
+        Array.isArray(saved)
+    ) {
+
+        saved.forEach(
+            (value, index) => {
+
+                if (checks[index]) {
+
+                    checks[index].checked =
+                        value;
+
+                }
+
+            }
+        );
+
+    }
+
+}
+catch {}
+
+
+updateChecklist();
+
+
+/* =========================
+   TEMPLATES
+========================= */
+
+async function copyTemplate(
+    button
+) {
+
+    const textarea =
+        button.parentElement
+            .querySelector(
+                "textarea"
+            );
+
+
+    await navigator.clipboard.writeText(
+        textarea.value
+    );
+
+
+    const original =
+        button.textContent;
+
+
+    button.textContent =
+        "Kopiert ✓";
+
+
+    setTimeout(
+        () => {
+
+            button.textContent =
+                original;
+
+        },
+        1500
+    );
+
+}
+
+
+/* =========================
+   PROJECTS
+========================= */
+
+function getProjects() {
 
     try {
 
-        const {
-            data: sessionData,
-            error: sessionError
-        } =
-            await supabase.auth.getSession();
+        return JSON.parse(
+            localStorage.getItem(
+                "kds_projects"
+            )
+        ) || [];
 
+    }
+    catch {
 
-        if (
-            sessionError ||
-            !sessionData.session
-        ) {
-
-            window.location.href =
-                "login.html";
-
-            return;
-        }
-
-
-        const user =
-            sessionData.session.user;
-
-
-        const {
-            data: profile,
-            error: profileError
-        } =
-            await supabase
-                .from("profiles")
-                .select(
-                    "id, full_name, premium, role, created_at"
-                )
-                .eq(
-                    "id",
-                    user.id
-                )
-                .maybeSingle();
-
-
-        if (profileError) {
-
-            console.error(profileError);
-
-            showError(
-                "Deine Kontodaten konnten nicht geladen werden."
-            );
-
-            return;
-        }
-
-
-        if (!profile) {
-
-            showError(
-                "Für dein Konto wurde kein Profil gefunden."
-            );
-
-            return;
-        }
-
-
-        if (
-            profile.premium !== true
-        ) {
-
-            showError(
-                "Dein Konto besitzt keinen aktiven Premium-Zugang."
-            );
-
-            return;
-        }
-
-
-        const name =
-            profile.full_name ||
-            user.email ||
-            "Mitglied";
-
-
-        document.getElementById(
-            "userName"
-        ).textContent = name;
-
-
-        document.getElementById(
-            "memberName"
-        ).textContent =
-            profile.full_name ||
-            "Nicht angegeben";
-
-
-        document.getElementById(
-            "memberEmail"
-        ).textContent =
-            user.email ||
-            "Nicht angegeben";
-
-
-        document.getElementById(
-            "memberRole"
-        ).textContent =
-            profile.role ||
-            "member";
-
-
-        if (profile.created_at) {
-
-            document.getElementById(
-                "createdAt"
-            ).textContent =
-                new Date(
-                    profile.created_at
-                ).toLocaleDateString(
-                    "de-DE"
-                );
-
-        }
-
-
-        loading.classList.add("hidden");
-
-        app.classList.remove("hidden");
+        return [];
 
     }
 
-    catch (error) {
-
-        console.error(error);
-
-        showError(
-            "Beim Laden des Premium-Bereichs ist ein Fehler aufgetreten."
-        );
-    }
 }
 
 
-document
-    .getElementById("logoutButton")
-    .addEventListener(
-        "click",
-        async () => {
+function saveProjects(
+    projects
+) {
 
-            await supabase.auth.signOut();
+    localStorage.setItem(
+        "kds_projects",
+        JSON.stringify(
+            projects
+        )
+    );
 
-            window.location.href =
-                "login.html";
-        }
+}
+
+
+function addProject() {
+
+    const name =
+        document.getElementById(
+            "projectName"
+        ).value.trim();
+
+
+    const description =
+        document.getElementById(
+            "projectDescription"
+        ).value.trim();
+
+
+    if (!name) {
+
+        alert(
+            "Bitte einen Projektnamen eingeben."
+        );
+
+        return;
+
+    }
+
+
+    const projects =
+        getProjects();
+
+
+    projects.unshift({
+
+        id:
+            Date.now(),
+
+        name:
+            name,
+
+        description:
+            description,
+
+        date:
+            new Date()
+                .toLocaleDateString(
+                    "de-DE"
+                )
+
+    });
+
+
+    saveProjects(
+        projects
     );
 
 
-window.comingSoon =
-    function(feature) {
+    document.getElementById(
+        "projectName"
+    ).value = "";
 
-        alert(
-            feature +
-            " wird gerade entwickelt und bald verfügbar sein."
+
+    document.getElementById(
+        "projectDescription"
+    ).value = "";
+
+
+    renderProjects();
+
+}
+
+
+function deleteProject(
+    id
+) {
+
+    const projects =
+        getProjects()
+            .filter(
+                project =>
+                    project.id !== id
+            );
+
+
+    saveProjects(
+        projects
+    );
+
+
+    renderProjects();
+
+}
+
+
+function escapeHTML(
+    text
+) {
+
+    return String(text)
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
         );
 
-    };
+}
 
 
-loadDashboard();
+function renderProjects() {
+
+    const list =
+        document.getElementById(
+            "projectsList"
+        );
+
+
+    const projects =
+        getProjects();
+
+
+    if (!projects.length) {
+
+        list.innerHTML = `
+            <div class="card">
+                <p>
+                    Noch keine Projekte gespeichert.
+                </p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    list.innerHTML =
+        projects.map(
+            project => `
+
+                <div class="project">
+
+                    <div>
+
+                        <strong>
+                            ${escapeHTML(project.name)}
+                        </strong>
+
+                        <small>
+                            ${escapeHTML(
+                                project.description ||
+                                "Keine Beschreibung"
+                            )}
+                            ·
+                            ${project.date}
+                        </small>
+
+                    </div>
+
+                    <button
+                        class="secondary"
+                        onclick="deleteProject(${project.id})"
+                    >
+                        Löschen
+                    </button>
+
+                </div>
+
+            `
+        ).join("");
+
+}
+
+
+renderProjects();
+
+
+/* =========================
+   NOTES
+========================= */
+
+const notesArea =
+    document.getElementById(
+        "notesArea"
+    );
+
+
+notesArea.value =
+    localStorage.getItem(
+        "kds_notes"
+    ) || "";
+
+
+function saveNotes() {
+
+    localStorage.setItem(
+        "kds_notes",
+        notesArea.value
+    );
+
+
+    alert(
+        "Notizen gespeichert."
+    );
+
+}
+
+
+function deleteNotes() {
+
+    if (
+        !confirm(
+            "Möchtest du alle Notizen löschen?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    notesArea.value = "";
+
+    localStorage.removeItem(
+        "kds_notes"
+    );
+
+}
+
+
+/* =========================
+   DOWNLOADS
+========================= */
+
+function downloadFile(
+    filename,
+    content
+) {
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type:
+                    "text/plain;charset=utf-8"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement(
+            "a"
+        );
+
+
+    link.href = url;
+
+    link.download =
+        filename;
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+    link.remove();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+
+function downloadChecklist() {
+
+    downloadFile(
+        "kds-website-checkliste.txt",
+
+`KDS WEBSITE-CHECKLISTE
+
+1. Funktioniert die Website auf Smartphones?
+2. Ist die Navigation verständlich?
+3. Sind die Leistungen klar erklärt?
+4. Gibt es einen Call-to-Action?
+5. Sind Kontaktmöglichkeiten leicht zu finden?
+6. Sind die Texte verständlich?
+7. Funktionieren alle Buttons?
+8. Wirkt das Design professionell?
+9. Sind Impressum und Datenschutz vorhanden?
+10. Wurde die Website getestet?`
+    );
+
+}
+
+
+function downloadCopywriting() {
+
+    downloadFile(
+        "kds-copywriting-grundlagen.txt",
+
+`KDS COPYWRITING GRUNDLAGEN
+
+1. Schreibe für den Kunden.
+2. Erkläre den konkreten Nutzen.
+3. Verwende klare Überschriften.
+4. Vermeide unnötig komplizierte Sprache.
+5. Verwende konkrete Call-to-Actions.
+6. Strukturiere lange Texte mit Zwischenüberschriften.
+7. Hebe wichtige Vorteile hervor.`
+    );
+
+}
+
+
+function downloadContent() {
+
+    downloadFile(
+        "kds-website-content-check.txt",
+
+`KDS WEBSITE CONTENT CHECK
+
+HERO
+[ ] Ist sofort klar, was angeboten wird?
+[ ] Wird ein konkreter Nutzen genannt?
+
+LEISTUNGEN
+[ ] Sind Leistungen verständlich erklärt?
+[ ] Werden Vorteile statt nur Funktionen genannt?
+
+VERTRAUEN
+[ ] Gibt es Referenzen?
+[ ] Gibt es Bewertungen?
+
+KONTAKT
+[ ] Ist der Kontakt leicht erreichbar?
+[ ] Gibt es einen klaren CTA?
+
+MOBILE
+[ ] Sind Texte gut lesbar?
+[ ] Sind Buttons groß genug?`
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout() {
+
+    /*
+       Diese Version ist bewusst komplett
+       unabhängig von Supabase.
+
+       Wenn deine Login-Seite später eine
+       eigene Session verwendet, kannst du
+       hier die entsprechende Abmeldefunktion
+       ergänzen.
+    */
+
+    window.location.href =
+        "login.html";
+
+}
 
 </script>
 
 </body>
 </html>
+```
