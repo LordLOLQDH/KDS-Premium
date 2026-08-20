@@ -1,761 +1,967 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KDS Premium</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+<style>
+* {
+    box-sizing: border-box;
+}
 
-    <title>KDS Premium</title>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 85% 0%, rgba(255, 80, 20, 0.10), transparent 28%),
+        #08090b;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+button {
+    font-family: inherit;
+}
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            background: #08090b;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 18px 25px;
+    background: rgba(13, 15, 18, 0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid #24272d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-        .topbar {
-            padding: 22px 25px;
-            background: #0d0f12;
-            border-bottom: 1px solid #24272d;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-        }
+.brand {
+    font-size: 21px;
+    font-weight: 800;
+}
 
-        .brand {
-            font-size: 21px;
-            font-weight: bold;
-        }
+.brand span {
+    background: linear-gradient(90deg, #ff3d16, #ff8a18);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 
-        .brand span {
-            color: #9da3ad;
-        }
+.logout {
+    border: 1px solid #30343b;
+    background: #17191e;
+    color: #fff;
+    padding: 9px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 
-        .logout {
-            border: 1px solid #30343b;
-            background: #17191e;
-            color: #ffffff;
-            padding: 9px 14px;
-            border-radius: 7px;
-            cursor: pointer;
-            font-size: 13px;
-        }
+.logout:hover {
+    background: #202329;
+}
 
-        .logout:hover {
-            background: #202329;
-        }
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 42px 20px 70px;
+}
 
-        .container {
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 45px 20px 60px;
-        }
+.hero {
+    position: relative;
+    overflow: hidden;
+    padding: 38px;
+    border: 1px solid #292c32;
+    border-radius: 18px;
+    background:
+        linear-gradient(135deg, rgba(255, 61, 22, .10), transparent 50%),
+        #111317;
+    margin-bottom: 20px;
+}
 
-        .hero {
-            margin-bottom: 30px;
-        }
+.hero::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -100px;
+    top: -100px;
+    border-radius: 50%;
+    background: rgba(255, 106, 20, .12);
+    filter: blur(20px);
+}
 
-        .label {
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 1.5px;
-            color: #8d939d;
-            text-transform: uppercase;
-        }
+.label {
+    position: relative;
+    z-index: 1;
+    color: #ff6a1a;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.7px;
+}
 
-        h1 {
-            margin: 10px 0 12px;
-            font-size: 38px;
-            line-height: 1.15;
-            letter-spacing: -1px;
-        }
+h1 {
+    position: relative;
+    z-index: 1;
+    margin: 10px 0;
+    font-size: 40px;
+    line-height: 1.12;
+    letter-spacing: -1px;
+}
 
-        .description {
-            margin: 0;
-            max-width: 650px;
-            color: #aeb4bd;
-            line-height: 1.7;
-            font-size: 16px;
-        }
+.description {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+    margin: 0;
+    color: #aeb4bd;
+    line-height: 1.7;
+}
 
-        .status-card {
-            margin-bottom: 25px;
-            padding: 22px;
-            background: #111317;
-            border: 1px solid #24272d;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
+.status-row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 22px;
+}
 
-        .status-title {
-            font-size: 14px;
-            color: #8d939d;
-            margin-bottom: 6px;
-        }
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    background: rgba(255, 72, 20, .10);
+    border: 1px solid rgba(255, 91, 25, .25);
+    color: #ff9a6d;
+    font-size: 12px;
+    font-weight: 800;
+}
 
-        .status {
-            font-size: 20px;
-            font-weight: bold;
-        }
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #ff6a1a;
+    box-shadow: 0 0 10px rgba(255, 106, 26, .7);
+}
 
-        .status-badge {
-            padding: 8px 12px;
-            border-radius: 20px;
-            background: #17221a;
-            border: 1px solid #29412f;
-            color: #a9d6b2;
-            font-size: 12px;
-            font-weight: bold;
-        }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+}
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(
-                auto-fit,
-                minmax(220px, 1fr)
-            );
-            gap: 15px;
-        }
+.card {
+    padding: 24px;
+    background: #111317;
+    border: 1px solid #24272d;
+    border-radius: 13px;
+}
 
-        .card {
-            padding: 24px;
-            background: #111317;
-            border: 1px solid #24272d;
-            border-radius: 12px;
-        }
+.card:hover {
+    border-color: #3a2c26;
+}
 
-        .card-label {
-            font-size: 12px;
-            color: #858b95;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.card-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255, 79, 22, .10);
+    border: 1px solid rgba(255, 79, 22, .20);
+    color: #ff752c;
+    font-size: 18px;
+    margin-bottom: 18px;
+}
 
-        .card h2 {
-            margin: 9px 0 0;
-            font-size: 19px;
-        }
+.card-label {
+    color: #858b95;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .card p {
-            margin: 9px 0 0;
-            color: #9da3ad;
-            font-size: 14px;
-            line-height: 1.6;
-        }
+.card h2 {
+    margin: 8px 0;
+    font-size: 19px;
+}
 
-        .section {
-            margin-top: 35px;
-        }
+.card p {
+    margin: 0;
+    color: #9da3ad;
+    font-size: 14px;
+    line-height: 1.6;
+}
 
-        .section-title {
-            margin-bottom: 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
+.card-button {
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px 13px;
+    border: 1px solid #34373d;
+    border-radius: 8px;
+    background: #181a1f;
+    color: #fff;
+    cursor: pointer;
+    text-align: left;
+}
 
-        .welcome {
-            padding: 25px;
-            background: #17191e;
-            border: 1px solid #282c33;
-            border-radius: 12px;
-        }
+.card-button:hover {
+    border-color: #ff6122;
+    background: #201b19;
+}
 
-        .welcome h2 {
-            margin: 0 0 8px;
-            font-size: 21px;
-        }
+.section {
+    margin-top: 32px;
+}
 
-        .welcome p {
-            margin: 0;
-            color: #9da3ad;
-            line-height: 1.7;
-        }
+.section-heading {
+    margin-bottom: 14px;
+    font-size: 21px;
+    font-weight: 800;
+}
 
-        .loading {
-            text-align: center;
-            padding: 50px 20px;
-            color: #9da3ad;
-        }
+.feature-wide {
+    display: grid;
+    grid-template-columns: 1.3fr .7fr;
+    gap: 15px;
+}
 
-        .error {
-            max-width: 500px;
-            margin: 80px auto;
-            padding: 30px;
-            text-align: center;
-            background: #111317;
-            border: 1px solid #24272d;
-            border-radius: 12px;
-        }
+.project {
+    padding: 26px;
+    border-radius: 13px;
+    background: #111317;
+    border: 1px solid #24272d;
+}
 
-        .error h2 {
-            margin-top: 0;
-        }
+.project h2 {
+    margin: 0 0 8px;
+}
 
-        .error p {
-            color: #9da3ad;
-            line-height: 1.6;
-        }
+.project p {
+    color: #9da3ad;
+    line-height: 1.6;
+}
 
-        .hidden {
-            display: none;
-        }
+.orange-button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 12px 17px;
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #ff3d16, #ff7b18);
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+}
 
-        @media (max-width: 600px) {
-            .topbar {
-                padding: 18px;
-            }
+.account {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
 
-            .container {
-                padding: 35px 15px 50px;
-            }
+.account-item {
+    padding: 17px;
+    background: #17191e;
+    border: 1px solid #282c33;
+    border-radius: 9px;
+}
 
-            h1 {
-                font-size: 31px;
-            }
+.account-label {
+    color: #777e88;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 7px;
+}
 
-            .status-card {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-    </style>
+.account-value {
+    color: #fff;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.loading {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aeb4bd;
+}
+
+.error {
+    max-width: 500px;
+    margin: 100px auto;
+    padding: 30px;
+    text-align: center;
+    background: #111317;
+    border: 1px solid #30282a;
+    border-radius: 13px;
+}
+
+.error p {
+    color: #9da3ad;
+    line-height: 1.6;
+}
+
+.hidden {
+    display: none !important;
+}
+
+footer {
+    padding: 25px;
+    text-align: center;
+    color: #626872;
+    font-size: 11px;
+    border-top: 1px solid #1c1f24;
+}
+
+@media (max-width: 800px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .feature-wide {
+        grid-template-columns: 1fr;
+    }
+
+    .account {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 550px) {
+    .container {
+        padding: 25px 15px 50px;
+    }
+
+    .hero {
+        padding: 27px 21px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .grid,
+    .account {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        padding: 17px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- ================================ -->
-    <!-- LOADING -->
-    <!-- ================================ -->
+<div id="loading" class="loading">
+    Premium-Bereich wird geladen...
+</div>
 
-    <div
-        id="loading"
-        class="loading"
-    >
-        Premium-Bereich wird geladen...
+
+<div id="app" class="hidden">
+
+<header class="topbar">
+
+    <div class="brand">
+        KDS <span>PREMIUM</span>
     </div>
 
+    <button id="logoutButton" class="logout">
+        Abmelden
+    </button>
 
-    <!-- ================================ -->
-    <!-- APP -->
-    <!-- ================================ -->
-
-    <div
-        id="app"
-        class="hidden"
-    >
-
-        <!-- TOPBAR -->
-
-        <header class="topbar">
-
-            <div class="brand">
-                KDS <span>Premium</span>
-            </div>
-
-            <button
-                id="logoutButton"
-                class="logout"
-            >
-                Abmelden
-            </button>
-
-        </header>
+</header>
 
 
-        <!-- CONTENT -->
+<main class="container">
 
-        <main class="container">
+<section class="hero">
 
-            <section class="hero">
+    <div class="label">
+        KDS PREMIUM
+    </div>
 
-                <div class="label">
-                    KDS PREMIUM
-                </div>
+    <h1>
+        Willkommen,
+        <span id="userName">Mitglied</span>.
+    </h1>
 
-                <h1>
-                    Willkommen,
-                    <span id="userName">
-                        Mitglied
-                    </span>.
-                </h1>
+    <p class="description">
+        Deine Premium-Zentrale für digitale Tools,
+        KI, Website-Optimierung und exklusive
+        KDS-Funktionen.
+    </p>
 
-                <p class="description">
-                    Willkommen im Premium-Bereich von
-                    Kraus Digital Solutions. Hier findest
-                    du deine persönlichen Premium-Funktionen
-                    und Informationen.
-                </p>
+    <div class="status-row">
 
-            </section>
-
-
-            <!-- STATUS -->
-
-            <section class="status-card">
-
-                <div>
-
-                    <div class="status-title">
-                        Mitgliedschaft
-                    </div>
-
-                    <div class="status">
-                        Premium-Zugang
-                    </div>
-
-                </div>
-
-                <div
-                    id="statusBadge"
-                    class="status-badge"
-                >
-                    PREMIUM AKTIV
-                </div>
-
-            </section>
-
-
-            <!-- INFO CARDS -->
-
-            <section class="grid">
-
-                <div class="card">
-
-                    <div class="card-label">
-                        Mitglied
-                    </div>
-
-                    <h2 id="memberName">
-                        —
-                    </h2>
-
-                    <p>
-                        Dein Name, der in deinem
-                        KDS Premium-Konto hinterlegt ist.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-label">
-                        E-Mail
-                    </div>
-
-                    <h2
-                        id="memberEmail"
-                        style="
-                            word-break: break-word;
-                        "
-                    >
-                        —
-                    </h2>
-
-                    <p>
-                        Deine E-Mail-Adresse für
-                        dein KDS Premium-Konto.
-                    </p>
-
-                </div>
-
-
-                <div class="card">
-
-                    <div class="card-label">
-                        Status
-                    </div>
-
-                    <h2>
-                        Aktiv
-                    </h2>
-
-                    <p>
-                        Dein Premium-Zugang ist
-                        derzeit freigeschaltet.
-                    </p>
-
-                </div>
-
-            </section>
-
-
-            <!-- WELCOME -->
-
-            <section class="section">
-
-                <div class="section-title">
-                    Dein Premium-Bereich
-                </div>
-
-                <div class="welcome">
-
-                    <h2>
-                        Mehr Möglichkeiten mit KDS Premium
-                    </h2>
-
-                    <p>
-                        Dieser Bereich wird Schritt für
-                        Schritt erweitert. Hier können
-                        später exklusive Tools,
-                        Dienstleistungen, Downloads,
-                        Anfragen und weitere
-                        Premium-Funktionen verfügbar
-                        gemacht werden.
-                    </p>
-
-                </div>
-
-            </section>
-
-        </main>
+        <div class="status">
+            <span class="dot"></span>
+            PREMIUM AKTIV
+        </div>
 
     </div>
 
+</section>
 
-    <!-- ================================ -->
-    <!-- ERROR -->
-    <!-- ================================ -->
 
-    <div
-        id="error"
-        class="error hidden"
-    >
+<section class="grid">
+
+    <div class="card">
+
+        <div class="card-icon">✦</div>
+
+        <div class="card-label">
+            KI
+        </div>
 
         <h2>
-            Zugriff verweigert
+            KDS AI Assistant
         </h2>
 
-        <p id="errorMessage">
-            Dein Premium-Zugang konnte nicht
-            überprüft werden.
+        <p>
+            Texte schreiben, Ideen entwickeln,
+            Inhalte verbessern und Aufgaben
+            schneller erledigen.
         </p>
 
         <button
-            class="logout"
-            onclick="window.location.href='login.html'"
+            class="card-button"
+            onclick="comingSoon('KDS AI Assistant')"
         >
-            Zum Login
+            AI Assistant öffnen →
         </button>
 
     </div>
 
 
-    <!-- ================================ -->
-    <!-- SUPABASE -->
-    <!-- ================================ -->
+    <div class="card">
 
-    <script type="module">
+        <div class="card-icon">↗</div>
 
-        import {
-            createClient
-        } from
-        "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+        <div class="card-label">
+            Analyse
+        </div>
 
+        <h2>
+            Website Check
+        </h2>
 
-        // ========================================
-        // SUPABASE
-        // ========================================
+        <p>
+            Lass deine Website auf Design,
+            Texte, Struktur und Nutzerfreundlichkeit
+            überprüfen.
+        </p>
 
-        const SUPABASE_URL =
-            "https://wpsgjzqbwpyfpmdawwnn.supabase.co";
+        <button
+            class="card-button"
+            onclick="comingSoon('Website Check')"
+        >
+            Website analysieren →
+        </button>
 
-
-        const SUPABASE_ANON_KEY =
-            "sb_publishable_flgB5CSE4scG3m3Fyx5lUA_GfLn6xh6";
-
-
-        const supabase =
-            createClient(
-                SUPABASE_URL,
-                SUPABASE_ANON_KEY
-            );
+    </div>
 
 
-        // ========================================
-        // ELEMENTE
-        // ========================================
+    <div class="card">
 
-        const loading =
-            document.getElementById(
-                "loading"
-            );
+        <div class="card-icon">▣</div>
 
-        const app =
-            document.getElementById(
-                "app"
-            );
+        <div class="card-label">
+            Vorlagen
+        </div>
 
-        const errorBox =
-            document.getElementById(
-                "error"
-            );
+        <h2>
+            Premium Templates
+        </h2>
 
-        const errorMessage =
-            document.getElementById(
-                "errorMessage"
-            );
+        <p>
+            Exklusive Vorlagen für Websites,
+            Texte, Angebote und digitale
+            Projekte.
+        </p>
 
-        const userName =
-            document.getElementById(
-                "userName"
-            );
+        <button
+            class="card-button"
+            onclick="comingSoon('Premium Templates')"
+        >
+            Vorlagen öffnen →
+        </button>
 
-        const memberName =
-            document.getElementById(
-                "memberName"
-            );
-
-        const memberEmail =
-            document.getElementById(
-                "memberEmail"
-            );
-
-        const logoutButton =
-            document.getElementById(
-                "logoutButton"
-            );
+    </div>
 
 
-        // ========================================
-        // FEHLER ANZEIGEN
-        // ========================================
+    <div class="card">
 
-        function showError(
-            message
+        <div class="card-icon">⚙</div>
+
+        <div class="card-label">
+            Automatisierung
+        </div>
+
+        <h2>
+            Automation Hub
+        </h2>
+
+        <p>
+            Entdecke praktische Automatisierungen
+            für wiederkehrende digitale Aufgaben.
+        </p>
+
+        <button
+            class="card-button"
+            onclick="comingSoon('Automation Hub')"
+        >
+            Automation Hub →
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-icon">↓</div>
+
+        <div class="card-label">
+            Downloads
+        </div>
+
+        <h2>
+            Premium Downloads
+        </h2>
+
+        <p>
+            Ressourcen, Checklisten, Vorlagen
+            und weitere Dateien exklusiv
+            für Premium-Mitglieder.
+        </p>
+
+        <button
+            class="card-button"
+            onclick="comingSoon('Premium Downloads')"
+        >
+            Downloads öffnen →
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="card-icon">?</div>
+
+        <div class="card-label">
+            Support
+        </div>
+
+        <h2>
+            Premium Support
+        </h2>
+
+        <p>
+            Stelle Fragen oder sende
+            eine Anfrage direkt aus
+            deinem Premium-Bereich.
+        </p>
+
+        <button
+            class="card-button"
+            onclick="comingSoon('Premium Support')"
+        >
+            Support öffnen →
+        </button>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-heading">
+        Persönlicher Bereich
+    </div>
+
+    <div class="feature-wide">
+
+        <div class="project">
+
+            <div class="card-label">
+                Mein Bereich
+            </div>
+
+            <h2>
+                Deine digitalen Projekte
+            </h2>
+
+            <p>
+                Hier können später deine gespeicherten
+                KI-Ergebnisse, Website-Analysen,
+                Projekte und persönlichen Dateien
+                gesammelt werden.
+            </p>
+
+            <button
+                class="orange-button"
+                onclick="comingSoon('Meine Projekte')"
+            >
+                Meine Projekte
+            </button>
+
+        </div>
+
+
+        <div class="project">
+
+            <div class="card-label">
+                Neu
+            </div>
+
+            <h2>
+                Premium wird erweitert
+            </h2>
+
+            <p>
+                Neue Tools und Funktionen werden
+                nach und nach direkt hier verfügbar.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-heading">
+        Konto
+    </div>
+
+    <div class="account">
+
+        <div class="account-item">
+
+            <div class="account-label">
+                Name
+            </div>
+
+            <div
+                id="memberName"
+                class="account-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="account-item">
+
+            <div class="account-label">
+                E-Mail
+            </div>
+
+            <div
+                id="memberEmail"
+                class="account-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="account-item">
+
+            <div class="account-label">
+                Rolle
+            </div>
+
+            <div
+                id="memberRole"
+                class="account-value"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="account-item">
+
+            <div class="account-label">
+                Mitglied seit
+            </div>
+
+            <div
+                id="createdAt"
+                class="account-value"
+            >
+                —
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    Kraus Digital Solutions · KDS Premium
+</footer>
+
+</div>
+
+
+<div id="error" class="error hidden">
+
+    <h2>
+        Zugriff verweigert
+    </h2>
+
+    <p id="errorMessage">
+        Dein Premium-Zugang konnte nicht überprüft werden.
+    </p>
+
+    <button
+        class="orange-button"
+        onclick="window.location.href='login.html'"
+    >
+        Zum Login
+    </button>
+
+</div>
+
+
+<script type="module">
+
+import {
+    createClient
+}
+from
+"https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+
+const SUPABASE_URL =
+    "https://wpsgjzqbwpyfpmdawwnn.supabase.co";
+
+const SUPABASE_ANON_KEY =
+    "sb_publishable_flgB5CSE4scG3m3Fyx5lUA_GfLn6xh6";
+
+
+const supabase =
+    createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+
+
+const loading =
+    document.getElementById("loading");
+
+const app =
+    document.getElementById("app");
+
+const errorBox =
+    document.getElementById("error");
+
+const errorMessage =
+    document.getElementById("errorMessage");
+
+
+function showError(message) {
+
+    loading.classList.add("hidden");
+
+    app.classList.add("hidden");
+
+    errorBox.classList.remove("hidden");
+
+    errorMessage.textContent = message;
+}
+
+
+async function loadDashboard() {
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await supabase.auth.getSession();
+
+
+        if (
+            sessionError ||
+            !sessionData.session
         ) {
 
-            loading.classList.add(
-                "hidden"
-            );
+            window.location.href =
+                "login.html";
 
-            app.classList.add(
-                "hidden"
-            );
-
-            errorBox.classList.remove(
-                "hidden"
-            );
-
-            errorMessage.textContent =
-                message;
+            return;
         }
 
 
-        // ========================================
-        // DASHBOARD LADEN
-        // ========================================
-
-        async function loadDashboard() {
-
-            try {
-
-                // --------------------------------
-                // SESSION
-                // --------------------------------
-
-                const {
-                    data: sessionData,
-                    error: sessionError
-                } =
-                    await supabase.auth.getSession();
+        const user =
+            sessionData.session.user;
 
 
-                if (
-                    sessionError ||
-                    !sessionData.session
-                ) {
-
-                    window.location.href =
-                        "login.html";
-
-                    return;
-                }
-
-
-                const user =
-                    sessionData.session.user;
-
-
-                // --------------------------------
-                // PROFIL
-                // --------------------------------
-
-                const {
-                    data: profile,
-                    error: profileError
-                } =
-                    await supabase
-
-                        .from("profiles")
-
-                        .select(
-                            "id, full_name, premium, role, created_at"
-                        )
-
-                        .eq(
-                            "id",
-                            user.id
-                        )
-
-                        .maybeSingle();
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabase
+                .from("profiles")
+                .select(
+                    "id, full_name, premium, role, created_at"
+                )
+                .eq(
+                    "id",
+                    user.id
+                )
+                .maybeSingle();
 
 
-                if (profileError) {
+        if (profileError) {
 
-                    console.error(
-                        profileError
-                    );
+            console.error(profileError);
 
-                    showError(
-                        "Deine Kontodaten konnten nicht geladen werden."
-                    );
+            showError(
+                "Deine Kontodaten konnten nicht geladen werden."
+            );
 
-                    return;
-                }
-
-
-                if (!profile) {
-
-                    showError(
-                        "Für dein Konto wurde kein Profil gefunden."
-                    );
-
-                    return;
-                }
-
-
-                // --------------------------------
-                // PREMIUM PRÜFEN
-                // --------------------------------
-
-                if (
-                    profile.premium !==
-                    true
-                ) {
-
-                    showError(
-                        "Dein Konto besitzt keinen aktiven Premium-Zugang."
-                    );
-
-                    return;
-                }
-
-
-                // --------------------------------
-                // NAME
-                // --------------------------------
-
-                const name =
-                    profile.full_name ||
-                    user.email ||
-                    "Mitglied";
-
-
-                userName.textContent =
-                    name;
-
-                memberName.textContent =
-                    profile.full_name ||
-                    "Nicht angegeben";
-
-                memberEmail.textContent =
-                    user.email ||
-                    "Nicht angegeben";
-
-
-                // --------------------------------
-                // DASHBOARD ANZEIGEN
-                // --------------------------------
-
-                loading.classList.add(
-                    "hidden"
-                );
-
-                app.classList.remove(
-                    "hidden"
-                );
-
-            }
-
-            catch (error) {
-
-                console.error(
-                    error
-                );
-
-                showError(
-                    "Beim Laden des Premium-Bereichs ist ein Fehler aufgetreten."
-                );
-            }
+            return;
         }
 
 
-        // ========================================
-        // LOGOUT
-        // ========================================
+        if (!profile) {
 
-        logoutButton.addEventListener(
-            "click",
-            async () => {
+            showError(
+                "Für dein Konto wurde kein Profil gefunden."
+            );
 
-                logoutButton.disabled =
-                    true;
-
-                logoutButton.textContent =
-                    "Abmelden...";
+            return;
+        }
 
 
-                await supabase.auth.signOut();
+        if (
+            profile.premium !== true
+        ) {
+
+            showError(
+                "Dein Konto besitzt keinen aktiven Premium-Zugang."
+            );
+
+            return;
+        }
 
 
-                window.location.href =
-                    "login.html";
-            }
+        const name =
+            profile.full_name ||
+            user.email ||
+            "Mitglied";
+
+
+        document.getElementById(
+            "userName"
+        ).textContent = name;
+
+
+        document.getElementById(
+            "memberName"
+        ).textContent =
+            profile.full_name ||
+            "Nicht angegeben";
+
+
+        document.getElementById(
+            "memberEmail"
+        ).textContent =
+            user.email ||
+            "Nicht angegeben";
+
+
+        document.getElementById(
+            "memberRole"
+        ).textContent =
+            profile.role ||
+            "member";
+
+
+        if (profile.created_at) {
+
+            document.getElementById(
+                "createdAt"
+            ).textContent =
+                new Date(
+                    profile.created_at
+                ).toLocaleDateString(
+                    "de-DE"
+                );
+
+        }
+
+
+        loading.classList.add("hidden");
+
+        app.classList.remove("hidden");
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        showError(
+            "Beim Laden des Premium-Bereichs ist ein Fehler aufgetreten."
+        );
+    }
+}
+
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        async () => {
+
+            await supabase.auth.signOut();
+
+            window.location.href =
+                "login.html";
+        }
+    );
+
+
+window.comingSoon =
+    function(feature) {
+
+        alert(
+            feature +
+            " wird gerade entwickelt und bald verfügbar sein."
         );
 
-
-        // ========================================
-        // SESSION-ÄNDERUNGEN
-        // ========================================
-
-        supabase.auth.onAuthStateChange(
-            (event) => {
-
-                if (
-                    event ===
-                    "SIGNED_OUT"
-                ) {
-
-                    window.location.href =
-                        "login.html";
-                }
-            }
-        );
+    };
 
 
-        // ========================================
-        // START
-        // ========================================
+loadDashboard();
 
-        loadDashboard();
-
-    </script>
+</script>
 
 </body>
 </html>
